@@ -1,6 +1,15 @@
 # tools/gen_lookup.py — emits the fast-marking table as Markdown.
-# Usage: python tools/gen_lookup.py > /tmp/lookup.md  then paste the body in.
+# Usage: python tools/gen_lookup.py > lookup.md  then paste the body in.
+import sys
+
+
 def main() -> None:
+    # The table uses U+2212 (−); force UTF-8 so it prints on Windows consoles too.
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except AttributeError:
+        pass
+
     ns = range(1, 7)          # coefficient 1..6
     cs = range(-3, 4)         # constant -3..3
     xs = range(1, 7)          # die faces
