@@ -44,7 +44,7 @@ The environment only affects magic and agility attacks. It never touches strike 
 On your turn, roll the die once. That roll is your `x` for this attack. Then work through these steps:
 
 1. Write your pet's base attack expression.
-2. Add the modifier terms that apply: your character modifier, then the environment modifier, then subtract the enemy's Strength defence. (Strike attacks skip straight past the character and environment modifiers.)
+2. Add the modifier terms that apply: your character modifier, then the environment modifier, then the enemy's Strength modifier (`−x`, `0`, or `+x` — see the table in section 2). (Strike attacks skip straight past the character and environment modifiers.)
 3. Collect like terms into a single `nx + c`.
 4. Substitute your die roll for `x` and work out the number.
 5. Apply the minimum (see section 7), then subtract the result from the enemy pet's HP.

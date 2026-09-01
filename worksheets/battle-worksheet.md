@@ -13,15 +13,15 @@ My pet: ____________________   Opponent's pet: ____________________
 
 ---
 
-One block per attack. Strike attacks: leave the Magic / Agility and environment lines as +0.
+One block per attack. Strike attacks: write `0` on the Magic / Agility and environment lines.
 
 ```
 Attack #1   Attack name & type: ____________________
 
 Base attack expression:            ______________________
-+ my Magic / Agility modifier:     ______________________
-+ environment modifier:            ______________________
-− enemy Strength modifier:         ______________________
+my Magic / Agility modifier (+x, −x, or 0):    ______________________
+environment modifier (+x, −x, or 0):           ______________________
+enemy Strength modifier (−x if High, +x if Low, 0 if Average):   ______________________
 
 Collect like terms  →              ______________________
 
@@ -37,9 +37,9 @@ Opponent HP:  ______  −  ______  =  ______
 Attack #2   Attack name & type: ____________________
 
 Base attack expression:            ______________________
-+ my Magic / Agility modifier:     ______________________
-+ environment modifier:            ______________________
-− enemy Strength modifier:         ______________________
+my Magic / Agility modifier (+x, −x, or 0):    ______________________
+environment modifier (+x, −x, or 0):           ______________________
+enemy Strength modifier (−x if High, +x if Low, 0 if Average):   ______________________
 
 Collect like terms  →              ______________________
 
@@ -55,9 +55,9 @@ Opponent HP:  ______  −  ______  =  ______
 Attack #3   Attack name & type: ____________________
 
 Base attack expression:            ______________________
-+ my Magic / Agility modifier:     ______________________
-+ environment modifier:            ______________________
-− enemy Strength modifier:         ______________________
+my Magic / Agility modifier (+x, −x, or 0):    ______________________
+environment modifier (+x, −x, or 0):           ______________________
+enemy Strength modifier (−x if High, +x if Low, 0 if Average):   ______________________
 
 Collect like terms  →              ______________________
 
@@ -82,9 +82,9 @@ The die roll is 4.
 Attack #1   Attack name & type: Fairy Lights — magic
 
 Base attack expression:            3x + 1
-+ my Magic / Agility modifier:     + x        (High Magic)
-+ environment modifier:            + x        (Arcane Nexus boosts Magic)
-− enemy Strength modifier:         − 0        (enemy Average Strength)
+my Magic / Agility modifier (+x, −x, or 0):    + x        (High Magic)
+environment modifier (+x, −x, or 0):           + x        (Arcane Nexus boosts Magic)
+enemy Strength modifier (−x if High, +x if Low, 0 if Average):   0        (enemy Average Strength)
 
 Collect like terms  →              5x + 1
 
@@ -98,4 +98,4 @@ Opponent HP:  50  −  21  =  29
 
 ---
 
-Show every line even if a modifier is 0 or not used — write `+0`.
+Show every line even if a modifier is 0 or not used — write `0`.
