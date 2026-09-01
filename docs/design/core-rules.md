@@ -47,15 +47,17 @@ NSW Mathematics Stage 4 — Algebraic Techniques:
 
 ```
 damage = pet's base attack
-       + your character modifier
-       + environment modifier
-       − enemy Strength defence
+       + your character modifier      (+x, 0, or −x — see §5.2)
+       + environment modifier         (+x, 0, or −x)
+       + enemy Strength modifier      (−x, 0, or +x)
 ```
+
+Every modifier is a signed term you **add**; the sign comes from the §5.2 table (a High-Strength defender contributes `−x`, a Low-Strength defender `+x`).
 
 Procedure the student follows every attack:
 
 1. Write the pet's base attack expression (`ax + b`).
-2. Add/subtract the modifier terms that apply (all are `±x`).
+2. Add the modifier terms that apply (each is `+x`, `−x`, or `0`).
 3. **Collect like terms** → a single `nx + c`.
 4. Substitute your dice roll for `x`.
 5. Apply the minimum (see §5.4).
