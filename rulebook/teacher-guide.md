@@ -1,0 +1,143 @@
+# Algebra Monster Battle — Teacher Guide
+
+This guide covers what you need to run the game. It assumes you have read the
+student rulebook (`rulebook/student-rulebook.md`); it does not re-teach the full
+ruleset, only the parts a teacher has to manage.
+
+## 1. Purpose & curriculum
+
+The game is a resolution engine for NSW Mathematics **Stage 4 — Algebraic
+Techniques**. Every attack forces the student to:
+
+- assemble a linear expression from `ax + b` plus `±x` modifier terms,
+- **collect like terms** into a single `nx + c`,
+- **substitute** a D6 roll for `x` and evaluate,
+- handle **negative constants** and **floor the result at 0**.
+
+There are no bare-number bonuses anywhere in the system — every modifier is a
+`±x` term, so students cannot avoid the like-terms step. (Confirm the exact
+current outcome code against your own programming.)
+
+Runs as **one lesson** (setup + two or three ladder rounds) or **two lessons**
+(add a full trading/strategy discussion and a longer ladder).
+
+## 2. Prep
+
+- **Characters:** print one class set of the 7 designs, multiple copies of each,
+  so several students can be the same character.
+- **Pet deck:** print enough that every student can draw **2 at random**;
+  duplicates are fine.
+- **Environment deck:** one small deck per group of pairs; drawn once per match.
+- **Worksheets:** one `worksheets/battle-worksheet.md` per student (print
+  several rows — one row per attack).
+- **Dice:** one D6 per pair.
+- **HP tracking:** counters, or mini-whiteboards, or a printed HP track per pet.
+  Mini-whiteboards double as working space and are the easiest to check.
+
+## 3. Run sheet
+
+1. **Deal characters** — random deal or free choice, your call. Random is faster
+   and forces students to adapt.
+2. **Draw pets** — each student draws **2** at random. This is their zoo.
+3. **Trading phase** — **5 minutes**, timed. Trades need both students to agree.
+   Prompt: cover your character's Low stat, or pick up a pet for terrain you
+   expect.
+4. **Pair students and run the ladder** — each pair draws an environment, fields
+   one pet each, and duels (steps in rulebook §6). Loser is eliminated; winner
+   heals to full, re-pairs with another winner, draws a **new** environment.
+5. **Call time** — either play to last student standing, or stop and count
+   **wins per student**.
+
+## 4. Managing eliminated students
+
+In a class of ~30 running a single-elimination ladder, **about half are out
+after round 1**. You must have a plan before you start. Pick one:
+
+- **Option A — worksheet + refereeing.** An eliminated student first completes
+  the worksheet for **every match they played**, then referees **two** further
+  matches, checking the maths on each attack against the answer key.
+- **Option B — second-chance bracket.** Eliminated students form a parallel
+  ladder and keep playing. Winner of that bracket can re-enter, or just be named
+  runner-up.
+
+Option A produces more markable evidence and more peer-checking; Option B keeps
+energy high and everyone rolling dice. Decide which **before** the first duel and
+tell the class up front.
+
+## 5. The maths students must show
+
+Direct students to the battle worksheet. It is the **gradable artifact** — one
+row per attack. For each attack the gradable evidence is:
+
+1. the **expression assembled** (base attack + each `±x` term that applies),
+2. **like terms collected** into a single `nx + c`,
+3. the **substitution** (`x =` the roll, shown),
+4. the **final damage** (after flooring at 0).
+
+An answer with only the final number is not complete work.
+
+## 6. Common errors to watch for
+
+- **Modifier written as a number, not an `x` term** — `+1` instead of `+x`. This
+  is the most common and it defeats the purpose; catch it early.
+- **Buffing a strike attack.** Strike attacks take **no** character modifier and
+  **no** environment modifier. Only the enemy's Strength defence applies to them.
+- **Forgetting the enemy Strength term** when the defender has High Strength
+  (`−x`) or Low Strength (`+x` to the attacker).
+- **Letting damage go negative.** After modifiers, damage floors at **0**, not a
+  negative number. (Base pet attacks separately never go below **1** — the card
+  prints its own floor where needed.)
+- **Applying the environment to the wrong attack type.** Each environment card
+  names one boosted stat and one hurt stat; it only touches magic and agility
+  attacks that match, never strike.
+
+## 7. Worked examples
+
+These are examples A–D from the design doc §5.5, reproduced in full, then
+independently recomputed.
+
+**A. Sorcerer + Sprite, magic attack, in Arcane Nexus, vs a Barbarian (Avg Strength)**
+Sprite "Fairy Lights" `3x + 1` · Sorcerer High Magic `+x` · Arcane Nexus boosts Magic `+x` · enemy Avg Strength `0`
+→ `3x + 1 + x + x = 5x + 1`
+→ roll 4 → `5(4) + 1 = 21 damage`
+
+**B. Same attack, but the defender is a Paladin (High Strength)**
+→ `3x + 1 + x + x − x = 4x + 1`
+→ roll 4 → `17 damage`
+
+**C. Physical attack ignores terrain**
+Ogre "Strike" `2x + 2` · trainer is a Ranger (no strike buff) · Arcane Nexus (no effect on physical) · enemy Avg Strength
+→ expression stays `2x + 2`
+→ roll 3 → `8 damage`
+Against a High-Strength defender → `2x + 2 − x = x + 2` → roll 3 → `5 damage`
+
+**D. Hitting zero on a low roll**
+Pet agility attack `2x − 2` · enemy in Blinding Light (Agility hurt, `−x`)
+→ `2x − 2 − x = x − 2`
+→ roll 2 → `0` · roll 5 → `3 damage`
+
+**Independent recomputation**
+
+- **A:** `3x + 1 + x + x` → `(3 + 1 + 1)x + 1 = 5x + 1`. At `x = 4`: `5 × 4 + 1 = 20 + 1 = 21`. ✔
+- **B:** `3x + 1 + x + x − x` → `(3 + 1 + 1 − 1)x + 1 = 4x + 1`. At `x = 4`: `4 × 4 + 1 = 16 + 1 = 17`. ✔
+- **C:** strike takes no buffs, so `2x + 2` is unchanged. At `x = 3`: `2 × 3 + 2 = 6 + 2 = 8`. ✔
+  vs High Strength: `2x + 2 − x = x + 2`. At `x = 3`: `3 + 2 = 5`. ✔
+- **D:** `2x − 2 − x = x − 2`. At `x = 2`: `2 − 2 = 0` (floored at 0, and already 0). At `x = 5`: `5 − 2 = 3`. ✔
+
+All four match the design doc and the student rulebook.
+
+## 8. Differentiation
+
+- **Support:** ignore the environment term entirely — only the character `±x`
+  modifier and the enemy Strength term apply.
+- **Extension:** draw **two** environment cards per match; use a **D8 or D12**
+  instead of a D6; introduce pets with **negative constants** in their base
+  attacks; require a **written inequality** justifying each trade (e.g. "Ogre
+  strike beats Sprite magic whenever `x > 3`").
+
+## 9. Answer key
+
+See `rulebook/answer-key.md`. It is a fast-marking lookup table: for each
+simplified form `nx + c` that the starter pets and environments can produce, it
+lists the value at `x = 1..6` so you can check a worksheet row at a glance
+without re-deriving it.
