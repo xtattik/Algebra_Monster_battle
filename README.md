@@ -1,10 +1,10 @@
 # Algebra Monster Battle
 
-A print-and-play classroom card game for lower-secondary maths. Each student picks a fantasy character, is dealt a pair of monster pets at random, spends a few minutes trading to shore up their weak stat, then fights other students in 1v1 duels. Every match is set in a randomly drawn environment, and every attack is a piece of algebra: the attacker builds a linear expression from the pet's base attack plus signed `±x` modifier terms, collects like terms into a single `nx + c`, then substitutes a D6 roll for `x` to find the damage (floored at zero). You cannot take a turn without doing the maths.
+A print-and-play classroom card game for lower-secondary maths. Each student picks a fantasy character, is dealt two monster pets at random, spends a few minutes trading to cover their weak stat, then duels other students 1v1 in a randomly drawn environment. Every attack is a piece of algebra: build a linear expression from the pet's base attack plus signed `±x` modifier terms, collect like terms into a single `nx + c`, then substitute a D6 roll for `x` to find the damage (floored at zero). You cannot take a turn without doing the maths.
 
 ## Learning goal
 
-NSW Mathematics **Stage 4 — Algebraic Techniques**: simplifying expressions by collecting like terms, substituting values into linear expressions and evaluating, and working with negative constants and results that floor at zero. Every modifier in the game is an `x` term rather than a bare number, so the like-terms step is unavoidable. *(Teachers should confirm the exact current outcome code against their own programming.)*
+NSW Mathematics **Stage 4 — Algebraic Techniques**: collecting like terms, substituting values into linear expressions and evaluating, and working with negative constants and results that floor at zero. Every modifier is an `x` term rather than a bare number, so the like-terms step is unavoidable. *(Teachers should confirm the exact current outcome code against their own programming.)*
 
 ## Components
 
@@ -26,7 +26,7 @@ NSW Mathematics **Stage 4 — Algebraic Techniques**: simplifying expressions by
 - [ ] Environment deck
 - [ ] Pet collection
 
-The card sets each get their own design doc in `docs/design/`. Some V2 ideas (extreme pets such as a 200 HP Hill Giant that never heals; requiring a written inequality to justify each trade) are recorded in the design doc but are out of scope for now.
+Each card set gets its own design doc in `docs/design/`. Some V2 ideas (extreme pets such as a 200 HP Hill Giant that never heals; a written inequality to justify each trade) are noted in the design doc but are out of scope for now.
 
 ## Repo layout
 
