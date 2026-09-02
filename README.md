@@ -8,7 +8,7 @@ NSW Mathematics **Stage 4 — Algebraic Techniques**: collecting like terms, sub
 
 ## Components
 
-- 7 character cards (print a class set so several students can share a design)
+- [7 character cards](cards/characters.html) (print a class set so several students can share a design)
 - a pet deck (enough that every student draws 2 at random)
 - an environment deck (one card drawn per match)
 - one six-sided die per pair
@@ -22,8 +22,8 @@ NSW Mathematics **Stage 4 — Algebraic Techniques**: collecting like terms, sub
 
 - [x] Core rules design ([`docs/design/core-rules.md`](docs/design/core-rules.md))
 - [x] Student rulebook, teacher guide, answer key, battle worksheet
-- [ ] Character card set (7 designs) — next
-- [ ] Environment deck
+- [x] Character card set — 7 designs, [design doc](docs/design/characters.md) + [print sheet](cards/characters.html)
+- [ ] Environment deck — next
 - [ ] Pet collection
 
 Each card set gets its own design doc in `docs/design/`. Some V2 ideas (extreme pets such as a 200 HP Hill Giant that never heals; a written inequality to justify each trade) are noted in the design doc but are out of scope for now.
@@ -34,7 +34,8 @@ Each card set gets its own design doc in `docs/design/`. Some V2 ideas (extreme 
 - `docs/plans/` — implementation plans
 - `rulebook/` — student rulebook, teacher guide, answer key
 - `worksheets/` — the battle worksheet
-- `tools/` — `gen_lookup.py`, which regenerates the answer-key lookup table
+- `cards/` — card content (source of truth) and generated print sheets
+- `tools/` — `gen_lookup.py` (answer-key lookup table) and `gen_cards.py` (character print sheet)
 
 ## How to print and play
 
