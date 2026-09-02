@@ -166,15 +166,18 @@ Order: **Magic / Strength / Agility**
 - One-line playstyle tip
 - Short flavour line
 
-## 7. Pets (scope summary — dedicated spec to follow)
+## 7. Pets
 
-Each pet card carries:
+Full spec: [`pets.md`](pets.md). Each pet card carries:
 
 - Name + art
-- **HP** and archetype: baseline (~50), glass cannon (~30, high damage), tank (~80, low damage)
-- **Three attack equations** — magic / strike / agility — each `ax + b` with a printed min where needed
+- **HP** and archetype: **Glass cannon** (~28, one big attack), **Baseline** (~48), **Tank** (~80, low damage)
+- **Three attack equations** — magic / strike / agility — each `ax + b` (`a ∈ {1,2,3}`, `b ∈ {−3..3}`), with `(min 1)` printed exactly when a roll of 1 would deal less than 1
+- A derived **affinity** (the attack type with the highest `x`-coefficient, or *Balanced*)
 
-Affinity is expressed **in the equations themselves**, not as a modifier: a strong-physical pet has a strike like `2x + 2` and a weak magic attack like `x − 1 (min 1)`.
+Affinity is expressed **in the equations themselves**, not as a modifier: a strong-physical pet has a strike like `3x` and a weak magic attack like `x − 1 (min 1)`.
+
+Starter collection: **12 pets** (3 glass cannons, 6 baselines, 3 tanks), print ~5 copies of each for a class of 30.
 
 **V2 only:** extreme pets (e.g. Hill Giant, 200 HP, strong, but does **not** heal between matches — dominates early, becomes a liability later).
 
@@ -241,10 +244,7 @@ Starter deck (8): Arcane Nexus, Deep Shadow, Null Field, Blinding Light, Frozen 
 
 ## 13. Open questions for later specs
 
-**Pets spec:**
-- How many distinct pets in the starter set? (enough that a class of ~30 drawing 2 each gets reasonable variety)
-- Exact HP values and equation coefficients per archetype
-- Do captured pets transfer the physical card, or is it drawn fresh from the box? (affects whether a player can be attritioned below 1 pet before elimination — currently moot since losing = elimination)
+**Pets spec:** resolved in [`pets.md`](pets.md) — 12 pets; HP bands and coefficient ranges per archetype in §3; ~5 copies of each printed. Captured-pet card handling stays moot while a loss is an elimination.
 
 **Environments spec:** resolved in [`environments.md`](environments.md) — 8 cards; Open Field is the neutral card; temperature ideas map onto `TESTS: Strength`. Remaining playtest question: whether the `TESTS: Strength` term should stack with the §5.2 enemy-Strength term (currently yes) or cap the slot at `±x`.
 
@@ -255,8 +255,8 @@ Starter deck (8): Arcane Nexus, Deep Shadow, Null Field, Blinding Light, Frozen 
 ## 14. Build sequence
 
 1. **Core rulebook** (this doc → student rulebook + teacher guide) — done
-2. **Character set** — 7 cards, final flavour, print layout — done ([`characters.md`](characters.md))
-3. **Environment deck** — 8 cards ([`environments.md`](environments.md)) ← current
-4. **Pet collection**
+2. **Character set** — 7 cards ([`characters.md`](characters.md)) — done
+3. **Environment deck** — 8 cards ([`environments.md`](environments.md)) — done
+4. **Pet collection** — 12 pets ([`pets.md`](pets.md)) — done
 
-Each subsequent component gets its own design doc in `docs/design/`.
+All phase-1 and phase-2 components are drafted. Next: playtest, then act on the open questions in §13.

@@ -23,11 +23,12 @@ Runs as **one lesson** (setup + two or three ladder rounds) or **two lessons**
 
 ## 2. Prep
 
-- **Characters:** print one class set of the 7 designs, multiple copies of each,
-  so several students can be the same character.
-- **Pet deck:** print enough that every student can draw **2 at random**;
-  duplicates are fine.
-- **Environment deck:** one small deck per group of pairs; drawn once per match.
+- **Characters:** print one class set of the 7 designs (`cards/characters.html`),
+  multiple copies of each, so several students can be the same character.
+- **Pet deck:** `cards/pets.html` — 12 designs; print about **5 copies of each**
+  for a class of 30, so every student draws **2 at random**. Duplicates are fine.
+- **Environment deck:** `cards/environments.html` — 8 cards; one small deck per
+  group of pairs, drawn once per match.
 - **Worksheets:** one `worksheets/battle-worksheet.md` per student (print
   several rows — one row per attack).
 - **Dice:** one D6 per pair.

@@ -125,6 +125,8 @@ BASE_CSS = """\
       body { background: #fff; }
       .sheet { margin: 0; padding: 0; width: auto; min-height: 0; box-shadow: none; }
       .hint { display: none; }
+      /* 9 cards per A4 page; force the break so a row is never split */
+      .card:nth-child(9n) { break-after: page; }
     }
     @page { size: A4; margin: 8mm; }
     .hint {
