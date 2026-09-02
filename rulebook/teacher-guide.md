@@ -25,7 +25,7 @@ Runs as **one lesson** (setup + two or three ladder rounds) or **two lessons**
 
 - **Characters:** print one class set of the 7 designs (`cards/characters.html`),
   multiple copies of each, so several students can be the same character.
-- **Pet deck:** `cards/pets.html` — 12 designs; print about **5 copies of each**
+- **Pet deck:** `cards/pets.html` — 22 designs; print about **3 copies of each**
   for a class of 30, so every student draws **2 at random**. Duplicates are fine.
 - **Environment deck:** `cards/environments.html` — 8 cards; one small deck per
   group of pairs, drawn once per match.

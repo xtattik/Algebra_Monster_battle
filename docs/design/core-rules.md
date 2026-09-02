@@ -177,7 +177,7 @@ Full spec: [`pets.md`](pets.md). Each pet card carries:
 
 Affinity is expressed **in the equations themselves**, not as a modifier: a strong-physical pet has a strike like `3x` and a weak magic attack like `x − 1 (min 1)`.
 
-Starter collection: **12 pets** (3 glass cannons, 6 baselines, 3 tanks), print ~5 copies of each for a class of 30.
+Starter collection: **22 pets** (6 glass cannons, 10 baselines, 6 tanks), print ~3 copies of each for a class of 30.
 
 **V2 only:** extreme pets (e.g. Hill Giant, 200 HP, strong, but does **not** heal between matches — dominates early, becomes a liability later).
 
@@ -244,7 +244,7 @@ Starter deck (8): Arcane Nexus, Deep Shadow, Null Field, Blinding Light, Frozen 
 
 ## 13. Open questions for later specs
 
-**Pets spec:** resolved in [`pets.md`](pets.md) — 12 pets; HP bands and coefficient ranges per archetype in §3; ~5 copies of each printed. Captured-pet card handling stays moot while a loss is an elimination.
+**Pets spec:** resolved in [`pets.md`](pets.md) — 22 pets; HP bands and coefficient ranges per archetype in §3; ~3 copies of each printed. Captured-pet card handling stays moot while a loss is an elimination.
 
 **Environments spec:** resolved in [`environments.md`](environments.md) — 8 cards; Open Field is the neutral card; temperature ideas map onto `TESTS: Strength`. Remaining playtest question: whether the `TESTS: Strength` term should stack with the §5.2 enemy-Strength term (currently yes) or cap the slot at `±x`.
 
@@ -257,6 +257,6 @@ Starter deck (8): Arcane Nexus, Deep Shadow, Null Field, Blinding Light, Frozen 
 1. **Core rulebook** (this doc → student rulebook + teacher guide) — done
 2. **Character set** — 7 cards ([`characters.md`](characters.md)) — done
 3. **Environment deck** — 8 cards ([`environments.md`](environments.md)) — done
-4. **Pet collection** — 12 pets ([`pets.md`](pets.md)) — done
+4. **Pet collection** — 22 pets ([`pets.md`](pets.md)) — done
 
 All phase-1 and phase-2 components are drafted. Next: playtest, then act on the open questions in §13.

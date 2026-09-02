@@ -46,6 +46,16 @@ Affinity, the damage range, and the min badge are derived by the generator.
 | 10 | Boulderhide | 82 | Tank | x − 1 (min 1) | 2x + 1 | x |
 | 11 | Old Cairn | 78 | Tank | 2x + 1 | x + 1 | x − 1 (min 1) |
 | 12 | Moss Troll | 84 | Tank | 2x | 2x | x + 1 |
+| 13 | Sparkhound | 29 | Glass cannon | 3x + 1 | x − 1 (min 1) | x + 1 |
+| 14 | Bristlecharge | 31 | Glass cannon | x − 1 (min 1) | 3x + 2 | x + 1 |
+| 15 | Quickfin | 27 | Glass cannon | x | x + 1 | 3x + 2 |
+| 16 | Cindercat | 49 | Baseline | 3x | x + 1 | 2x |
+| 17 | Ironhide Ram | 52 | Baseline | x + 1 | 3x | 2x |
+| 18 | Zephyr Kite | 45 | Baseline | 2x | x + 1 | 3x |
+| 19 | Clockwork Beetle | 53 | Baseline | 2x | 2x + 1 | 2x − 1 |
+| 20 | Barrow Wight | 79 | Tank | x − 1 (min 1) | 2x + 1 | x |
+| 21 | Deepstone Toad | 80 | Tank | 2x + 1 | x + 1 | x − 1 (min 1) |
+| 22 | Rust Golem | 83 | Tank | x − 1 (min 1) | 2x + 1 | x |
 
 ---
 
@@ -156,3 +166,93 @@ Affinity, the damage range, and the min badge are derived by the generator.
 - Strike: Heavy Club | 2x
 - Agility: Shamble | x + 1
 - Flavour: Thick, slow, and remarkably hard to convince to fall over.
+
+## 13. Sparkhound
+
+- HP: 29
+- Archetype: Glass cannon
+- Magic: Arc Bite | 3x + 1
+- Strike: Nip | x - 1 (min 1)
+- Agility: Dash | x + 1
+- Flavour: Static crackles off it when it gets excited, which is always.
+
+## 14. Bristlecharge
+
+- HP: 31
+- Archetype: Glass cannon
+- Magic: Huff | x - 1 (min 1)
+- Strike: Spine Rush | 3x + 2
+- Agility: Sidestep | x + 1
+- Flavour: The warning snort is the only warning you get.
+
+## 15. Quickfin
+
+- HP: 27
+- Archetype: Glass cannon
+- Magic: Bubble | x
+- Strike: Fin Slap | x + 1
+- Agility: Riptide Dart | 3x + 2
+- Flavour: Gone before the ripples have finished spreading.
+
+## 16. Cindercat
+
+- HP: 49
+- Archetype: Baseline
+- Magic: Ember Purr | 3x
+- Strike: Swipe | x + 1
+- Agility: Slink | 2x
+- Flavour: Warm to the touch. Warmer if it has decided it doesn't like you.
+
+## 17. Ironhide Ram
+
+- HP: 52
+- Archetype: Baseline
+- Magic: Bleat | x + 1
+- Strike: Headbutt | 3x
+- Agility: Scramble | 2x
+- Flavour: Built like a doorstop and twice as stubborn.
+
+## 18. Zephyr Kite
+
+- HP: 45
+- Archetype: Baseline
+- Magic: Updraft | 2x
+- Strike: Talon Rake | x + 1
+- Agility: Divebomb | 3x
+- Flavour: Rides the wind so you never have to guess where it is — until you do.
+
+## 19. Clockwork Beetle
+
+- HP: 53
+- Archetype: Baseline
+- Magic: Spark Coil | 2x
+- Strike: Pincer | 2x + 1
+- Agility: Scuttle | 2x - 1
+- Flavour: Wind it up, set it down, and take a step back.
+
+## 20. Barrow Wight
+
+- HP: 79
+- Archetype: Tank
+- Magic: Chill Touch | x - 1 (min 1)
+- Strike: Grave Reach | 2x + 1
+- Agility: Drift | x
+- Flavour: It remembers being alive, and it resents you for still managing it.
+
+## 21. Deepstone Toad
+
+- HP: 80
+- Archetype: Tank
+- Magic: Mud Bolt | 2x + 1
+- Strike: Bellyflop | x + 1
+- Agility: Hunker | x - 1 (min 1)
+- Flavour: Has not moved in a decade and does not plan to start now.
+
+## 22. Rust Golem
+
+- HP: 83
+- Archetype: Tank
+- Magic: Oxide Cloud | x - 1 (min 1)
+- Strike: Iron Fist | 2x + 1
+- Agility: Grind Forward | x
+- Flavour: Slow, heavy, and only ever going one direction: yours.
