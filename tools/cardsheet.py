@@ -5,12 +5,26 @@
 # that must stay identical between them: the page skeleton, the base CSS, the
 # card-block parser, and the red "defence / vs you" treatment for any row that
 # modifies the enemy-Strength term.
+import base64
 import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 MINUS = "−"  # U+2212 MINUS SIGN, matches the rest of the project
+
+# Optional per-card artwork. Drop a file at
+#   cards/art/<deck>/<NN>-<slug>.<ext>     e.g. cards/art/pets/01-emberwisp.png
+# and it is embedded (base64) into the sheet the next time the generator runs.
+# <NN> is the two-digit card number; <slug> is the lower-cased name with runs of
+# non-alphanumerics turned into single hyphens. Bare "<NN>.<ext>" or
+# "<slug>.<ext>" also match. Accepted extensions, in priority order:
+ART_DIR = ROOT / "cards" / "art"
+_ART_EXTS = (".svg", ".png", ".webp", ".jpg", ".jpeg")
+_ART_MIME = {
+    ".svg": "image/svg+xml", ".png": "image/png", ".webp": "image/webp",
+    ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+}
 
 _CARD_RE = re.compile(
     r"^## (?P<num>\d+)\. (?P<name>.+?)\s*$\n"
@@ -27,6 +41,35 @@ def die(prog: str, msg: str) -> None:
 
 def esc(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def slug(name: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+
+
+def _find_art(deck: str, num: int, name: str, prog: str):
+    d = ART_DIR / deck
+    if not d.is_dir():
+        return None
+    for stem in (f"{num:02d}-{slug(name)}", f"{num:02d}", slug(name)):
+        matches = [d / f"{stem}{ext}" for ext in _ART_EXTS if (d / f"{stem}{ext}").is_file()]
+        if matches:
+            if len(matches) > 1:
+                die(prog, f"card {num} ({name}): multiple art files match — keep one of "
+                          f"{', '.join(p.name for p in matches)}")
+            return matches[0]
+    return None
+
+
+def art_block(deck: str, num: int, name: str, prog: str) -> str:
+    """The card's <div class="art">: an embedded image if one exists, else the
+    empty placeholder box."""
+    path = _find_art(deck, num, name, prog)
+    if path is None:
+        return '      <div class="art">art</div>'
+    uri = f"data:{_ART_MIME[path.suffix.lower()]};base64," + base64.b64encode(
+        path.read_bytes()).decode("ascii")
+    return f'      <div class="art has-art"><img alt="" src="{uri}"></div>'
 
 
 def parse_blocks(text: str, prog: str) -> list[dict]:
@@ -81,11 +124,14 @@ BASE_CSS = """\
     .name { font-size: 12.5pt; font-weight: 700; letter-spacing: 0.2pt; }
     .num { font-size: 7pt; color: #444; }
     .art {
-      height: 12mm; margin: 1.6mm 0 2mm;
+      height: 17mm; margin: 1.6mm 0 2mm;
       border: 0.3mm dashed #999;
       display: flex; align-items: center; justify-content: center;
       font-size: 6.5pt; letter-spacing: 1pt; text-transform: uppercase; color: #aaa;
+      overflow: hidden;
     }
+    .art.has-art { border: 0.3mm solid #000; }
+    .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .row { margin-bottom: 1.6mm; }
     .row-def {
       background: #fbeceb; border-radius: 1mm;

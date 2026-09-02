@@ -37,6 +37,7 @@ Each card set gets its own design doc in `docs/design/`. Some V2 ideas (extreme 
 - `rulebook/` — student rulebook, teacher guide, answer key
 - `worksheets/` — the battle worksheet
 - `cards/` — card content (source of truth `.md`) and generated print sheets (`.html`)
+- `cards/art/` — optional per-card artwork, embedded into the sheets on regenerate ([convention](cards/art/README.md))
 - `tools/` — `gen_lookup.py` (answer-key table), `gen_cards.py` / `gen_env_cards.py` / `gen_pet_cards.py` (print sheets), `cardsheet.py` (shared layout)
 
 ## How to print and play

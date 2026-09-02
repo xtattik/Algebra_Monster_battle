@@ -90,7 +90,7 @@ def render_card(card: dict, total: int) -> str:
         f'      <div class="head">'
         f'<span class="name">{esc(card["name"])}</span>'
         f'<span class="num">{card["num"]}/{total}</span></div>\n'
-        f'      <div class="art">art</div>\n'
+        + cardsheet.art_block("environments", card["num"], card["name"], PROG) + "\n"
         + attack_row("Boosts", card["boosts"], "+x", "gains") + "\n"
         + attack_row("Hinders", card["hinders"], f"{MINUS}x", "takes") + "\n"
         + tests_row(card["tests"]) + "\n"

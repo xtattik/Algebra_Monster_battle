@@ -37,11 +37,14 @@
     .name { font-size: 12.5pt; font-weight: 700; letter-spacing: 0.2pt; }
     .num { font-size: 7pt; color: #444; }
     .art {
-      height: 12mm; margin: 1.6mm 0 2mm;
+      height: 17mm; margin: 1.6mm 0 2mm;
       border: 0.3mm dashed #999;
       display: flex; align-items: center; justify-content: center;
       font-size: 6.5pt; letter-spacing: 1pt; text-transform: uppercase; color: #aaa;
+      overflow: hidden;
     }
+    .art.has-art { border: 0.3mm solid #000; }
+    .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .row { margin-bottom: 1.6mm; }
     .row-def {
       background: #fbeceb; border-radius: 1mm;
