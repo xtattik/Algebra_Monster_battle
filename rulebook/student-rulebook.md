@@ -32,34 +32,40 @@ You get about **5 minutes** to trade pets with other students. Trades happen by 
 
 ## 5. The environment
 
-One environment card is drawn per match and applies for the whole match. Each card names:
+One environment card is drawn per match and applies for the whole match. A card can do up to three things:
 
-- one stat it **boosts** — matching attacks gain `+x`
-- one stat it **hurts** — matching attacks take `−x`
+- **Boosts** an attack type — every magic (or agility) attack gains `+x`, for both players.
+- **Hinders** an attack type — every magic (or agility) attack takes `−x`, for both players.
+- **Tests Strength** — a harsh place (ice, heat). Check **your character's Strength** tier: High `−x`, Average `0`, Low `+x`. That term is added to attacks **against you** — and unlike Boosts/Hinders, it *does* affect **strike** attacks aimed at you.
 
-The environment only affects magic and agility attacks. It never touches strike attacks.
+Boosts and Hinders never touch strike attacks. Some cards (like **Open Field**) do none of the three.
 
 ## 6. Resolving one attack
 
 On your turn, roll the die once. That roll is your `x` for this attack. Then work through these steps:
 
 1. Write your pet's base attack expression.
-2. Add the modifier terms that apply: your character modifier, then the environment modifier, then the enemy's Strength modifier (`−x`, `0`, or `+x` — see the table in section 2). (Strike attacks skip straight past the character and environment modifiers.)
+2. Add the modifier terms that apply, each `+x`, `−x` or `0`:
+   - your character modifier (Magic on magic attacks, Agility on agility attacks),
+   - the environment's **Boosts** / **Hinders** term, if it matches this attack's type,
+   - the enemy's **Strength** modifier,
+   - the environment's **Tests Strength** term, if the card has one (based on the *defender's* Strength).
+   Strike attacks skip the character modifier and the Boosts/Hinders term — but still take the enemy Strength modifier *and* any Tests Strength term.
 3. Collect like terms into a single `nx + c`.
 4. Substitute your die roll for `x` and work out the number.
 5. Apply the minimum (see section 7), then subtract the result from the enemy pet's HP.
 
-**Worked example.** Your pet's magic attack is `3x + 1`. You have High Magic, so you add `+ x`. The environment boosts Magic, so you add another `+ x`. The enemy has Average Strength, so you add `+ 0`.
-
-Collect like terms:
+**Worked example 1 — a magic attack.** Your pet's magic attack is `3x + 1`. You have High Magic, so you add `+ x`. The environment **Boosts Magic**, so you add another `+ x`. The enemy has Average Strength, so you add `+ 0`.
 
 `3x + 1 + x + x = 5x + 1`
 
-You roll the die and get 4. Substitute:
+You roll a 4: `5 × 4 + 1 = 21`. The enemy pet loses **21 HP**.
 
-`5 × 4 + 1 = 21`
+**Worked example 2 — a strike attack in Frozen Wastes.** Your pet's strike attack is `2x + 2`. Strike takes no character or Boosts/Hinders term. The enemy has **Low Strength** (`+ x`), and **Frozen Wastes Tests Strength** — the enemy is Low Strength, so that is another `+ x`.
 
-The enemy pet loses **21 HP**.
+`2x + 2 + x + x = 4x + 2`
+
+You roll a 3: `4 × 3 + 2 = 14`. The enemy pet loses **14 HP** — the cold left them exposed even to a plain hit.
 
 ## 7. Minimums
 

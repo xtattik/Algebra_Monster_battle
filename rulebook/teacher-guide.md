@@ -87,17 +87,23 @@ An answer with only the final number is not complete work.
 - **Letting damage go negative.** After modifiers, damage floors at **0**, not a
   negative number. (Base pet attacks separately never go below **1** — the card
   prints its own floor where needed.)
-- **Applying the environment to the wrong attack type.** Each environment card
-  names one boosted stat and one hurt stat; it only touches magic and agility
-  attacks that match, never strike.
+- **Applying the environment to the wrong attack type.** A card's Boosts / Hinders
+  lines only touch magic and agility attacks that match — never strike.
+- **Mishandling a `Tests: Strength` environment.** It is resolved against the
+  *defender's* Strength tier (High `−x` / Average `0` / Low `+x`), added to the
+  enemy-Strength term — and it *does* reach **strike** attacks. Students often
+  either skip it on a strike attack or check the wrong player's Strength.
+- **Forgetting the environment terms stack.** In Frozen Wastes / Scorching Desert
+  a High-Strength defender contributes `−x` (their Strength) **and** another `−x`
+  (the test) — two separate terms to collect.
 
 ## 7. Worked examples
 
-These are examples A–D from the design doc §5.5, reproduced in full, then
-independently recomputed.
+Examples A–D are from `core-rules.md` §5.5; F, G, H are from `environments.md`
+§6 (same lettering). All are reproduced in full, then independently recomputed.
 
 **A. Sorcerer + Sprite, magic attack, in Arcane Nexus, vs a Barbarian (Avg Strength)**
-Sprite "Fairy Lights" `3x + 1` · Sorcerer High Magic `+x` · Arcane Nexus boosts Magic `+x` · enemy Avg Strength `0`
+Sprite "Fairy Lights" `3x + 1` · Sorcerer High Magic `+x` · Arcane Nexus `Boosts: Magic` `+x` · enemy Avg Strength `0`
 → `3x + 1 + x + x = 5x + 1`
 → roll 4 → `5(4) + 1 = 21 damage`
 
@@ -112,9 +118,26 @@ Ogre "Strike" `2x + 2` · trainer is a Ranger (no strike buff) · Arcane Nexus (
 Against a High-Strength defender → `2x + 2 − x = x + 2` → roll 3 → `5 damage`
 
 **D. Hitting zero on a low roll**
-Pet agility attack `2x − 2` · enemy in Blinding Light (Agility hurt, `−x`)
+Pet agility attack `2x − 2` · Blinding Light `Hinders: Agility` `−x`
 → `2x − 2 − x = x − 2`
 → roll 2 → `0` · roll 5 → `3 damage`
+
+**F. Hinder cancels a caster's edge**
+Illusionist (High Magic) pet magic `3x + 1` · Null Field `Hinders: Magic` `−x` · enemy Avg Strength `0`
+→ `3x + 1 + x − x = 3x + 1`
+→ roll 4 → `13 damage`
+
+**G. `Tests: Strength` hits a strike attack, fragile defender**
+Barbarian pet strike `2x + 2` · Frozen Wastes `Tests: Strength` · defender is an Illusionist (Low Strength)
+→ enemy Strength `+x` · environment test (defender Low) `+x`
+→ `2x + 2 + x + x = 4x + 2`
+→ roll 3 → `14 damage`
+
+**H. Same, tough defender (the "fortress")**
+Same strike `2x + 2` · Frozen Wastes · defender is a Paladin (High Strength)
+→ enemy Strength `−x` · environment test (defender High) `−x`
+→ `2x + 2 − x − x = 2`
+→ any roll → `2 damage`
 
 **Independent recomputation**
 
@@ -123,13 +146,16 @@ Pet agility attack `2x − 2` · enemy in Blinding Light (Agility hurt, `−x`)
 - **C:** strike takes no buffs, so `2x + 2` is unchanged. At `x = 3`: `2 × 3 + 2 = 6 + 2 = 8`. ✔
   vs High Strength: `2x + 2 − x = x + 2`. At `x = 3`: `3 + 2 = 5`. ✔
 - **D:** `2x − 2 − x = x − 2`. At `x = 2`: `2 − 2 = 0` (floored at 0, and already 0). At `x = 5`: `5 − 2 = 3`. ✔
+- **F:** `3x + 1 + x − x` → `(3 + 1 − 1)x + 1 = 3x + 1`. At `x = 4`: `3 × 4 + 1 = 13`. ✔
+- **G:** `2x + 2 + x + x` → `(2 + 1 + 1)x + 2 = 4x + 2`. At `x = 3`: `4 × 3 + 2 = 14`. ✔
+- **H:** `2x + 2 − x − x` → `(2 − 1 − 1)x + 2 = 0x + 2 = 2`. Any `x` → `2`. ✔
 
-All four match the design doc and the student rulebook.
+All match the design docs and the student rulebook.
 
 ## 8. Differentiation
 
-- **Support:** ignore the environment term entirely — only the character `±x`
-  modifier and the enemy Strength term apply.
+- **Support:** always play the **Open Field** environment card — it has no terms,
+  so only the character `±x` modifier and the enemy Strength term apply.
 - **Extension:** draw **two** environment cards per match; use a **D8 or D12**
   instead of a D6; introduce pets with **negative constants** in their base
   attacks; require a **written inequality** justifying each trade (e.g. "Ogre

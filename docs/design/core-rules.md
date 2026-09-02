@@ -47,12 +47,13 @@ NSW Mathematics Stage 4 — Algebraic Techniques:
 
 ```
 damage = pet's base attack
-       + your character modifier      (+x, 0, or −x — see §5.2)
-       + environment modifier         (+x, 0, or −x)
-       + enemy Strength modifier      (−x, 0, or +x)
+       + your character modifier         (+x, 0, or −x — see §5.2)
+       + environment Boosts / Hinders    (+x if this attack's type is boosted, −x if hindered)
+       + enemy Strength modifier          (−x, 0, or +x — see §5.2)
+       + environment Strength test         (−x, 0, or +x — see §5.2 and the environment spec §8)
 ```
 
-Every modifier is a signed term you **add**; the sign comes from the §5.2 table (a High-Strength defender contributes `−x`, a Low-Strength defender `+x`).
+Every modifier is a signed term you **add**; the sign comes from the §5.2 table (a High-Strength defender contributes `−x`, a Low-Strength defender `+x`). The environment contributes a flat `Boosts`/`Hinders` term to magic and agility attacks, and — on a Strength-testing card — a further term to the enemy-Strength slot; the full environment model is [`environments.md`](environments.md).
 
 Procedure the student follows every attack:
 
@@ -69,18 +70,22 @@ Procedure the student follows every attack:
 |---|---|---|---|
 | Your **Magic** — applies to *magic* attacks only | `+x` | `0` | `−x` |
 | Your **Agility** — applies to *agility* attacks only | `+x` | `0` | `−x` |
-| **Environment** — each card names one boosted stat and one hurt stat | `+x` if the attack matches the boosted stat | `0` | `−x` if the attack matches the hurt stat |
+| **Environment — Boosts / Hinders** — a card may boost and/or hinder one attack type each (Magic or Agility); flat, applies to everyone | `+x` to a boosted attack type | `0` | `−x` to a hindered attack type |
 | Enemy **Strength** — their defence against *your* attack | `−x` | `0` | `+x` |
+| **Environment — Tests Strength** — a physically harsh card; checked against the **defender's** Strength tier, added to the enemy-Strength slot (so it also affects strike) | `−x` | `0` | `+x` |
 
-All modifiers are coefficient terms (`±x`), never bare numbers — this is what forces the like-terms step. Individual character types may vary slightly in flavour text but stay within this `±x` band.
+All modifiers are coefficient terms (`±x`), never bare numbers — this is what forces the like-terms step. Individual character types may vary slightly in flavour text but stay within this `±x` band. A `Tests: Strength` environment **stacks** with the enemy-Strength row above (both use the same sign convention), so a High-Strength defender in that terrain contributes `−2x` and a Low-Strength defender `+2x`. The environment spec is [`environments.md`](environments.md).
 
 ### 5.3 Physical / strike attacks
 
-A pet's **physical (strike) attack takes no character modifier and no environment modifier.** Strength is a defensive stat, and physical damage is meant to be the *reliable* option — unaffected by hostile terrain.
+A pet's **physical (strike) attack takes no character modifier and no environment Boosts/Hinders term.** Physical damage is meant to be the *reliable* option — unaffected by a caster's stats or by magic/agility terrain.
 
-The enemy's **Strength defence still applies** to it (`−x` vs High-Strength defenders).
+Two things **do** still apply to a strike attack:
 
-This is the strategic core: a Sorcerer stuck in a Null Field can field a physical pet and still deal predictable damage.
+- the enemy's **Strength defence** (`−x` vs High-Strength defenders — §5.2), and
+- a **`Tests: Strength` environment** (Frozen Wastes, Scorching Desert), which rides that same enemy-Strength slot. Marrow-deep cold wears you down even when you are swinging a club.
+
+This is still the strategic core: a Sorcerer stuck in a Null Field (which only *hinders magic*) can field a physical pet and deal predictable damage — just not in a blizzard against a hardy defender.
 
 ### 5.4 Minimums
 
@@ -92,7 +97,7 @@ This is the strategic core: a Sorcerer stuck in a Null Field can field a physica
 ### 5.5 Worked examples
 
 **A. Sorcerer + Sprite, magic attack, in Arcane Nexus, vs a Barbarian (Avg Strength)**
-Sprite "Fairy Lights" `3x + 1` · Sorcerer High Magic `+x` · Arcane Nexus boosts Magic `+x` · enemy Avg Strength `0`
+Sprite "Fairy Lights" `3x + 1` · Sorcerer High Magic `+x` · Arcane Nexus `Boosts: Magic` `+x` · enemy Avg Strength `0`
 → `3x + 1 + x + x = 5x + 1`
 → roll 4 → `5(4) + 1 = 21 damage`
 
@@ -107,9 +112,11 @@ Ogre "Strike" `2x + 2` · trainer is a Ranger (no strike buff) · Arcane Nexus (
 Against a High-Strength defender → `2x + 2 − x = x + 2` → roll 3 → `5 damage`
 
 **D. Hitting zero on a low roll**
-Pet agility attack `2x − 2` · enemy in Blinding Light (Agility hurt, `−x`)
+Pet agility attack `2x − 2` · Blinding Light `Hinders: Agility` `−x` (flat, applies to any attacker)
 → `2x − 2 − x = x − 2`
 → roll 2 → `0` · roll 5 → `3 damage`
+
+**E–I** — worked examples for the Boosts / Hinders / Tests: Strength model are in [`environments.md`](environments.md) §6.
 
 ### 5.6 Balance ceiling (50 HP baseline pet, standard D6)
 
@@ -121,6 +128,8 @@ Pet agility attack `2x − 2` · enemy in Blinding Light (Agility hurt, `−x`)
 | Everything against you | `1x` | 6 | grindy, never zero |
 
 No configuration one-shots a normal pet. A fully-aligned character + pet + environment can burst a 30 HP glass cannon — the designed reward for a well-planned trade.
+
+The `Tests: Strength` environments add one more axis: attacking a **Low-Strength character** who is stuck in Frozen Wastes / Scorching Desert stacks `+2x` onto the enemy-Strength slot, and a **High-Strength character** there turns most base attacks into a bare constant (a "fortress"). See [`environments.md`](environments.md) §7 for the numbers; left in for playtest.
 
 ## 6. Characters (full roster)
 
@@ -169,14 +178,15 @@ Affinity is expressed **in the equations themselves**, not as a modifier: a stro
 
 **V2 only:** extreme pets (e.g. Hill Giant, 200 HP, strong, but does **not** heal between matches — dominates early, becomes a liability later).
 
-## 8. Environments (scope summary — dedicated spec to follow)
+## 8. Environments
 
-Each environment card carries a **modifier table** naming:
+Full spec: [`environments.md`](environments.md). Each card has up to three lines:
 
-- one **boosted** stat → matching attacks gain `+x`
-- one **hurt** stat → matching attacks take `−x`
+- **`BOOSTS: <Magic | Agility>`** — that attack type gains `+x` (flat, everyone).
+- **`HINDERS: <Magic | Agility>`** — that attack type takes `−x` (flat, everyone). `Boosts` and `Hinders` name different stats.
+- **`TESTS: Strength`** — resolved against the **defender's** Strength tier (High `−x` / Avg `0` / Low `+x`), added to the enemy-Strength slot, so it also reaches **strike** attacks.
 
-Working examples to develop: Arcane Nexus, Null Field, Deep Shadow, Blinding Light, Frozen Wastes.
+Starter deck (8): Arcane Nexus, Deep Shadow, Null Field, Blinding Light, Frozen Wastes, Scorching Desert, Runic Vault, and **Open Field** (the neutral / pacing card). Neither `Boosts` nor `Hinders` ever names Strength, and there are no Magic/Agility `Tests` — a graded attack-type check would just be a flat boost or hinder.
 
 ## 9. Game flow
 
@@ -217,7 +227,7 @@ Working examples to develop: Arcane Nexus, Null Field, Deep Shadow, Blinding Lig
 
 ## 11. Differentiation
 
-- **Support:** ignore the environment modifier — only the character `±x` applies.
+- **Support:** always play **Open Field** (no environment terms) — only the character `±x` applies.
 - **Core:** full rules as written.
 - **Extension:** two environment cards per match; larger die (D8/D12); pets with negative constants; the inequality trade-justification.
 
@@ -236,10 +246,7 @@ Working examples to develop: Arcane Nexus, Null Field, Deep Shadow, Blinding Lig
 - Exact HP values and equation coefficients per archetype
 - Do captured pets transfer the physical card, or is it drawn fresh from the box? (affects whether a player can be attritioned below 1 pet before elimination — currently moot since losing = elimination)
 
-**Environments spec:**
-- Final list and count of environment cards
-- Whether any environment is "neutral" (no modifier) for pacing
-- Mapping the original temperature / city / library ideas onto the three-stat model
+**Environments spec:** resolved in [`environments.md`](environments.md) — 8 cards; Open Field is the neutral card; temperature ideas map onto `TESTS: Strength`. Remaining playtest question: whether the `TESTS: Strength` term should stack with the §5.2 enemy-Strength term (currently yes) or cap the slot at `±x`.
 
 **Core (revisit after playtest):**
 - Trading phase length
@@ -247,9 +254,9 @@ Working examples to develop: Arcane Nexus, Null Field, Deep Shadow, Blinding Lig
 
 ## 14. Build sequence
 
-1. **Core rulebook** (this doc → student rulebook + teacher guide) ← current
-2. **Character set** — 7 cards, final flavour, print layout
-3. **Environment deck**
+1. **Core rulebook** (this doc → student rulebook + teacher guide) — done
+2. **Character set** — 7 cards, final flavour, print layout — done ([`characters.md`](characters.md))
+3. **Environment deck** — 8 cards ([`environments.md`](environments.md)) ← current
 4. **Pet collection**
 
 Each subsequent component gets its own design doc in `docs/design/`.
