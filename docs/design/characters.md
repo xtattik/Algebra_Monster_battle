@@ -17,14 +17,14 @@ Nothing here changes the damage model. If a conflict is found, [`core-rules.md`]
 
 Per core-rules §6.3, each card carries:
 
-1. **Name** and an art area — a dashed placeholder box until an image is added to `cards/art/characters/` ([`../../cards/art/README.md`](../../cards/art/README.md)); students can also just draw in the printed box.
+1. **Name** and an art area. With no art file: a printed name header + a dashed placeholder box students can draw in. With an image in `cards/art/characters/` ([`../../cards/art/README.md`](../../cards/art/README.md)): "hero mode" — the image fills the top ~26 mm and the printed name header is dropped (the name is expected to be in the artwork), leaving only a small `N/7` chip.
 2. **The character's three stat tiers** — Magic, Strength, Agility, each shown with:
    - its tier (HIGH / AVERAGE / LOW),
    - its effect in plain words,
    - its `±x` term.
 3. **One playstyle line** — how to pilot the character.
 4. **One flavour line** — tone only, no rules content.
-5. **A card number** (1–7) in the footer, for sorting a class set back into designs.
+5. **A card number** (1–7), for sorting a class set back into designs — in the header, or overlaid on the art in hero mode.
 
 Only the character's *own* three stats appear — not the full 3×3 grid. A student reads their card, not a matrix.
 
@@ -90,7 +90,7 @@ Requirements:
 
 - **Card size:** 63 mm × 88 mm (standard poker / "bridge-plus" playing card), the size most sleeve and cutter guillotines expect.
 - **Page:** A4 portrait, 9 cards per sheet (3 × 3), centred, with a thin cut outline on each card.
-- **Print:** black on white plus one spot colour (red) used only on the Strength/defence row. No bleed, no art dependency. The card must still be fully readable if the red drops to grey on a mono copy — the red is reinforcement, never the only signal. The art area is a full-width × 17 mm box: an embedded image when `cards/art/characters/NN-slug.*` exists, otherwise a dashed placeholder labelled "art".
+- **Print:** black on white plus one spot colour (red) used only on the Strength/defence row. No bleed. The card must still be fully readable if the red drops to grey on a mono copy — the red is reinforcement, never the only signal. Art is optional per card (see §2 item 1 and [`../../cards/art/README.md`](../../cards/art/README.md)); with no art the card is fully functional.
 - **Self-contained:** one HTML file, inline CSS, no external fonts or images, so "Print to PDF" from any browser produces the deck.
 - **Legibility:** stat terms (`+x`, `−x`, `0`) set larger and bold; plain-words effect in a smaller line beneath. The Strength row gets the §3 defensive treatment (tint + `vs you` + `defence` + red term).
 - **Class set:** the sheet prints one of each card. To make a class set, print the sheet as many times as needed (the teacher guide already says "multiple copies of each").

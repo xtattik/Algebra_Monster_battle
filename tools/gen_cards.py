@@ -62,10 +62,7 @@ def render_card(card: dict, total: int) -> str:
         )
     return (
         f'    <div class="card">\n'
-        f'      <div class="head">'
-        f'<span class="name">{esc(card["name"])}</span>'
-        f'<span class="num">{card["num"]}/{total}</span></div>\n'
-        + cardsheet.art_block("characters", card["num"], card["name"], PROG) + "\n"
+        + cardsheet.card_top("characters", card["num"], total, card["name"], PROG) + "\n"
         + "\n".join(rows) + "\n"
         f'      <p class="rule">{esc(card["playstyle"])}</p>\n'
         f'      <p class="flavour">{esc(card["flavour"])}</p>\n'

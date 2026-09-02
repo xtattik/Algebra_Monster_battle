@@ -61,15 +61,51 @@ def _find_art(deck: str, num: int, name: str, prog: str):
     return None
 
 
-def art_block(deck: str, num: int, name: str, prog: str) -> str:
-    """The card's <div class="art">: an embedded image if one exists, else the
-    empty placeholder box."""
+def _sniff_mime(data: bytes, path: Path, prog: str) -> str:
+    """Trust the file's actual bytes, not its extension."""
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return "image/png"
+    if data[:3] == b"\xff\xd8\xff":
+        return "image/jpeg"
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return "image/webp"
+    head = data[:512].lstrip().lower()
+    if head.startswith(b"<?xml") or head.startswith(b"<svg"):
+        return "image/svg+xml"
+    die(prog, f"{path.name}: not a recognisable PNG / JPEG / WebP / SVG "
+              f"(the extension is ignored — the file's contents are what matter)")
+
+
+def _data_uri(path: Path, prog: str) -> str:
+    data = path.read_bytes()
+    return (f"data:{_sniff_mime(data, path, prog)};base64,"
+            + base64.b64encode(data).decode("ascii"))
+
+
+def card_top(deck: str, num: int, total: int, name: str, prog: str, subhead: str = "") -> str:
+    """The top of a card: the identity zone + art.
+
+    No artwork: a text header (name + N/total), then `subhead` (deck-specific,
+    e.g. a pet's HP line), then an empty dashed art box.
+    Artwork present: a taller "hero" image filling the top of the card with only
+    a small N/total chip overlaid — the name is expected to be in the art — then
+    `subhead`. Drop a file at cards/art/<deck>/<NN>-<slug>.<ext> to switch a card.
+    """
+    sub = f"\n      {subhead}" if subhead else ""
     path = _find_art(deck, num, name, prog)
     if path is None:
-        return '      <div class="art">art</div>'
-    uri = f"data:{_ART_MIME[path.suffix.lower()]};base64," + base64.b64encode(
-        path.read_bytes()).decode("ascii")
-    return f'      <div class="art has-art"><img alt="" src="{uri}"></div>'
+        return (
+            f'      <div class="head"><span class="name">{esc(name)}</span>'
+            f'<span class="num">{num}/{total}</span></div>'
+            f'{sub}\n'
+            f'      <div class="art">art</div>'
+        )
+    return (
+        f'      <div class="art has-art art-hero">'
+        f'<img alt="{esc(name)}" src="{_data_uri(path, prog)}">'
+        f'<span class="cardno">{num}/{total}</span></div>'
+        f'{sub}'
+    )
 
 
 def parse_blocks(text: str, prog: str) -> list[dict]:
@@ -132,6 +168,17 @@ BASE_CSS = """\
     }
     .art.has-art { border: 0.3mm solid #000; }
     .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* "hero" art replaces the text header: taller, name is baked into the art */
+    .art-hero {
+      height: 26mm; margin: 0 0 2mm; position: relative;
+    }
+    .art-hero img { object-position: 50% 18%; }
+    .cardno {
+      position: absolute; top: 1mm; right: 1.2mm;
+      font-size: 6pt; line-height: 1; color: #fff;
+      background: rgba(0, 0, 0, 0.5); padding: 0.6mm 1mm; border-radius: 1mm;
+      letter-spacing: 0.3pt;
+    }
     .row { margin-bottom: 1.6mm; }
     .row-def {
       background: #fbeceb; border-radius: 1mm;

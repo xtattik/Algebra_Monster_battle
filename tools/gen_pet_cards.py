@@ -106,14 +106,13 @@ def render_card(pet: dict, total: int) -> str:
             f'        <div class="atk-sub">{sub}</div>\n'
             f'      </div>'
         )
+    pethdr = (
+        f'<div class="pethdr"><span class="hp">{pet["hp"]}<span> HP</span></span>'
+        f'<span class="arch">{esc(pet["archetype"])} &middot; {pet["affinity"]}</span></div>'
+    )
     return (
         f'    <div class="card">\n'
-        f'      <div class="head">'
-        f'<span class="name">{esc(pet["name"])}</span>'
-        f'<span class="num">{pet["num"]}/{total}</span></div>\n'
-        f'      <div class="pethdr"><span class="hp">{pet["hp"]}<span> HP</span></span>'
-        f'<span class="arch">{esc(pet["archetype"])} &middot; {pet["affinity"]}</span></div>\n'
-        + cardsheet.art_block("pets", pet["num"], pet["name"], PROG) + "\n"
+        + cardsheet.card_top("pets", pet["num"], total, pet["name"], PROG, subhead=pethdr) + "\n"
         + "\n".join(rows) + "\n"
         f'      <p class="flavour">{esc(pet["flavour"])}</p>\n'
         f'    </div>'

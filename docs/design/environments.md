@@ -168,7 +168,7 @@ Mirror the character-card setup:
 - **BOOSTS** row: stat name + `+x`. **HINDERS** row: stat name + `−x`. Missing line prints `—`.
 - **TESTS: Strength** shown as a mini 3-row table (High `−x` / Average `0` / Low `+x`) with the same red "defence · vs you" treatment as the character cards, plus a one-line "also affects strike attacks" note.
 - Flavour line at the foot; card number in the header.
-- Art box: full width × 17 mm, centre-cropped; embedded from `cards/art/environments/NN-slug.*` when present. See `cards/art/README.md`.
+- Art box: full width × ~26 mm hero image that replaces the name header when present, centre-cropped; embedded from `cards/art/environments/NN-slug.*` when present. See `cards/art/README.md`.
 - The generator derives every `±x` term; it reads only name / boosts / hinders / tests / flavour from the source. It exits non-zero on: an unknown stat, `BOOSTS == HINDERS`, `TESTS` not equal to `Strength`, or a card with no lines that is not named `Open Field`.
 
 ## 10. Verification checklist
