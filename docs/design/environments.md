@@ -1,9 +1,9 @@
 # Algebra Monster Battle — Environment Set Design
 
 **Date:** 2026-09-02
-**Status:** Draft for review
+**Status:** Implemented — model confirmed with the design owner; cards, generator, and rulebook reconciliation are in the repo. Open playtest question flagged in §7.
 **Depends on:** [`core-rules.md`](core-rules.md) §5, §8
-**Changes:** [`core-rules.md`](core-rules.md) §5.2, §5.3, §8, §13 — see §8 below
+**Changes applied:** [`core-rules.md`](core-rules.md) §5.1–§5.3, §8, §13; student rulebook §5–6; teacher guide §6–8; answer key §1, §3 — see §8 below
 **Scope:** The environment model and an 8-card starter deck, with content and print layout.
 
 ---
@@ -172,13 +172,13 @@ Mirror the character-card setup:
 
 ## 10. Verification checklist
 
-- [ ] core-rules.md §5.1–§5.3, §8, §13 reconciled; no document still describes only the flat model.
-- [ ] Worked examples A–I recomputed from scratch everywhere they appear, PASS/FAIL listed.
-- [ ] Each of the 8 cards: BOOSTS ≠ HINDERS; TESTS is Strength or absent; at least one line (Open Field excepted).
-- [ ] Every doc that mentions the Strength test also says it reaches strike attacks.
-- [ ] `python tools/gen_env_cards.py` runs clean, is idempotent, validates the constraints.
-- [ ] Print preview: 8 cards on one A4 page, nothing clipped; Strength-test rows readable with colour off.
-- [ ] No card or doc introduces a bare-number bonus or a coefficient other than `x`.
+- [x] core-rules.md §5.1–§5.3, §8, §13 reconciled; no document still describes only the flat model.
+- [x] Worked examples A–I recomputed from scratch (`ev(n,c,x)=max(0,nx+c)`), all PASS.
+- [x] Each of the 8 cards: BOOSTS ≠ HINDERS; TESTS is Strength or absent; at least one line (Open Field excepted). Enforced by the generator.
+- [x] Every doc that mentions the Strength test also says it reaches strike attacks (core-rules §5.3/§8, student rulebook §5/§6, teacher guide §6/§7, answer key §1/§3, card face).
+- [x] `python tools/gen_env_cards.py` runs clean, is idempotent (`--check` after two runs), and rejects a bad stat / `BOOSTS==HINDERS` / `TESTS: Agility` / an empty non-Open-Field card.
+- [x] Print preview: 8 cards on one A4 page, nothing clipped; Strength-test rows still distinguishable in greyscale.
+- [x] No card or doc introduces a bare-number bonus or a coefficient other than `x`.
 
 ## 11. Out of scope
 
