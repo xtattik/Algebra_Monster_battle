@@ -85,13 +85,24 @@ def render_card(card: dict, total: int) -> str:
     for stat in STAT_ORDER:
         tier = card["stats"][stat]
         effect, term = EFFECTS[(stat, tier)]
-        term_cls = "term term-zero" if term == "0" else "term"
+        # Strength is defensive and its sign is inverted vs Magic/Agility
+        # (HIGH gives the *attacker* -x). Flag the row so students read it as
+        # "the enemy's term", not their own: tinted row, "vs you" label, red term.
+        is_def = stat == "Strength"
+        stat_cls = "stat stat-def" if is_def else "stat"
+        term_cls = "term"
+        if term == "0":
+            term_cls += " term-zero"
+        elif is_def:
+            term_cls += " term-def"
+        prefix = '<span class="vsyou">vs you</span>' if is_def else ""
+        tier_label = f"{tier.upper()} <span class=\"deftag\">defence</span>" if is_def else tier.upper()
         rows.append(
-            f'      <div class="stat">\n'
+            f'      <div class="{stat_cls}">\n'
             f'        <div class="statline">'
             f'<span class="statname">{stat}</span>'
-            f'<span class="tier">{tier.upper()}</span>'
-            f'<span class="{term_cls}">{esc(term)}</span></div>\n'
+            f'<span class="tier">{tier_label}</span>'
+            f'<span class="termwrap">{prefix}<span class="{term_cls}">{esc(term)}</span></span></div>\n'
             f'        <div class="effect">{esc(effect)}</div>\n'
             f'      </div>'
         )
@@ -115,6 +126,7 @@ CSS = """\
       margin: 0; background: #d8d8d8;
       font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       color: #000;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
     .sheet {
       display: grid;
@@ -147,18 +159,34 @@ CSS = """\
       font-size: 6.5pt; letter-spacing: 1pt; text-transform: uppercase; color: #aaa;
     }
     .stat { margin-bottom: 1.6mm; }
+    .stat-def {
+      background: #fbeceb; border-radius: 1mm;
+      padding: 0.9mm 1.2mm; margin-left: -1.2mm; margin-right: -1.2mm;
+    }
     .statline { display: flex; align-items: baseline; gap: 1.4mm; }
     .statname {
       font-size: 7pt; text-transform: uppercase; letter-spacing: 0.6pt;
       width: 15mm; color: #333;
     }
     .tier { font-size: 8pt; font-weight: 700; flex: 1; }
+    .deftag {
+      font-size: 5.6pt; font-weight: 600; letter-spacing: 0.4pt;
+      text-transform: uppercase; color: #b3261e;
+    }
+    .termwrap {
+      margin-left: auto; display: flex; align-items: baseline;
+      gap: 1mm; white-space: nowrap;
+    }
+    .vsyou {
+      font-size: 5.8pt; font-weight: 600; letter-spacing: 0.4pt;
+      text-transform: uppercase; color: #b3261e;
+    }
     .term {
       font-size: 11pt; font-weight: 700;
       font-family: "Cambria Math", "Times New Roman", Georgia, serif;
-      min-width: 8mm; text-align: right;
     }
     .term-zero { color: #777; }
+    .term-def { color: #b3261e; }
     .effect { font-size: 6.6pt; line-height: 1.25; color: #222; margin-top: 0.3mm; }
     .playstyle {
       font-size: 7pt; line-height: 1.3; margin: 1.4mm 0 0;

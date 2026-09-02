@@ -45,7 +45,12 @@ The `±x` term and the plain-words effect are a pure function of (stat, tier). T
 | Strength | LOW | enemy attacks against you gain | `+x` |
 
 Notes:
-- Strength is **defensive**: a HIGH-Strength card makes the *attacker's* expression `−x`; a LOW-Strength card hands the attacker `+x`. The card text says "enemy attacks against you" to make the direction unambiguous.
+- Strength is **defensive**: a HIGH-Strength card makes the *attacker's* expression `−x`; a LOW-Strength card hands the attacker `+x`. This is **inverted** from Magic/Agility (where HIGH is `+x`), which trips students up. The Strength row is therefore set apart visually so it reads as "the enemy's term, not yours":
+  - the whole row sits on a **light red tint**,
+  - the tier is tagged **`defence`**,
+  - the term is prefixed **`vs you`** and printed in **red**,
+  - the effect sentence spells out the direction ("Enemy attacks against you take `−x`").
+  None of this changes the maths — the term a student writes on the worksheet is still exactly `−x` / `0` / `+x`. The tint and red are set with `print-color-adjust: exact` so a colour printer keeps them; on a mono photocopy the `vs you` / `defence` labels and the effect sentence still carry the meaning.
 - Strike (physical) attacks are never modified by Magic or Agility or the environment — that rule lives in the rulebook, not on the character card, because it is about the *pet's* attack type, not the character.
 - The `0` tiers still print a row. Students must write `+ 0` on the worksheet, so the card should not hide the Average stat.
 
@@ -85,9 +90,9 @@ Requirements:
 
 - **Card size:** 63 mm × 88 mm (standard poker / "bridge-plus" playing card), the size most sleeve and cutter guillotines expect.
 - **Page:** A4 portrait, 9 cards per sheet (3 × 3), centred, with a thin cut outline on each card.
-- **Print:** pure black on white, no bleed, no art dependency — every card must photocopy cleanly. The art area is an empty outlined box labelled "art".
+- **Print:** black on white plus one spot colour (red) used only on the Strength/defence row. No bleed, no art dependency. The card must still be fully readable if the red drops to grey on a mono copy — the red is reinforcement, never the only signal. The art area is an empty outlined box labelled "art".
 - **Self-contained:** one HTML file, inline CSS, no external fonts or images, so "Print to PDF" from any browser produces the deck.
-- **Legibility:** stat terms (`+x`, `−x`, `0`) set larger and bold; plain-words effect in a smaller line beneath.
+- **Legibility:** stat terms (`+x`, `−x`, `0`) set larger and bold; plain-words effect in a smaller line beneath. The Strength row gets the §3 defensive treatment (tint + `vs you` + `defence` + red term).
 - **Class set:** the sheet prints one of each card. To make a class set, print the sheet as many times as needed (the teacher guide already says "multiple copies of each").
 
 The generator must fail loudly (non-zero exit, message to stderr) if `cards/characters.md` contains a stat tier it does not recognise, rather than emitting a card with a blank effect.
@@ -102,6 +107,7 @@ Before committing:
 - [ ] `python tools/gen_cards.py` runs clean and regenerates `cards/characters.html` with no diff when run twice.
 - [ ] The HTML prints to 1 page of 9 cards with nothing clipped (checked in a browser print preview).
 - [ ] No card contains a bare-number bonus anywhere in its text.
+- [ ] The Strength row on every card is visually distinct from Magic/Agility, and still readable with colour disabled.
 
 ## 7. Out of scope
 

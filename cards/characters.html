@@ -10,6 +10,7 @@
       margin: 0; background: #d8d8d8;
       font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       color: #000;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
     .sheet {
       display: grid;
@@ -42,18 +43,34 @@
       font-size: 6.5pt; letter-spacing: 1pt; text-transform: uppercase; color: #aaa;
     }
     .stat { margin-bottom: 1.6mm; }
+    .stat-def {
+      background: #fbeceb; border-radius: 1mm;
+      padding: 0.9mm 1.2mm; margin-left: -1.2mm; margin-right: -1.2mm;
+    }
     .statline { display: flex; align-items: baseline; gap: 1.4mm; }
     .statname {
       font-size: 7pt; text-transform: uppercase; letter-spacing: 0.6pt;
       width: 15mm; color: #333;
     }
     .tier { font-size: 8pt; font-weight: 700; flex: 1; }
+    .deftag {
+      font-size: 5.6pt; font-weight: 600; letter-spacing: 0.4pt;
+      text-transform: uppercase; color: #b3261e;
+    }
+    .termwrap {
+      margin-left: auto; display: flex; align-items: baseline;
+      gap: 1mm; white-space: nowrap;
+    }
+    .vsyou {
+      font-size: 5.8pt; font-weight: 600; letter-spacing: 0.4pt;
+      text-transform: uppercase; color: #b3261e;
+    }
     .term {
       font-size: 11pt; font-weight: 700;
       font-family: "Cambria Math", "Times New Roman", Georgia, serif;
-      min-width: 8mm; text-align: right;
     }
     .term-zero { color: #777; }
+    .term-def { color: #b3261e; }
     .effect { font-size: 6.6pt; line-height: 1.25; color: #222; margin-top: 0.3mm; }
     .playstyle {
       font-size: 7pt; line-height: 1.3; margin: 1.4mm 0 0;
@@ -79,15 +96,15 @@
       <div class="head"><span class="name">Sorcerer</span><span class="num">1/7</span></div>
       <div class="art">art</div>
       <div class="stat">
-        <div class="statline"><span class="statname">Magic</span><span class="tier">HIGH</span><span class="term">+x</span></div>
+        <div class="statline"><span class="statname">Magic</span><span class="tier">HIGH</span><span class="termwrap"><span class="term">+x</span></span></div>
         <div class="effect">Your magic attacks gain +x.</div>
       </div>
-      <div class="stat">
-        <div class="statline"><span class="statname">Strength</span><span class="tier">AVERAGE</span><span class="term term-zero">0</span></div>
+      <div class="stat stat-def">
+        <div class="statline"><span class="statname">Strength</span><span class="tier">AVERAGE <span class="deftag">defence</span></span><span class="termwrap"><span class="vsyou">vs you</span><span class="term term-zero">0</span></span></div>
         <div class="effect">Enemy attacks against you are unchanged.</div>
       </div>
       <div class="stat">
-        <div class="statline"><span class="statname">Agility</span><span class="tier">LOW</span><span class="term">−x</span></div>
+        <div class="statline"><span class="statname">Agility</span><span class="tier">LOW</span><span class="termwrap"><span class="term">−x</span></span></div>
         <div class="effect">Your agility attacks take −x.</div>
       </div>
       <p class="playstyle">Field high-magic pets and lean on their magic attack; watch the environment, because a Magic-hurt terrain turns your main weapon into −x.</p>
@@ -97,15 +114,15 @@
       <div class="head"><span class="name">Illusionist</span><span class="num">2/7</span></div>
       <div class="art">art</div>
       <div class="stat">
-        <div class="statline"><span class="statname">Magic</span><span class="tier">HIGH</span><span class="term">+x</span></div>
+        <div class="statline"><span class="statname">Magic</span><span class="tier">HIGH</span><span class="termwrap"><span class="term">+x</span></span></div>
         <div class="effect">Your magic attacks gain +x.</div>
       </div>
-      <div class="stat">
-        <div class="statline"><span class="statname">Strength</span><span class="tier">LOW</span><span class="term">+x</span></div>
+      <div class="stat stat-def">
+        <div class="statline"><span class="statname">Strength</span><span class="tier">LOW <span class="deftag">defence</span></span><span class="termwrap"><span class="vsyou">vs you</span><span class="term term-def">+x</span></span></div>
         <div class="effect">Enemy attacks against you gain +x.</div>
       </div>
       <div class="stat">
-        <div class="statline"><span class="statname">Agility</span><span class="tier">AVERAGE</span><span class="term term-zero">0</span></div>
+        <div class="statline"><span class="statname">Agility</span><span class="tier">AVERAGE</span><span class="termwrap"><span class="term term-zero">0</span></span></div>
         <div class="effect">Your agility attacks are unchanged.</div>
       </div>
       <p class="playstyle">Same big magic as the Sorcerer but paper defence — every enemy attack gets +x against you, so end fights before they end you.</p>
@@ -115,15 +132,15 @@
       <div class="head"><span class="name">Paladin</span><span class="num">3/7</span></div>
       <div class="art">art</div>
       <div class="stat">
-        <div class="statline"><span class="statname">Magic</span><span class="tier">AVERAGE</span><span class="term term-zero">0</span></div>
+        <div class="statline"><span class="statname">Magic</span><span class="tier">AVERAGE</span><span class="termwrap"><span class="term term-zero">0</span></span></div>
         <div class="effect">Your magic attacks are unchanged.</div>
       </div>
-      <div class="stat">
-        <div class="statline"><span class="statname">Strength</span><span class="tier">HIGH</span><span class="term">−x</span></div>
+      <div class="stat stat-def">
+        <div class="statline"><span class="statname">Strength</span><span class="tier">HIGH <span class="deftag">defence</span></span><span class="termwrap"><span class="vsyou">vs you</span><span class="term term-def">−x</span></span></div>
         <div class="effect">Enemy attacks against you take −x.</div>
       </div>
       <div class="stat">
-        <div class="statline"><span class="statname">Agility</span><span class="tier">LOW</span><span class="term">−x</span></div>
+        <div class="statline"><span class="statname">Agility</span><span class="tier">LOW</span><span class="termwrap"><span class="term">−x</span></span></div>
         <div class="effect">Your agility attacks take −x.</div>
       </div>
       <p class="playstyle">A wall. Enemy attacks take −x, so field a durable pet and win the long game while your magic ticks away.</p>
@@ -133,15 +150,15 @@
       <div class="head"><span class="name">Barbarian</span><span class="num">4/7</span></div>
       <div class="art">art</div>
       <div class="stat">
-        <div class="statline"><span class="statname">Magic</span><span class="tier">LOW</span><span class="term">−x</span></div>
+        <div class="statline"><span class="statname">Magic</span><span class="tier">LOW</span><span class="termwrap"><span class="term">−x</span></span></div>
         <div class="effect">Your magic attacks take −x.</div>
       </div>
-      <div class="stat">
-        <div class="statline"><span class="statname">Strength</span><span class="tier">HIGH</span><span class="term">−x</span></div>
+      <div class="stat stat-def">
+        <div class="statline"><span class="statname">Strength</span><span class="tier">HIGH <span class="deftag">defence</span></span><span class="termwrap"><span class="vsyou">vs you</span><span class="term term-def">−x</span></span></div>
         <div class="effect">Enemy attacks against you take −x.</div>
       </div>
       <div class="stat">
-        <div class="statline"><span class="statname">Agility</span><span class="tier">AVERAGE</span><span class="term term-zero">0</span></div>
+        <div class="statline"><span class="statname">Agility</span><span class="tier">AVERAGE</span><span class="termwrap"><span class="term term-zero">0</span></span></div>
         <div class="effect">Your agility attacks are unchanged.</div>
       </div>
       <p class="playstyle">Bruiser. Your magic is −x, so field physical-strong pets and swing the strike attack the environment can't touch.</p>
@@ -151,15 +168,15 @@
       <div class="head"><span class="name">Trickster</span><span class="num">5/7</span></div>
       <div class="art">art</div>
       <div class="stat">
-        <div class="statline"><span class="statname">Magic</span><span class="tier">AVERAGE</span><span class="term term-zero">0</span></div>
+        <div class="statline"><span class="statname">Magic</span><span class="tier">AVERAGE</span><span class="termwrap"><span class="term term-zero">0</span></span></div>
         <div class="effect">Your magic attacks are unchanged.</div>
       </div>
-      <div class="stat">
-        <div class="statline"><span class="statname">Strength</span><span class="tier">LOW</span><span class="term">+x</span></div>
+      <div class="stat stat-def">
+        <div class="statline"><span class="statname">Strength</span><span class="tier">LOW <span class="deftag">defence</span></span><span class="termwrap"><span class="vsyou">vs you</span><span class="term term-def">+x</span></span></div>
         <div class="effect">Enemy attacks against you gain +x.</div>
       </div>
       <div class="stat">
-        <div class="statline"><span class="statname">Agility</span><span class="tier">HIGH</span><span class="term">+x</span></div>
+        <div class="statline"><span class="statname">Agility</span><span class="tier">HIGH</span><span class="termwrap"><span class="term">+x</span></span></div>
         <div class="effect">Your agility attacks gain +x.</div>
       </div>
       <p class="playstyle">Fast and fragile. Agility attacks gain +x, but enemies get +x against you — pick agility pets and don't get caught in Blinding Light.</p>
@@ -169,15 +186,15 @@
       <div class="head"><span class="name">Ranger</span><span class="num">6/7</span></div>
       <div class="art">art</div>
       <div class="stat">
-        <div class="statline"><span class="statname">Magic</span><span class="tier">LOW</span><span class="term">−x</span></div>
+        <div class="statline"><span class="statname">Magic</span><span class="tier">LOW</span><span class="termwrap"><span class="term">−x</span></span></div>
         <div class="effect">Your magic attacks take −x.</div>
       </div>
-      <div class="stat">
-        <div class="statline"><span class="statname">Strength</span><span class="tier">AVERAGE</span><span class="term term-zero">0</span></div>
+      <div class="stat stat-def">
+        <div class="statline"><span class="statname">Strength</span><span class="tier">AVERAGE <span class="deftag">defence</span></span><span class="termwrap"><span class="vsyou">vs you</span><span class="term term-zero">0</span></span></div>
         <div class="effect">Enemy attacks against you are unchanged.</div>
       </div>
       <div class="stat">
-        <div class="statline"><span class="statname">Agility</span><span class="tier">HIGH</span><span class="term">+x</span></div>
+        <div class="statline"><span class="statname">Agility</span><span class="tier">HIGH</span><span class="termwrap"><span class="term">+x</span></span></div>
         <div class="effect">Your agility attacks gain +x.</div>
       </div>
       <p class="playstyle">Agility specialist with a solid guard. Thrives where Agility is boosted — Deep Shadow is home turf.</p>
@@ -187,15 +204,15 @@
       <div class="head"><span class="name">Bard</span><span class="num">7/7</span></div>
       <div class="art">art</div>
       <div class="stat">
-        <div class="statline"><span class="statname">Magic</span><span class="tier">AVERAGE</span><span class="term term-zero">0</span></div>
+        <div class="statline"><span class="statname">Magic</span><span class="tier">AVERAGE</span><span class="termwrap"><span class="term term-zero">0</span></span></div>
         <div class="effect">Your magic attacks are unchanged.</div>
       </div>
-      <div class="stat">
-        <div class="statline"><span class="statname">Strength</span><span class="tier">AVERAGE</span><span class="term term-zero">0</span></div>
+      <div class="stat stat-def">
+        <div class="statline"><span class="statname">Strength</span><span class="tier">AVERAGE <span class="deftag">defence</span></span><span class="termwrap"><span class="vsyou">vs you</span><span class="term term-zero">0</span></span></div>
         <div class="effect">Enemy attacks against you are unchanged.</div>
       </div>
       <div class="stat">
-        <div class="statline"><span class="statname">Agility</span><span class="tier">AVERAGE</span><span class="term term-zero">0</span></div>
+        <div class="statline"><span class="statname">Agility</span><span class="tier">AVERAGE</span><span class="termwrap"><span class="term term-zero">0</span></span></div>
         <div class="effect">Your agility attacks are unchanged.</div>
       </div>
       <p class="playstyle">No weakness and no spike. Every stat is 0, so you adapt to any terrain and any pet while sharper builds get countered.</p>
