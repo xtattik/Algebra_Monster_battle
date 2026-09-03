@@ -119,7 +119,7 @@ Ogre "Strike" `2x + 2` · trainer is a Ranger (no strike buff) · Arcane Nexus (
 Against a High-Strength defender → `2x + 2 − x = x + 2` → roll 3 → `5 damage`
 
 **D. Hitting zero on a low roll**
-Pet agility attack `2x − 2` · Blinding Light `Hinders: Agility` `−x`
+Pet agility attack `2x − 2` · Sunken Marsh `Hinders: Agility` `−x`
 → `2x − 2 − x = x − 2`
 → roll 2 → `0` · roll 5 → `3 damage`
 

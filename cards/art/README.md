@@ -41,17 +41,23 @@ So: **put the card's name in the image.**
 
 ## Shape & safe area
 
-- Target the hero box: **~55 × 26 mm, i.e. about 2.1 : 1** (landscape).
-- The image is scaled to **fill** and **centre-cropped** (`object-fit: cover`),
-  biased slightly upward (`object-position: 50% 18%`) so faces/heads survive.
-- 3 : 2 or 16 : 9 source art works fine — expect the lower third to be cropped.
-  Keep the title and any faces in the **upper ~65 %**; keep nothing important in
-  the outer ~2 mm (the frame sits on the edge).
-- Vector (`svg`) prints sharpest. For raster, ~1500 px wide is plenty; a whole
-  deck of multi-MB files makes a heavy `.html`, so ~150–400 KB each is ideal.
+- The hero box on the card is **~55 × 26 mm** wide-landscape.
+- **Black letterbox bars are trimmed automatically** before embedding (if
+  `Pillow` is installed — `pip install Pillow`). So if your art tool pads a
+  non-10:3 export to a fixed canvas with black, that padding is removed; the
+  card sees just your artwork. Without Pillow the file is embedded as-is.
+- After trimming, the image is **left-anchored and centre-cropped**
+  (`object-fit: cover`, `object-position: 0% 45%`) — the box is a touch
+  narrower than typical trimmed art, so the **right edge** is what gets clipped.
+  Keep your title on the **left**, and nothing essential in the outer ~3 mm.
+- Anything from ~2 : 1 to ~2.8 : 1 lands with almost no crop. 3 : 2 works too
+  (its sides get clipped a little more).
+- Vector (`svg`) prints sharpest and is never trimmed/recompressed. Raster is
+  re-saved as JPEG q88 and downscaled to 1800 px wide, so source file size
+  barely matters — a ~1500 px+ export is plenty.
 
-Ask if you want the box taller/shorter, the crop focal point moved (globally or
-per card), or full-bleed to the cut edge.
+Ask if you want the box taller/shorter, the crop anchor moved (globally or per
+card), or full-bleed to the cut edge.
 
 ## Regenerate
 

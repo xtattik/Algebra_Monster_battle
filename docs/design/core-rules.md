@@ -112,7 +112,7 @@ Ogre "Strike" `2x + 2` · trainer is a Ranger (no strike buff) · Arcane Nexus (
 Against a High-Strength defender → `2x + 2 − x = x + 2` → roll 3 → `5 damage`
 
 **D. Hitting zero on a low roll**
-Pet agility attack `2x − 2` · Blinding Light `Hinders: Agility` `−x` (flat, applies to any attacker)
+Pet agility attack `2x − 2` · Sunken Marsh `Hinders: Agility` `−x` (flat, applies to any attacker)
 → `2x − 2 − x = x − 2`
 → roll 2 → `0` · roll 5 → `3 damage`
 
@@ -153,8 +153,8 @@ Order: **Magic / Strength / Agility**
 | 2 | Illusionist | High | Low | Avg | Big magic, paper defence — end fights fast |
 | 3 | Paladin | Avg | High | Low | Tanky; let pets grind while your defence holds |
 | 4 | Barbarian | Low | High | Avg | Bruiser; lean on physical-strong pets |
-| 5 | Trickster | Avg | Low | High | Nimble skirmisher; agility pets, avoid Blinding Light |
-| 6 | Ranger | Low | Avg | High | Agility specialist; thrives in Deep Shadow |
+| 5 | Trickster | Avg | Low | High | Nimble skirmisher; agility pets, avoid Sunken Marsh |
+| 6 | Ranger | Low | Avg | High | Agility specialist; thrives in Dark Cavern |
 | 7 | Bard | Avg | Avg | Avg | No weakness, no spike — flexible in any terrain |
 
 ### 6.3 Character card layout
@@ -189,7 +189,7 @@ Full spec: [`environments.md`](environments.md). Each card has up to three lines
 - **`HINDERS: <Magic | Agility>`** — that attack type takes `−x` (flat, everyone). `Boosts` and `Hinders` name different stats.
 - **`TESTS: Strength`** — resolved against the **defender's** Strength tier (High `−x` / Avg `0` / Low `+x`), added to the enemy-Strength slot, so it also reaches **strike** attacks.
 
-Starter deck (8): Arcane Nexus, Deep Shadow, Null Field, Blinding Light, Frozen Wastes, Scorching Desert, Runic Vault, and **Open Field** (the neutral / pacing card). Neither `Boosts` nor `Hinders` ever names Strength, and there are no Magic/Agility `Tests` — a graded attack-type check would just be a flat boost or hinder.
+Starter deck (8): Arcane Nexus, Dark Cavern, Null Field, Sunken Marsh, Frozen Wastes, Scorching Desert, Runic Vault, and **Open Field** (the neutral / pacing card). Neither `Boosts` nor `Hinders` ever names Strength, and there are no Magic/Agility `Tests` — a graded attack-type check would just be a flat boost or hinder.
 
 ## 9. Game flow
 

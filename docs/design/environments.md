@@ -127,9 +127,9 @@ The `TESTS`/§5.2 stack against a Low-Strength *character* (not just pet) is the
 | # | Name | BOOSTS | HINDERS | TESTS | Flavour hook |
 |---|---|---|---|---|---|
 | 1 | Arcane Nexus | Magic | — | — | Ley lines converge; spellcraft comes easy. |
-| 2 | Deep Shadow | Agility | — | — | Deep gloom; the sure-footed slip through unseen. |
+| 2 | Dark Cavern | Agility | — | — | Pitch black underground; footwork and feel win. |
 | 3 | Null Field | — | Magic | — | A dead zone. Spells gutter and fail. |
-| 4 | Blinding Light | — | Agility | — | Relentless glare; no way to pick your footing. |
+| 4 | Sunken Marsh | — | Agility | — | Knee-deep mud and black water; every quick move turns slow. |
 | 5 | Frozen Wastes | — | — | Strength | Marrow-deep cold. The hardy endure; the frail seize up. |
 | 6 | Scorching Desert | — | Agility | Strength | Heat and thirst: every move drags, and only the tough push on. |
 | 7 | Runic Vault | Magic | Agility | — | Old wards feed spellcraft, but the air hangs thick and slow. |
@@ -146,8 +146,8 @@ Small, because the flat attack-type model is unchanged:
 **`core-rules.md`**
 - **§5.1 / §5.2** — the environment row becomes: up to one `BOOSTS` (`+x`) and one `HINDERS` (`−x`) attack-type term, still flat and unconditional, **plus** an optional `TESTS: Strength` term (§4 here) added to the enemy-Strength slot.
 - **§5.3** — physical attacks still take no BOOSTS/HINDERS term; add one sentence that a `TESTS: Strength` environment *does* affect them, through the enemy-Strength slot.
-- **§5.5** — examples A–D still hold verbatim (Arcane Nexus = `BOOSTS: Magic`; Blinding Light = `HINDERS: Agility`). No rewrite; optionally add a cross-reference.
-- **§6.2** — no change. "Sorcerer: fear Null Fields" and "Trickster: avoid Blinding Light" are both still correct under the flat model.
+- **§5.5** — example D's card was later renamed *Blinding Light → Sunken Marsh* (a `HINDERS: Agility` marsh — more realistic than glare now that stealth folds into Agility); the maths is unchanged.
+- **§6.2** — playstyle tips renamed with the cards: *Deep Shadow → Dark Cavern* (Ranger's home turf), *Blinding Light → Sunken Marsh* (what the Trickster avoids). Both still correct under the flat model.
 - **§8** — replace the scope summary with the model above and a pointer to this doc.
 - **§13** — mark the environment open questions resolved (count 8; Open Field is the neutral card; the temperature ideas map onto `TESTS: Strength`).
 

@@ -49,7 +49,10 @@
     .art-hero {
       height: 26mm; margin: 0 0 2mm; position: relative;
     }
-    .art-hero img { object-position: 50% 18%; }
+    /* left-anchored: the art template puts its title on the left, so the
+       side that gets cropped (box is a touch narrower than the trimmed art)
+       is the right */
+    .art-hero img { object-position: 0% 45%; }
     .cardno, .cardname {
       position: absolute; bottom: 1mm;
       font-size: 6pt; line-height: 1; color: #fff;

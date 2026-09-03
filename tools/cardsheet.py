@@ -6,9 +6,15 @@
 # card-block parser, and the red "defence / vs you" treatment for any row that
 # modifies the enemy-Strength term.
 import base64
+import io
 import re
 import sys
 from pathlib import Path
+
+try:
+    from PIL import Image  # optional: enables letterbox auto-trim + recompress
+except ImportError:
+    Image = None
 
 ROOT = Path(__file__).resolve().parent.parent
 MINUS = "−"  # U+2212 MINUS SIGN, matches the rest of the project
@@ -76,10 +82,57 @@ def _sniff_mime(data: bytes, path: Path, prog: str) -> str:
               f"(the extension is ignored — the file's contents are what matter)")
 
 
+_BAR_MAX = 24        # a pixel this dark (max RGB channel) counts as "letterbox"
+_MAX_ART_W = 1800     # downscale wider raster art than this when re-encoding
+
+
+def _row_is_bar(px, w: int, y: int) -> bool:
+    step = max(1, w // 64)
+    return all(max(px[x, y][:3]) <= _BAR_MAX for x in range(0, w, step))
+
+
+def _prep_raster(data: bytes):
+    """With Pillow: trim near-solid dark bars from the top/bottom of the image
+    (the user's art tool letterboxes non-10:3 exports with black), then re-encode
+    as a reasonably sized JPEG. Returns (mime, bytes) or None to embed as-is."""
+    if Image is None:
+        return None
+    try:
+        im = Image.open(io.BytesIO(data))
+        im.load()
+    except Exception:
+        return None
+    im = im.convert("RGB")
+    w, h = im.size
+    px = im.load()
+    top, bot = 0, h
+    while top < bot and _row_is_bar(px, w, top):
+        top += 1
+    while bot > top and _row_is_bar(px, w, bot - 1):
+        bot -= 1
+    trimmed = (top, bot) != (0, h)
+    if trimmed and bot - top < h * 0.35:
+        trimmed = False          # implausible — leave it alone
+    if not trimmed and max(w, h) <= _MAX_ART_W:
+        return None              # nothing to do; keep the original file
+    if trimmed:
+        im = im.crop((0, top, w, bot))
+    if im.width > _MAX_ART_W:
+        im = im.resize((_MAX_ART_W, round(im.height * _MAX_ART_W / im.width)),
+                       Image.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, format="JPEG", quality=88, optimize=True)
+    return "image/jpeg", buf.getvalue()
+
+
 def _data_uri(path: Path, prog: str) -> str:
     data = path.read_bytes()
-    return (f"data:{_sniff_mime(data, path, prog)};base64,"
-            + base64.b64encode(data).decode("ascii"))
+    mime = _sniff_mime(data, path, prog)
+    if mime != "image/svg+xml":
+        prepped = _prep_raster(data)
+        if prepped is not None:
+            mime, data = prepped
+    return f"data:{mime};base64," + base64.b64encode(data).decode("ascii")
 
 
 def card_top(deck: str, num: int, total: int, name: str, prog: str, subhead: str = "") -> str:
@@ -175,7 +228,10 @@ BASE_CSS = """\
     .art-hero {
       height: 26mm; margin: 0 0 2mm; position: relative;
     }
-    .art-hero img { object-position: 50% 18%; }
+    /* left-anchored: the art template puts its title on the left, so the
+       side that gets cropped (box is a touch narrower than the trimmed art)
+       is the right */
+    .art-hero img { object-position: 0% 45%; }
     .cardno, .cardname {
       position: absolute; bottom: 1mm;
       font-size: 6pt; line-height: 1; color: #fff;

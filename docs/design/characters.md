@@ -78,8 +78,8 @@ The authored content (names, tiers, playstyle, flavour) is the source of truth i
 2. **Illusionist** — *Playstyle:* Same big magic as the Sorcerer but paper defence — every enemy attack gets `+x` against you, so end fights before they end you. *Flavour:* Every wound is real. So is every second you waste doubting it.
 3. **Paladin** — *Playstyle:* A wall. Enemy attacks take `−x`, so field a durable pet and win the long game while your magic ticks away. *Flavour:* Stand still long enough and the storm has to go around you.
 4. **Barbarian** — *Playstyle:* Bruiser. Your magic is `−x`, so field physical-strong pets and swing the strike attack the environment can't touch. *Flavour:* The maths is simple when the answer is always "hit it again".
-5. **Trickster** — *Playstyle:* Fast and fragile. Agility attacks gain `+x`, but enemies get `+x` against you — pick agility pets and don't get caught in Blinding Light. *Flavour:* Win the roll, not the fight. There is a difference, and only one of them hurts.
-6. **Ranger** — *Playstyle:* Agility specialist with a solid guard. Thrives where Agility is boosted — Deep Shadow is home turf. *Flavour:* Patience, the right ground, and one clean shot.
+5. **Trickster** — *Playstyle:* Fast and fragile. Agility attacks gain `+x`, but enemies get `+x` against you — pick agility pets and don't get caught in a Sunken Marsh. *Flavour:* Win the roll, not the fight. There is a difference, and only one of them hurts.
+6. **Ranger** — *Playstyle:* Agility specialist with a solid guard. Thrives where Agility is boosted — a Dark Cavern is home turf. *Flavour:* Patience, the right ground, and one clean shot.
 7. **Bard** — *Playstyle:* No weakness and no spike. Every stat is `0`, so you adapt to any terrain and any pet while sharper builds get countered. *Flavour:* Never the strongest in the room. Often the last one standing.
 
 ## 5. Print layout

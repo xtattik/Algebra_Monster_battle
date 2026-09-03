@@ -143,7 +143,7 @@ Roll = 3 → `3 + 2 = 5`
 ### D. Hitting zero on a low roll
 
 - Base: pet agility attack `2x − 2`
-- Blinding Light `Hinders: Agility` → `−x` (flat, any attacker)
+- Sunken Marsh `Hinders: Agility` → `−x` (flat, any attacker)
 
 Assemble: `2x − 2 − x`
 Collect like terms: `(2 − 1)x − 2 = x − 2`

@@ -79,7 +79,7 @@ the generator derives them from the tier so the wording is identical on every ca
 - Magic: Average
 - Strength: Low
 - Agility: High
-- Playstyle: Fast and fragile. Agility attacks gain +x, but enemies get +x against you — pick agility pets and don't get caught in Blinding Light.
+- Playstyle: Fast and fragile. Agility attacks gain +x, but enemies get +x against you — pick agility pets and don't get bogged down in a Sunken Marsh.
 - Flavour: Win the roll, not the fight. There is a difference, and only one of them hurts.
 
 ## 6. Ranger
@@ -87,7 +87,7 @@ the generator derives them from the tier so the wording is identical on every ca
 - Magic: Low
 - Strength: Average
 - Agility: High
-- Playstyle: Agility specialist with a solid guard. Thrives where Agility is boosted — Deep Shadow is home turf.
+- Playstyle: Agility specialist with a solid guard. Thrives where Agility is boosted — a Dark Cavern is home turf.
 - Flavour: Patience, the right ground, and one clean shot.
 
 ## 7. Bard

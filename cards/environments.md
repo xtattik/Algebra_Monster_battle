@@ -35,9 +35,9 @@ not written here (see the design doc §9).
 | # | Name | Boosts | Hinders | Tests |
 |---|---|---|---|---|
 | 1 | Arcane Nexus | Magic | — | — |
-| 2 | Deep Shadow | Agility | — | — |
+| 2 | Dark Cavern | Agility | — | — |
 | 3 | Null Field | — | Magic | — |
-| 4 | Blinding Light | — | Agility | — |
+| 4 | Sunken Marsh | — | Agility | — |
 | 5 | Frozen Wastes | — | — | Strength |
 | 6 | Scorching Desert | — | Agility | Strength |
 | 7 | Runic Vault | Magic | Agility | — |
@@ -52,12 +52,12 @@ not written here (see the design doc §9).
 - Tests: none
 - Flavour: Ley lines converge here; spellcraft comes easy to anyone.
 
-## 2. Deep Shadow
+## 2. Dark Cavern
 
 - Boosts: Agility
 - Hinders: none
 - Tests: none
-- Flavour: Deep gloom swallows the field — the sure-footed slip through unseen.
+- Flavour: Pitch black and close underground. Those who fight by feel and footwork own it.
 
 ## 3. Null Field
 
@@ -66,12 +66,12 @@ not written here (see the design doc §9).
 - Tests: none
 - Flavour: A dead zone for magic. Spells gutter and fail no matter who casts them.
 
-## 4. Blinding Light
+## 4. Sunken Marsh
 
 - Boosts: none
 - Hinders: Agility
 - Tests: none
-- Flavour: Relentless glare off every surface — no way to pick your footing.
+- Flavour: Knee-deep mud and black water. Every quick move turns into a slow one.
 
 ## 5. Frozen Wastes
 
