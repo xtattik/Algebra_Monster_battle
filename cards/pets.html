@@ -50,12 +50,14 @@
       height: 26mm; margin: 0 0 2mm; position: relative;
     }
     .art-hero img { object-position: 50% 18%; }
-    .cardno {
-      position: absolute; top: 1mm; right: 1.2mm;
+    .cardno, .cardname {
+      position: absolute; bottom: 1mm;
       font-size: 6pt; line-height: 1; color: #fff;
-      background: rgba(0, 0, 0, 0.5); padding: 0.6mm 1mm; border-radius: 1mm;
+      background: rgba(0, 0, 0, 0.55); padding: 0.6mm 1mm; border-radius: 1mm;
       letter-spacing: 0.3pt;
     }
+    .cardno { right: 1.2mm; }
+    .cardname { left: 1.2mm; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5pt; }
     .row { margin-bottom: 1.6mm; }
     .row-def {
       background: #fbeceb; border-radius: 1mm;

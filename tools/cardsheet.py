@@ -87,9 +87,11 @@ def card_top(deck: str, num: int, total: int, name: str, prog: str, subhead: str
 
     No artwork: a text header (name + N/total), then `subhead` (deck-specific,
     e.g. a pet's HP line), then an empty dashed art box.
-    Artwork present: a taller "hero" image filling the top of the card with only
-    a small N/total chip overlaid — the name is expected to be in the art — then
-    `subhead`. Drop a file at cards/art/<deck>/<NN>-<slug>.<ext> to switch a card.
+    Artwork present: a taller "hero" image filling the top of the card, with the
+    N/total chip overlaid top-right and the card name in a small pill
+    bottom-left (so the card is identifiable even if its name is not painted
+    into the art), then `subhead`. Drop a file at
+    cards/art/<deck>/<NN>-<slug>.<ext> to switch a card.
     """
     sub = f"\n      {subhead}" if subhead else ""
     path = _find_art(deck, num, name, prog)
@@ -103,6 +105,7 @@ def card_top(deck: str, num: int, total: int, name: str, prog: str, subhead: str
     return (
         f'      <div class="art has-art art-hero">'
         f'<img alt="{esc(name)}" src="{_data_uri(path, prog)}">'
+        f'<span class="cardname">{esc(name)}</span>'
         f'<span class="cardno">{num}/{total}</span></div>'
         f'{sub}'
     )
@@ -173,12 +176,14 @@ BASE_CSS = """\
       height: 26mm; margin: 0 0 2mm; position: relative;
     }
     .art-hero img { object-position: 50% 18%; }
-    .cardno {
-      position: absolute; top: 1mm; right: 1.2mm;
+    .cardno, .cardname {
+      position: absolute; bottom: 1mm;
       font-size: 6pt; line-height: 1; color: #fff;
-      background: rgba(0, 0, 0, 0.5); padding: 0.6mm 1mm; border-radius: 1mm;
+      background: rgba(0, 0, 0, 0.55); padding: 0.6mm 1mm; border-radius: 1mm;
       letter-spacing: 0.3pt;
     }
+    .cardno { right: 1.2mm; }
+    .cardname { left: 1.2mm; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5pt; }
     .row { margin-bottom: 1.6mm; }
     .row-def {
       background: #fbeceb; border-radius: 1mm;
