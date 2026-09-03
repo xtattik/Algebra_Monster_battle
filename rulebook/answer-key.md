@@ -1,6 +1,6 @@
 # Algebra Monster Battle — Fast-Marking Answer Key
 
-A lookup sheet for marking battle worksheets. Once a student has collected like
+A lookup sheet for marking battle sheets. Once a student has collected like
 terms to a single `nx + c`, you do not need to re-derive anything: find the row,
 read the value under their die roll, and that is the damage — already floored at
 0.

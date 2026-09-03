@@ -83,7 +83,7 @@ A pet's **base attack** never deals less than **1**. When this could happen on a
 
 ## 9. The ladder
 
-If you lose, you are out — but stay involved by completing your battle worksheet, refereeing a match, or joining a second-chance bracket.
+If you lose, you are out — but stay involved by completing your battle sheet, refereeing a match, or joining a second-chance bracket.
 
 If you win:
 

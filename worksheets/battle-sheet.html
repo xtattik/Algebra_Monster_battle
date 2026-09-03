@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algebra Monster Battle — Battle Sheet</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; color: #000; }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10pt; line-height: 1.3;
+  }
+  .page {
+    width: 210mm; min-height: 297mm; margin: 0 auto; padding: 10mm;
+  }
+  h1 { font-size: 15pt; margin: 0 0 1mm; letter-spacing: 0.2pt; }
+  .sub { font-size: 8pt; color: #555; margin: 0 0 3mm; }
+  hr.rule { border: none; border-top: 0.4mm solid #000; margin: 2.5mm 0; }
+
+  .fill { display: inline-block; border-bottom: 0.3mm solid #444; min-width: 24mm; }
+  .fill.sm { min-width: 13mm; }
+  .fill.lg { min-width: 40mm; }
+  .box {
+    display: inline-block; border: 0.3mm solid #000; border-radius: 1mm;
+    min-width: 12mm; height: 6mm; vertical-align: middle;
+  }
+  code, .m {
+    font-family: "Cambria Math", "Times New Roman", Georgia, serif;
+    font-size: 10pt; font-weight: 700;
+  }
+  .term { color: #b3261e; }
+
+  .setup { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8mm 8mm; align-items: baseline; }
+  .setup .wide { grid-column: 1 / -1; }
+  .setup .tier b { letter-spacing: 0.3pt; }
+  .wins { display: flex; gap: 1.6mm; align-items: center; font-size: 9pt; }
+  .wins .w { width: 6mm; height: 6mm; border: 0.3mm solid #000; border-radius: 1mm; }
+
+  .body { display: flex; gap: 6mm; align-items: flex-start; }
+  .col-main { flex: 1; min-width: 0; }
+  .col-hp { flex: none; width: 51mm; }
+
+  .method {
+    border: 0.4mm solid #000; border-radius: 1.5mm; padding: 2.6mm 3.5mm;
+    background: #f4f6f8; font-size: 8.5pt; line-height: 1.25;
+  }
+  .method h2 { font-size: 9.5pt; margin: 0 0 1mm; }
+  .method ol { margin: 0; padding-left: 4.5mm; }
+  .method > ol > li { margin: 0 0 0.7mm; }
+  .method .note { color: #555; font-style: italic; }
+  .method .mnote { margin: 1.2mm 0 0; padding-top: 1mm; border-top: 0.3mm solid #cdd3d8; }
+
+  .work {
+    margin-top: 2.5mm; border: 0.4mm solid #000; border-radius: 1.5mm;
+    overflow: hidden;
+  }
+  .work .cap { font-size: 8pt; color: #555; margin: 0; padding: 2mm 3mm 1.5mm; }
+  .tmpl { padding: 0 3mm 2.5mm; font-size: 8.8pt; border-bottom: 0.3mm dashed #999; }
+  .trow { display: flex; align-items: baseline; gap: 2mm; margin-bottom: 1.4mm; }
+  .trow .lbl { flex: none; width: 42mm; }
+  .trow .fill { flex: 1; }
+  .pick { display: block; font-size: 8pt; margin-top: 0.5mm; }
+  .pick .cb { display: inline-block; width: 3.2mm; height: 3.2mm; border: 0.3mm solid #000; vertical-align: -0.4mm; margin: 0 1mm 0 0; }
+  .scribble {
+    height: 76mm;
+    background-image:
+      linear-gradient(#e8e8e8 0.2mm, transparent 0.2mm),
+      linear-gradient(90deg, #eee 0.2mm, transparent 0.2mm);
+    background-size: 5mm 5mm;
+    background-position: 2mm 2mm;
+  }
+  .scribble .tag { display: block; font-size: 7.5pt; color: #999; padding: 1.5mm 2mm 0; }
+
+  .hp { border: 0.4mm solid #000; border-radius: 1.5mm; padding: 3mm; }
+  .hp + .hp { margin-top: 4mm; }
+  .hp h3 { font-size: 9.5pt; margin: 0 0 2mm; text-transform: uppercase; letter-spacing: 0.4pt; }
+  .hp .start { display: flex; align-items: center; gap: 2mm; margin-bottom: 2mm; font-size: 8.5pt; }
+  .hp .start .box { height: 7mm; min-width: 15mm; }
+  .hp .rows { display: flex; flex-direction: column; gap: 1.7mm; }
+  .hp .hrow { display: flex; align-items: center; gap: 1.4mm; }
+  .hp .hrow .minus { width: 2.5mm; text-align: center; font-weight: 700; }
+  .hp .hrow .eq { width: 2.5mm; text-align: center; }
+  .hp .hrow .box { flex: 1; height: 6mm; min-width: 0; }
+  .hp .ko { font-size: 7.5pt; color: #444; margin: 2mm 0 0; }
+
+  .foot {
+    margin-top: 4mm; border-top: 0.4mm solid #000; padding-top: 2.5mm;
+    font-size: 8pt; color: #222;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2mm 6mm;
+  }
+  .foot .ex { grid-column: 1 / -1; background: #f4f6f8; border-radius: 1mm; padding: 2mm 2.5mm; }
+  .foot b { color: #000; }
+
+  @page { size: A4; margin: 10mm; }
+  @media print {
+    .page { margin: 0; padding: 0; min-height: 0; width: auto; }
+    body { font-size: 9.5pt; }
+    .method { font-size: 8.2pt; }
+    .foot { font-size: 7.8pt; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Battle Sheet</h1>
+  <p class="sub">Algebra Monster Battle · one sheet per match · show your working for every attack</p>
+
+  <div class="setup">
+    <div>Name: <span class="fill lg"></span></div>
+    <div class="wins">Wins this session:
+      <span class="w"></span><span class="w"></span><span class="w"></span>
+      <span class="w"></span><span class="w"></span><span class="w"></span>
+    </div>
+    <div class="wide tier">
+      My character: <span class="fill"></span>
+      &nbsp;&nbsp;circle each tier —
+      <b>Magic</b> H / A / L &nbsp;&nbsp;
+      <b>Strength</b> H / A / L &nbsp;&nbsp;
+      <b>Agility</b> H / A / L
+    </div>
+    <div>My pet: <span class="fill"></span></div>
+    <div>Opponent / their pet: <span class="fill"></span></div>
+    <div class="wide">
+      Environment card: <span class="fill"></span>
+      &nbsp;&nbsp;Boosts: <span class="fill sm"></span>
+      &nbsp;&nbsp;Hinders: <span class="fill sm"></span>
+      &nbsp;&nbsp;Tests: <span class="fill sm"></span>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <div class="body">
+    <div class="col-main">
+      <div class="method">
+        <h2>Work out every attack — five steps</h2>
+        <ol>
+          <li><b>Choose your attack</b> — magic, strike or agility — and write its equation, e.g. <code>3x + 1</code>.</li>
+          <li><b>Add your character bonus</b> — <b>Magic</b> on a magic attack, <b>Agility</b> on an agility attack: High <span class="term m">+x</span> · Average <span class="m">0</span> · Low <span class="term m">−x</span>. <span class="note">Strike: none.</span></li>
+          <li><b>Add the environment</b> — does it <b>Boost</b> <span class="term m">+x</span> or <b>Hinder</b> <span class="term m">−x</span> this attack's type? <span class="note">Strike: none — but a <b>Tests: Strength</b> card still applies (step 4).</span></li>
+          <li><b>Add the enemy's defence</b> — their <b>Strength</b> (High <span class="term m">−x</span> · Average <span class="m">0</span> · Low <span class="term m">+x</span>), plus the environment's <b>Tests: Strength</b> term if it has one (check <i>your own</i> Strength the same way).</li>
+          <li><b>Collect like terms</b> into one <code>nx + c</code>. Roll the die, substitute. Base attack min <b>1</b>; after bonuses min <b>0</b>. Subtract from the enemy pet's HP →</li>
+        </ol>
+        <p class="mnote">Every bonus is an <i>x</i> term — <span class="term m">+x</span>, <span class="term m">−x</span> or <span class="m">0</span>, <b>never</b> a plain number like <code>+2</code>.</p>
+      </div>
+
+      <div class="work">
+        <p class="cap">Your first attack — write it out in full so you can see the pattern; do the rest on the grid the same way.</p>
+        <div class="tmpl">
+          <div class="trow">
+            <span class="lbl">Attack &nbsp;<span class="pick"><span class="cb"></span>magic <span class="cb"></span>strike <span class="cb"></span>agility</span></span>
+            <span class="fill"></span>
+          </div>
+          <div class="trow"><span class="lbl">Base equation</span><span class="fill"></span></div>
+          <div class="trow"><span class="lbl">+ my bonuses</span><span class="fill"></span></div>
+          <div class="trow"><span class="lbl">+ enemy's defence</span><span class="fill"></span></div>
+          <div class="trow"><span class="lbl"><b>Collect like terms →</b></span><span class="fill"></span></div>
+          <div class="trow">
+            <span class="lbl">Roll&nbsp; <code>x =</code>&nbsp;<span class="box" style="min-width:9mm"></span></span>
+            <span class="fill"></span><span>=</span><span class="box" style="min-width:15mm"></span><span>dmg</span>
+          </div>
+        </div>
+        <div class="scribble"><span class="tag">Scribble space — one attack per area, grid lines help you keep terms lined up</span></div>
+      </div>
+    </div>
+
+    <div class="col-hp">
+      <div class="hp">
+        <h3>Enemy pet HP</h3>
+        <div class="start">start <span class="box"></span></div>
+        <div class="rows">
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+        </div>
+        <p class="ko">Knocked out at 0 — you win the duel.</p>
+      </div>
+
+      <div class="hp">
+        <h3>My pet HP</h3>
+        <div class="start">start <span class="box"></span></div>
+        <div class="rows">
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+          <div class="hrow"><span class="minus">−</span><span class="box"></span><span class="eq">=</span><span class="box"></span></div>
+        </div>
+        <p class="ko">Heals to full if you win the match.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div><b>Every bonus is an <i>x</i> term</b> — write <code>+x</code>, <code>−x</code> or <code>0</code>, never <code>+2</code>.</div>
+    <div><b>Strike attacks</b> take no character or environment bonus — only enemy Strength and a Strength-testing environment.</div>
+    <div><b>Minimums:</b> a base attack is at least <b>1</b>; damage after bonuses is at least <b>0</b>.</div>
+    <div><b>Show every line</b> even when a bonus is <code>0</code> — write the <code>0</code>.</div>
+    <div class="ex">
+      <b>Worked example.</b> Magic attack <code>3x + 1</code> · High Magic <code>+x</code> · Arcane Nexus Boosts Magic <code>+x</code> · enemy Average Strength <code>0</code>
+      → collect like terms <code>5x + 1</code>. Roll a 4 → <code>5 × 4 + 1 = 21</code>. Enemy pet HP: <code>50 − 21 = 29</code>.
+    </div>
+  </div>
+</div>
+</body>
+</html>

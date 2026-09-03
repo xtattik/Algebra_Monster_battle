@@ -16,12 +16,12 @@ NSW Mathematics **Stage 4 — Algebraic Techniques**: collecting like terms, sub
 - [Student rulebook](rulebook/student-rulebook.md)
 - [Teacher guide](rulebook/teacher-guide.md)
 - [Fast-marking answer key](rulebook/answer-key.md) (lookup table plus worked scenarios)
-- [Battle worksheet](worksheets/battle-worksheet.md) — the markable artifact, one row per attack
+- [Battle sheet](worksheets/battle-sheet.html) — the guided working + HP-tracking pad, one per match
 
 ## Build status
 
 - [x] Core rules design ([`docs/design/core-rules.md`](docs/design/core-rules.md))
-- [x] Student rulebook, teacher guide, answer key, battle worksheet
+- [x] Student rulebook, teacher guide, answer key, battle sheet
 - [x] Character card set — 7 designs, [design doc](docs/design/characters.md) + [print sheet](cards/characters.html)
 - [x] Environment deck — 8 cards, [design doc](docs/design/environments.md) + [print sheet](cards/environments.html)
 - [x] Pet collection — 22 pets, [design doc](docs/design/pets.md) + [print sheet](cards/pets.html)
@@ -35,7 +35,7 @@ Each card set gets its own design doc in `docs/design/`. Some V2 ideas (extreme 
 - `docs/design/` — design docs
 - `docs/plans/` — implementation plans
 - `rulebook/` — student rulebook, teacher guide, answer key
-- `worksheets/` — the battle worksheet
+- `worksheets/` — the printable battle sheet (guided working + HP track)
 - `cards/` — card content (source of truth `.md`) and generated print sheets (`.html`)
 - `cards/art/` — optional per-card artwork, embedded into the sheets on regenerate ([convention](cards/art/README.md))
 - `tools/` — `gen_lookup.py` (answer-key table), `gen_cards.py` / `gen_env_cards.py` / `gen_pet_cards.py` (print sheets), `cardsheet.py` (shared layout)
@@ -43,7 +43,7 @@ Each card set gets its own design doc in `docs/design/`. Some V2 ideas (extreme 
 ## How to print and play
 
 1. Teachers start with the [teacher guide](rulebook/teacher-guide.md): prep list, run sheet, timing, what to do with eliminated students, common student errors, and differentiation.
-2. Give each student the [student rulebook](rulebook/student-rulebook.md) and a copy of the [battle worksheet](worksheets/battle-worksheet.md).
+2. Give each student the [student rulebook](rulebook/student-rulebook.md) and a copy of the [battle sheet](worksheets/battle-sheet.html).
 3. Print the three card sheets (`cards/*.html`) — open in a browser and "Print to PDF" at A4, 100% scale. To regenerate a sheet after editing its `cards/*.md` source, run the matching `tools/gen_*.py`.
 4. Mark against the [answer key](rulebook/answer-key.md). To regenerate its lookup table, run `python tools/gen_lookup.py`.
 

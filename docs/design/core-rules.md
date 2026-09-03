@@ -33,7 +33,7 @@ NSW Mathematics Stage 4 — Algebraic Techniques:
 | HP trackers | Counters, mini-whiteboards, or a printed HP track per pet |
 | Student rulebook | 1–2 pages |
 | Teacher guide + answer key | Worked examples, fast-marking lookup table |
-| Battle worksheet | Students record each attack's working — the **markable artifact** |
+| Battle sheet | One A4 page per match: guided method, worked-attack template, scribble grid, HP track — the **markable artifact** ([`../../worksheets/battle-sheet.html`](../../worksheets/battle-sheet.html)) |
 
 ## 4. The variable and the die
 
@@ -219,13 +219,13 @@ Starter deck (8): Arcane Nexus, Dark Cavern, Null Field, Sunken Marsh, Frozen Wa
 
 - Winners re-pair with other winners, draw a **new environment**, and play again.
 - Session ends at **last player standing**, or **most wins** when time is called.
-- **Eliminated students** stay engaged via the teacher guide: complete the battle worksheet, referee a match, or join a second-chance bracket.
+- **Eliminated students** stay engaged via the teacher guide: complete the battle sheet, referee a match, or join a second-chance bracket.
 
 ## 10. Teacher materials
 
 - **Worked example** for each attack type × modifier combination.
 - **Fast-marking lookup:** for each simplified form `nx + c`, a table of its value at `x = 1..6`, so a teacher can check a worksheet at a glance.
-- **Battle worksheet:** one row per attack — expression built, like terms collected, roll, final damage. This is the gradable artifact.
+- **Battle sheet:** the guided method + a worked-attack template (expression built, like terms collected, roll, final damage) + scribble grid + a per-pet HP track. One page per match; this is the gradable artifact. Spec/source: [`../../worksheets/battle-sheet.html`](../../worksheets/battle-sheet.html).
 - **Answer key** for the sample pets/environments in the starter set.
 
 ## 11. Differentiation

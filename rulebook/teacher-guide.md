@@ -29,11 +29,13 @@ Runs as **one lesson** (setup + two or three ladder rounds) or **two lessons**
   for a class of 30, so every student draws **2 at random**. Duplicates are fine.
 - **Environment deck:** `cards/environments.html` — 8 cards; one small deck per
   group of pairs, drawn once per match.
-- **Worksheets:** one `worksheets/battle-worksheet.md` per student (print
-  several rows — one row per attack).
+- **Battle sheets:** `worksheets/battle-sheet.html` — print a bundle (one A4
+  page each); students use one per match. It has the guided method, a
+  worked-attack template, a scribble area, and an HP track for both pets, so it
+  doubles as the HP-tracking method and the gradable working.
 - **Dice:** one D6 per pair.
-- **HP tracking:** counters, or mini-whiteboards, or a printed HP track per pet.
-  Mini-whiteboards double as working space and are the easiest to check.
+- **Spare HP tracking:** counters or mini-whiteboards if a match outlasts the
+  eight rows on the sheet.
 
 ## 3. Run sheet
 
@@ -67,8 +69,9 @@ tell the class up front.
 
 ## 5. The maths students must show
 
-Direct students to the battle worksheet. It is the **gradable artifact** — one
-row per attack. For each attack the gradable evidence is:
+Direct students to the battle sheet — the worked-attack template on it, then the
+same layout continued on the scribble grid. It is the **gradable artifact**. For
+each attack the gradable evidence is:
 
 1. the **expression assembled** (base attack + each `±x` term that applies),
 2. **like terms collected** into a single `nx + c`,
