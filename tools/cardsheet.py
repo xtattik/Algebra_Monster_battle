@@ -64,7 +64,13 @@ def _find_art(deck: str, num: int, name: str, prog: str):
                 die(prog, f"card {num} ({name}): multiple art files match — keep one of "
                           f"{', '.join(p.name for p in matches)}")
             return matches[0]
-    return None
+    # lenient fallback: any "<NN>-<anything>.<ext>" — the number is the binding key
+    loose = sorted(p for p in d.glob(f"{num:02d}-*")
+                   if p.is_file() and p.suffix.lower() in _ART_EXTS)
+    if len(loose) > 1:
+        die(prog, f"card {num} ({name}): multiple art files start with {num:02d}- — "
+                  f"keep one of {', '.join(p.name for p in loose)}")
+    return loose[0] if loose else None
 
 
 def _sniff_mime(data: bytes, path: Path, prog: str) -> str:

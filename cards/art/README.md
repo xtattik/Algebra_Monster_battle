@@ -28,6 +28,11 @@ cards/art/
   JPEG named `.png` still works (rename it anyway to keep the folder honest).
   Two files for one card → the generator stops and asks you to remove one.
 
+**Only the number has to be right.** `09-grave-hound.jpg`, `09-gravehound.jpg`,
+`09-anything.jpg`, or bare `09.jpg` all bind to card 9 — the slug is decoration.
+Check the numbers against the deck's `.md` source (`## N.` headings), since
+inserting or renaming cards can shift them.
+
 ## What a card with art looks like
 
 When a card has art it switches to **hero mode**:
