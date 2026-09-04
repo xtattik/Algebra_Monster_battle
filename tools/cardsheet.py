@@ -91,10 +91,14 @@ def _row_is_bar(px, w: int, y: int) -> bool:
     return all(max(px[x, y][:3]) <= _BAR_MAX for x in range(0, w, step))
 
 
+_MAX_ART_BYTES = 260_000  # re-encode raster art heavier than this
+
+
 def _prep_raster(data: bytes):
     """With Pillow: trim near-solid dark bars from the top/bottom of the image
-    (the user's art tool letterboxes non-10:3 exports with black), then re-encode
-    as a reasonably sized JPEG. Returns (mime, bytes) or None to embed as-is."""
+    (the user's art tool letterboxes non-10:3 exports with black), cap the width,
+    and re-encode a heavy file as a lean JPEG so the sheet stays small.
+    Returns (mime, bytes), or None to embed the original file untouched."""
     if Image is None:
         return None
     try:
@@ -113,15 +117,19 @@ def _prep_raster(data: bytes):
     trimmed = (top, bot) != (0, h)
     if trimmed and bot - top < h * 0.35:
         trimmed = False          # implausible — leave it alone
-    if not trimmed and max(w, h) <= _MAX_ART_W:
-        return None              # nothing to do; keep the original file
+
+    oversized = w > _MAX_ART_W
+    heavy = len(data) > _MAX_ART_BYTES
+    if not (trimmed or oversized or heavy):
+        return None              # small, clean, right size — keep the original
+
     if trimmed:
         im = im.crop((0, top, w, bot))
     if im.width > _MAX_ART_W:
         im = im.resize((_MAX_ART_W, round(im.height * _MAX_ART_W / im.width)),
                        Image.LANCZOS)
     buf = io.BytesIO()
-    im.save(buf, format="JPEG", quality=88, optimize=True)
+    im.save(buf, format="JPEG", quality=86, optimize=True)
     return "image/jpeg", buf.getvalue()
 
 
