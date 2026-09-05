@@ -232,7 +232,7 @@ Starter deck (8): Arcane Nexus, Dark Cavern, Null Field, Sunken Marsh, Frozen Wa
 
 - **Support:** always play **Open Field** (no environment terms) — only the character `±x` applies.
 - **Core:** full rules as written.
-- **Extension:** two environment cards per match; larger die (D8/D12); pets with negative constants; the inequality trade-justification.
+- **Extension:** two environment cards per match; larger die (D8/D12); the **Challenge pet deck** (`docs/design/pets-challenge.md`) — unexpanded brackets and negative leading coefficients on every attack, same HP/art/names as Core; the inequality trade-justification.
 
 ## 12. Non-goals / YAGNI
 
@@ -258,5 +258,6 @@ Starter deck (8): Arcane Nexus, Dark Cavern, Null Field, Sunken Marsh, Frozen Wa
 2. **Character set** — 7 cards ([`characters.md`](characters.md)) — done
 3. **Environment deck** — 8 cards ([`environments.md`](environments.md)) — done
 4. **Pet collection** — 22 pets ([`pets.md`](pets.md)) — done
+5. **Challenge pet deck** — same 22 pets, harder attacks ([`pets-challenge.md`](pets-challenge.md)) — done
 
 All phase-1 and phase-2 components are drafted. Next: playtest, then act on the open questions in §13.
