@@ -33,9 +33,9 @@ REQUIRED = ("HP",) + ("Archetype",) + ATTACKS + ("Flavour",)
 # Challenge card is a drop-in swap for its Core counterpart.
 BANDS = {"Glass cannon": (26, 32), "Baseline": (44, 54), "Tank": (76, 84)}
 
-PLAIN_RE = re.compile(r"^([123]?)x(?:\s*([+-])\s*([0-3]))?(?:\s*\(min\s*(\d+)\))?$")
-BRACKET_RE = re.compile(r"^([23])\(x\s*([+-])\s*([12])\)(?:\s*\(min\s*(\d+)\))?$")
-NEGATIVE_RE = re.compile(r"^-([123]?)x(?:\s*([+-])\s*(\d{1,2}))?(?:\s*\(min\s*(\d+)\))?$")
+PLAIN_RE = re.compile(r"^([123]?)x(?:\s*([+-])\s*([0-3]))?(?:\s*\(min\s*(?P<min>\d+)\))?$")
+BRACKET_RE = re.compile(r"^([23])\(x\s*([+-])\s*([12])\)(?:\s*\(min\s*(?P<min>\d+)\))?$")
+NEGATIVE_RE = re.compile(r"^-([123]?)x(?:\s*([+-])\s*(\d{1,2}))?(?:\s*\(min\s*(?P<min>\d+)\))?$")
 
 VARIANTS = {
     None: (ROOT / "cards" / "pets.md", ROOT / "cards" / "pets.html", "", {"plain"}, False),
@@ -120,7 +120,7 @@ def parse_eqn(prog_tag: str, raw: str):
         die(PROG, f"{prog_tag}: {raw!r} uses the {form} form, not allowed for "
                   f"--variant {VARIANT!r} (expected: {', '.join(sorted(ALLOWED_FORMS))})")
 
-    printed_min = int(m.group(4)) if m.group(4) else None
+    printed_min = int(m.group("min")) if m.group("min") else None
     values = [a * x + b for x in range(1, 7)]
     needs_min = min(values) < 1
     if needs_min and printed_min is None:
@@ -130,9 +130,10 @@ def parse_eqn(prog_tag: str, raw: str):
     if needs_min and printed_min != 1:
         die(PROG, f"{prog_tag}: {raw!r} floor must be '(min 1)', not '(min {printed_min})'")
 
+    at1, at6 = max(1, values[0]), max(1, values[5])
     return {
         "a": a, "b": b, "form": form, "min": printed_min, "display": display,
-        "at1": max(1, values[0]), "at6": max(1, values[5]),
+        "lo": min(at1, at6), "hi": max(at1, at6),
     }
 
 
@@ -146,7 +147,7 @@ def render_card(pet: dict, total: int) -> str:
     rows = []
     for t in ATTACKS:
         e = pet["attacks"][t]
-        sub = f"rolls {e['at1']}{MINUS}{e['at6']}"
+        sub = f"rolls {e['lo']}{MINUS}{e['hi']}"
         if e["min"] is not None:
             sub = f'<span class="min">min 1</span> &middot; {sub}'
         rows.append(
