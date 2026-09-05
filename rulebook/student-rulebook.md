@@ -92,3 +92,38 @@ If you win:
 - Find another winner, draw a **new environment**, and play again.
 
 The session ends when one player is left standing, or when time is called and the player with the **most wins** takes it.
+
+## 10. Challenge Mode (optional)
+
+Some pets come in a **Challenge** version (`cards/pets-challenge.html`) —
+same pet, same HP, same art, but harder attacks. Everything above still
+applies. Two new things you'll see on a Challenge card:
+
+**A bracket you have to expand first**, e.g. `3(x − 1)`. Multiply it out
+before you do anything else: `3(x − 1) = 3x − 3`. Then carry on exactly as
+in section 6 — add your modifiers, collect like terms, substitute your roll.
+
+**A negative coefficient**, e.g. `−3x + 10`. This attack gets *weaker* as
+your roll gets *better* — a 1 might deal 7, a 6 might floor at the attack's
+minimum of 1. Watch what a modifier does to it: your own `+x` buff doesn't
+make a negative-coefficient attack hit harder — it partially cancels the
+negative coefficient instead. Work it out term by term and you won't be
+caught out.
+
+**Worked example (bracket).** Base attack `3(x − 1)`, you have High Magic
+(`+x`), the environment boosts Magic (`+x`), enemy is Average Strength
+(`+0`).
+
+- Expand first: `3(x − 1) = 3x − 3`
+- Add modifiers: `3x − 3 + x + x + 0`
+- Collect like terms: `5x − 3`
+- Roll a 4: `5 × 4 − 3 = 17`
+
+**Worked example (negative coefficient).** Base attack `−3x + 10`, you have
+High Magic (`+x`), the environment boosts Magic (`+x`), enemy is Average
+Strength (`+0`).
+
+- Add modifiers straight away (no expansion needed): `−3x + 10 + x + x + 0`
+- Collect like terms: `−x + 10`
+- Roll a 4: `−4 + 10 = 6`
+- Roll a 1 instead: `−1 + 10 = 9` — a *worse* roll deals *more* damage here.
