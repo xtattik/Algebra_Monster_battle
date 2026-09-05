@@ -49,7 +49,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 | 4 | Sootmane | 50 | Baseline | -x + 5 (min 1) | 3(x + 1) | 2(x - 1) (min 1) |
 | 5 | Tidecaller | 48 | Baseline | 3(x - 1) (min 1) | 2(x - 1) (min 1) | -2x + 8 (min 1) |
 | 6 | Gustling | 46 | Baseline | -x + 5 (min 1) | 2(x + 1) | 3(x - 1) (min 1) |
-| 7 | Patchwork Golem | 54 | Baseline | 3(x + 1) | -2x + 8 (min 1) | 2(x - 1) (min 1) |
+| 7 | Patchwork Golem | 54 | Baseline | 2(x + 1) | -2x + 8 (min 1) | 3(x - 1) (min 1) |
 | 8 | Riftmoth | 44 | Baseline | 2(x - 1) (min 1) | -2x + 8 (min 1) | 3(x - 1) (min 1) |
 | 9 | Grave Hound | 46 | Baseline | -x + 5 (min 1) | 3(x - 1) (min 1) | 2(x + 1) |
 | 10 | Boulderhide | 82 | Tank | -x + 5 (min 1) | -2x + 8 (min 1) | 2(x - 1) (min 1) |
@@ -64,7 +64,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 | 19 | Clockwork Beetle | 53 | Baseline | -2x + 8 (min 1) | 2(x - 1) (min 1) | 3(x - 1) (min 1) |
 | 20 | Barrow Wight | 79 | Tank | -x + 5 (min 1) | 2(x - 1) (min 1) | -2x + 8 (min 1) |
 | 21 | Deepstone Toad | 80 | Tank | -2x + 8 (min 1) | 2(x - 1) (min 1) | -x + 5 (min 1) |
-| 22 | Rust Golem | 83 | Tank | 2(x - 1) (min 1) | -2x + 8 (min 1) | -x + 5 (min 1) |
+| 22 | Rust Golem | 83 | Tank | -2x + 8 (min 1) | -x + 5 (min 1) | 2(x - 1) (min 1) |
 
 ---
 
@@ -126,9 +126,9 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 - HP: 54
 - Archetype: Baseline
-- Magic: Spark Seam | 3(x + 1)
+- Magic: Spark Seam | 2(x + 1)
 - Strike: Hammer Fist | -2x + 8 (min 1)
-- Agility: Lumber | 2(x - 1) (min 1)
+- Agility: Lumber | 3(x - 1) (min 1)
 - Flavour: Assembled from spare parts, none of them a matched set.
 
 ## 8. Riftmoth
@@ -261,7 +261,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 - HP: 83
 - Archetype: Tank
-- Magic: Oxide Cloud | 2(x - 1) (min 1)
-- Strike: Iron Fist | -2x + 8 (min 1)
-- Agility: Grind Forward | -x + 5 (min 1)
+- Magic: Oxide Cloud | -2x + 8 (min 1)
+- Strike: Iron Fist | -x + 5 (min 1)
+- Agility: Grind Forward | 2(x - 1) (min 1)
 - Flavour: Slow, heavy, and only ever going one direction: yours.
