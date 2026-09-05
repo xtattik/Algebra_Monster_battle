@@ -161,9 +161,10 @@ All match the design docs and the student rulebook.
 - **Support:** always play the **Open Field** environment card — it has no terms,
   so only the character `±x` modifier and the enemy Strength term apply.
 - **Extension:** draw **two** environment cards per match; use a **D8 or D12**
-  instead of a D6; introduce pets with **negative constants** in their base
-  attacks; require a **written inequality** justifying each trade (e.g. "Ogre
-  strike beats Sprite magic whenever `x > 3`").
+  instead of a D6; hand out the **Challenge pet deck** (section 10 below —
+  same pets, same art, harder attacks); require a **written inequality**
+  justifying each trade (e.g. "Ogre strike beats Sprite magic whenever
+  `x > 3`").
 
 ## 9. Answer key
 
@@ -171,3 +172,16 @@ See `rulebook/answer-key.md`. It is a fast-marking lookup table: for each
 simplified form `nx + c` that the starter pets and environments can produce, it
 lists the value at `x = 1..6` so you can check a worksheet row at a glance
 without re-deriving it.
+
+## 10. Challenge Mode (optional)
+
+`cards/pets-challenge.html` is a drop-in swap for the pet deck — same 22
+pets, same HP, same art — where every attack is either an unexpanded
+bracket (`3(x − 1)`) or a negative leading coefficient (`−3x + 10`). Hand it
+to pairs who are breezing through the standard deck; it needs no extra setup
+and no rule changes anywhere else. Full design and balance reasoning:
+`docs/design/pets-challenge.md`.
+
+Mark it exactly as in §9, using `rulebook/answer-key.md` §2a for the
+negative-coefficient rows. The two worked examples in the student rulebook's
+"Challenge Mode" section are the ones to walk through if a table gets stuck.

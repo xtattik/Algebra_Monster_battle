@@ -11,8 +11,6 @@
 #   python tools/gen_cards.py --variant female    # same cards, art from cards/art/characters/female
 #   python tools/gen_cards.py --check             # exit 1 if the file is out of date
 #   python tools/gen_cards.py --stdout            # print the HTML instead of writing it
-import sys
-
 import cardsheet
 from cardsheet import MINUS, ROOT, die, esc
 
@@ -24,20 +22,7 @@ VARIANTS = {
     "female": ("characters/female", ROOT / "cards" / "characters-female.html", " (Female Art)"),
 }
 
-
-def _variant_arg() -> str | None:
-    argv = sys.argv[1:]
-    for i, a in enumerate(argv):
-        if a == "--variant" and i + 1 < len(argv):
-            return argv[i + 1]
-        if a.startswith("--variant="):
-            return a.split("=", 1)[1]
-    return None
-
-
-VARIANT = _variant_arg()
-if VARIANT not in VARIANTS:
-    die(PROG, f"unknown --variant {VARIANT!r} (expected: {', '.join(v for v in VARIANTS if v)})")
+VARIANT = cardsheet.variant_arg(PROG, set(VARIANTS))
 ART_DECK, OUT, TITLE_SUFFIX = VARIANTS[VARIANT]
 
 # (stat, tier) -> (plain-words effect, term shown in the chip)

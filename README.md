@@ -10,6 +10,7 @@ NSW Mathematics **Stage 4 — Algebraic Techniques**: collecting like terms, sub
 
 - [7 character cards](cards/characters.html) (print a class set so several students can share a design)
 - [22 pet cards](cards/pets.html) (print ~3 copies each so every student draws 2 at random)
+- [optional Challenge printing](cards/pets-challenge.html) of the same 22 pets with harder attacks (unexpanded brackets, negative coefficients) — same pets, same art
 - [8 environment cards](cards/environments.html) (one card drawn per match)
 - one six-sided die per pair
 - HP counters or mini-whiteboards
@@ -25,6 +26,7 @@ NSW Mathematics **Stage 4 — Algebraic Techniques**: collecting like terms, sub
 - [x] Character card set — 7 designs, [design doc](docs/design/characters.md) + [print sheet](cards/characters.html)
 - [x] Environment deck — 8 cards, [design doc](docs/design/environments.md) + [print sheet](cards/environments.html)
 - [x] Pet collection — 22 pets, [design doc](docs/design/pets.md) + [print sheet](cards/pets.html)
+- [x] Challenge pet deck — same 22 pets, harder attacks ([design doc](docs/design/pets-challenge.md) + [print sheet](cards/pets-challenge.html))
 
 All card sets drafted — next is playtesting.
 
