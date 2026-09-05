@@ -1,7 +1,7 @@
 # Algebra Monster Battle — Challenge Pet Deck Design
 
 **Date:** 2026-09-05
-**Status:** Draft for review
+**Status:** Implemented — `cards/pets-challenge.md`/`.html`, `--variant challenge`, and the extended answer key are in the repo; core-rules §11/§14, teacher guide §10, student rulebook §10, and answer-key §2a updated.
 **Depends on:** [`core-rules.md`](core-rules.md) §5 (damage model), §11 (differentiation — already flags "pets with negative constants" as an extension); [`pets.md`](pets.md) (the roster this deck re-skins)
 **Scope:** A second, harder printing of the same 22 pets — same names, HP, archetype, flavour, and art. Only the three attack equations change.
 
@@ -69,8 +69,8 @@ Authoring guidance for the 22 × 3 grid (done as part of implementation, enforce
 
 - **Glass cannon** (HP 26–32): one attack from {B3, N3} (its affinity — highest `|a|`), the other two from {B1, B2, N1, N2}.
 - **Baseline** (HP 44–54): one attack from {B1, B3, N2} as affinity, the other two from {B2, B4, N1}.
-- **Tank** (HP 76–84): affinity from {B2, N2} — tanks win on HP, not damage, same as Core; the other two from {N1, B2}.
-- Every pet still gets **all three attack types** (magic/strike/agility). **Every individual pet's three attacks must include at least one bracket form and at least one negative-coefficient form** — no card gets three of the same form. Vary which attack type carries which template pet-to-pet, same as Core does with its own templates.
+- **Tank** (HP 76–84): affinity from {B2, N2} — tanks win on HP, not damage, same as Core; the other two from {N1, B2}. In practice, satisfying "at least one bracket and one negative" with only {B2, N1, N2} available means every Tank ends up pairing two `|a| = 2` templates (B2 with N2), which ties for the affinity computation — **every Challenge Tank reads "Balanced."** This is intentional, not a bug: it's a stronger version of Core's own stance that Tanks win on HP rather than a signature hit, and it was chosen over the alternative (dropping to only two distinct templates per Tank, e.g. B2 + N1 twice) because that alternative would force at least two of the six Tanks into an identical Magic/Strike/Agility arrangement — variety of arrangement was judged more valuable than a differentiated affinity label for an archetype that isn't supposed to have one anyway.
+- Every pet still gets **all three attack types** (magic/strike/agility). **Every individual pet's three attacks must include at least one bracket form and at least one negative-coefficient form** — no card gets three of the same form. Vary which attack type carries which template pet-to-pet, same as Core does with its own templates. Note the Baseline pool has the same tension in miniature: B4 (`|a|=3`) can outrank the intended B1/B3/N2 affinity pick when both land on one card, so a handful of Baseline pets' computed affinity isn't the template that was meant to be "the" affinity slot — harmless (the card's numbers are still correct and archetype-appropriate), just a label that doesn't always match authoring intent.
 - Affinity is now "the attack type with the largest `|a|`" (was: largest `a`) — the generalization needed once `a` can be negative.
 
 ## 5. Balance check

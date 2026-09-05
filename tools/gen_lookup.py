@@ -25,9 +25,9 @@ def main() -> None:
     print()
     emit_table(range(1, 7), range(-3, 4))
     print()
-    print("### Challenge negative-coefficient rows (n = -1x .. -3x)")
+    print("### Challenge negative-coefficient rows (n = -1x .. -6x)")
     print()
-    emit_table(range(-1, -4, -1), (5, 8, 10))
+    emit_table(range(-1, -7, -1), (5, 8, 10))
 
 
 if __name__ == "__main__":

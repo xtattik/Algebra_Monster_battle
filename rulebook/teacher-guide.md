@@ -161,9 +161,10 @@ All match the design docs and the student rulebook.
 - **Support:** always play the **Open Field** environment card — it has no terms,
   so only the character `±x` modifier and the enemy Strength term apply.
 - **Extension:** draw **two** environment cards per match; use a **D8 or D12**
-  instead of a D6; introduce pets with **negative constants** in their base
-  attacks; require a **written inequality** justifying each trade (e.g. "Ogre
-  strike beats Sprite magic whenever `x > 3`").
+  instead of a D6; hand out the **Challenge pet deck** (section 10 below —
+  same pets, same art, harder attacks); require a **written inequality**
+  justifying each trade (e.g. "Ogre strike beats Sprite magic whenever
+  `x > 3`").
 
 ## 9. Answer key
 

@@ -69,7 +69,7 @@ You roll a 3: `4 × 3 + 2 = 14`. The enemy pet loses **14 HP** — the cold left
 
 ## 7. Minimums
 
-A pet's **base attack** never deals less than **1**. When this could happen on a low roll, the card prints its own floor, such as `x − 1 (min 1)`.
+A pet's **base attack** never deals less than **1**. When this could happen — on a low roll for a normal attack, or on a *high* roll for one of Challenge Mode's negative-coefficient attacks (section 10) — the card prints its own floor, such as `x − 1 (min 1)`.
 
 **After modifiers**, damage can be reduced all the way to **0**, but never below 0. A well-countered attack can be fully blocked on a low roll, but a high roll should always connect for something.
 
