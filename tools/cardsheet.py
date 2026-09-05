@@ -53,6 +53,26 @@ def slug(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
+def variant_arg(prog: str, allowed: set) -> str | None:
+    """Parse --variant NAME / --variant=NAME from argv. `allowed` is a set of
+    legal values including None for "no variant". Dies with a clear message
+    if the value given isn't recognized.
+    """
+    argv = sys.argv[1:]
+    val = None
+    for i, a in enumerate(argv):
+        if a == "--variant" and i + 1 < len(argv):
+            val = argv[i + 1]
+            break
+        if a.startswith("--variant="):
+            val = a.split("=", 1)[1]
+            break
+    if val not in allowed:
+        names = ", ".join(repr(v) for v in sorted(x for x in allowed if x is not None))
+        die(prog, f"unknown --variant {val!r} (expected: {names})")
+    return val
+
+
 def _find_art(deck: str, num: int, name: str, prog: str):
     d = ART_DIR / deck
     if not d.is_dir():
