@@ -26,27 +26,37 @@ BOOST_TERMS = ("+2x", "+x")
 WEAKEN_TERMS = (f"{MINUS}2x", f"{MINUS}x", "-2x", "-x")  # accept ASCII or U+2212 in source
 
 EXTRA_CSS = """\
-    .fx { margin-bottom: 1.8mm; }
-    .fx .line { display: flex; align-items: baseline; gap: 1.6mm; }
-    .fx .verb {
-      font-size: 7pt; text-transform: uppercase; letter-spacing: 0.6pt;
-      width: 16mm; color: #333;
+    .fxrows { margin: 0.8mm 0 1.4mm; }
+    .fxrow { padding: 1mm 0; border-top: 0.2mm solid #e4e4e4; }
+    .fxrow:first-child { border-top: none; }
+    .fxrow .line { display: flex; align-items: baseline; gap: 1.6mm; }
+    .fxrow .type {
+      font-size: 7.2pt; text-transform: uppercase; letter-spacing: 0.6pt;
+      width: 17mm; color: #333; font-weight: 600;
     }
-    .fx .type { font-size: 8.5pt; font-weight: 700; flex: 1; }
-    .fx .term {
-      font-size: 12pt; font-weight: 700; margin-left: auto;
+    .fxrow .what { flex: 1; font-size: 7.4pt; color: #333; }
+    .fxrow .term {
+      margin-left: auto; font-size: 12.5pt; font-weight: 700;
       font-family: "Cambria Math", "Times New Roman", Georgia, serif;
     }
-    .fx .term-up { color: #1a7f37; }
-    .fx .term-down { color: #b3261e; }
-    .fx.cancel {
+    .fxrow.up   .term { color: #1a7f37; }
+    .fxrow.down .term { color: #b3261e; }
+    .fxrow.none .term { color: #b3b3b3; font-weight: 400; }
+    .fxrow.cancel {
       background: #fbeceb; border-radius: 1mm;
-      padding: 1mm 1.4mm; margin-left: -1.4mm; margin-right: -1.4mm;
+      margin: 0 -1.6mm; padding: 1mm 1.6mm;
     }
-    .fx.cancel .type { color: #b3261e; }
-    .fx.cancel .x { color: #b3261e; font-weight: 700; font-size: 10pt; margin-left: auto; }
-    .fx .effect { font-size: 6.6pt; line-height: 1.25; color: #222; margin-top: 0.3mm; }
-    .neutral { font-size: 8pt; color: #666; font-style: italic; margin: 1mm 0; }
+    .fxrow.cancel .type, .fxrow.cancel .what { color: #b3261e; }
+    .fxrow.cancel .term { color: #b3261e; font-size: 10.5pt; }
+
+    .worked {
+      font-size: 7pt; color: #555; margin: 0 0 1.6mm;
+      border-left: 0.4mm solid #cfcfcf; padding-left: 2mm;
+    }
+    .worked b { color: #222; }
+    .worked .m { font-family: "Cambria Math", "Times New Roman", Georgia, serif; font-weight: 700; }
+
+    .flavour { font-size: 8pt; line-height: 1.35; }
 """
 
 
@@ -75,38 +85,73 @@ def _parse_effects(prog_tag, verb, raw):
     return entries
 
 
-def render_effect(fx) -> str:
-    typ = fx["type"]
+def _mag(term: str) -> int:
+    """coefficient magnitude of '+2x' / '-x' etc."""
+    return 2 if "2" in term else 1
+
+
+def fx_row(typ: str, fx) -> str:
+    """One of the three attack-type rows on a card."""
+    if fx is None:
+        return (
+            f'      <div class="fxrow none">\n'
+            f'        <div class="line"><span class="type">{typ}</span>'
+            f'<span class="what">no change here</span>'
+            f'<span class="term">0</span></div>\n'
+            f'      </div>'
+        )
     if fx["verb"] == "Cancel":
         return (
-            f'      <div class="fx cancel">\n'
-            f'        <div class="line"><span class="verb">Cancel</span>'
-            f'<span class="type">{typ.upper()}</span><span class="x">&#10005; unusable</span></div>\n'
-            f'        <div class="effect">{typ} attacks <b>cannot be used</b> this match.</div>\n'
+            f'      <div class="fxrow cancel">\n'
+            f'        <div class="line"><span class="type">{typ}</span>'
+            f'<span class="what"><b>cannot be used</b> this match</span>'
+            f'<span class="term">&#10005;</span></div>\n'
             f'      </div>'
         )
     up = fx["verb"] == "Boost"
-    cls = "term-up" if up else "term-down"
-    word = "gain" if up else "take"
     return (
-        f'      <div class="fx">\n'
-        f'        <div class="line"><span class="verb">{fx["verb"]}</span>'
-        f'<span class="type">{typ.upper()}</span>'
-        f'<span class="term {cls}">{esc(fx["term"])}</span></div>\n'
-        f'        <div class="effect">Every {typ.lower()} attack here {word}s {esc(fx["term"])}.</div>\n'
+        f'      <div class="fxrow {"up" if up else "down"}">\n'
+        f'        <div class="line"><span class="type">{typ}</span>'
+        f'<span class="what">{typ.lower()} attacks {"gain" if up else "take"}&hellip;</span>'
+        f'<span class="term">{esc(fx["term"])}</span></div>\n'
         f'      </div>'
     )
 
 
+def worked_line(effects) -> str:
+    """A one-line 'here's the maths' example, keyed off the headline effect."""
+    boost = next((e for e in effects if e["verb"] == "Boost"), None)
+    weaken = next((e for e in effects if e["verb"] == "Weaken"), None)
+    cancel = next((e for e in effects if e["verb"] == "Cancel"), None)
+    if boost:
+        n = 3 + _mag(boost["term"])
+        rhs = f"3x + {boost['term'].lstrip('+')} = {n}x"
+        return (f'      <p class="worked">e.g. a {boost["type"].lower()} attack '
+                f'<span class="m">3x</span> becomes <span class="m">{rhs}</span> here.</p>')
+    if weaken:
+        n = 3 - _mag(weaken["term"])
+        core = "0" if n == 0 else ("x" if n == 1 else f"{n}x")
+        rhs = f"3x {MINUS} {weaken['term'].lstrip(MINUS)} = {core}"
+        return (f'      <p class="worked">e.g. a {weaken["type"].lower()} attack '
+                f'<span class="m">3x</span> becomes <span class="m">{rhs}</span> here.</p>')
+    if cancel:
+        t = cancel["type"].lower()
+        art = "an" if t[0] in "aeiou" else "a"
+        others = [o.lower() for o in TYPES if o != cancel["type"]]
+        return (f'      <p class="worked">You cannot choose {art} {t} '
+                f'attack here &mdash; field {others[0]} or {others[1]}.</p>')
+    return ('      <p class="worked">Nothing to add or take away &mdash; a '
+            '<span class="m">3x</span> attack stays <span class="m">3x</span>.</p>')
+
+
 def render_card(card: dict, total: int) -> str:
-    if card["effects"]:
-        fx_html = "\n".join(render_effect(fx) for fx in card["effects"]) + "\n"
-    else:
-        fx_html = '      <div class="neutral">No effect — a clear, even battleground.</div>\n'
+    by_type = {fx["type"]: fx for fx in card["effects"]}
+    rows = "\n".join(fx_row(t, by_type.get(t)) for t in TYPES)
     return (
         f'    <div class="card">\n'
         + cardsheet.card_top("environments", card["num"], total, card["name"], PROG) + "\n"
-        + fx_html
+        + f'      <div class="fxrows">\n{rows}\n      </div>\n'
+        + worked_line(card["effects"]) + "\n"
         + f'      <p class="flavour">{esc(card["flavour"])}</p>\n'
         f'    </div>'
     )

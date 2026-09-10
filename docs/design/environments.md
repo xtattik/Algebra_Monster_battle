@@ -48,6 +48,15 @@ One card: at most one Boost, at most one Cancel, up to two Weaken types; every e
 
 Coverage: every attack type gets a pure `+2x` boost, a hybrid `+2x` boost, a `−2x` weaken, and a Cancel.
 
+## 3a. Card layout
+
+Every card shows **all three attack types** as rows (Magic / Strength / Agility),
+each with its status here — `+2x` boosted (green), `−x` weakened (red), `✕`
+cancelled (pink row), or `0` no change (grey). Below the rows: a one-line worked
+example keyed off the headline effect (*"a magic attack `3x` becomes `3x + 2x =
+5x` here"*), then the flavour line. This makes each card a complete, self-teaching
+reference rather than a single terse effect.
+
 ## 4. Frequency
 
 There is **no fixed ratio**. The teacher prints however many copies of each design they want — a deck weighted to boosts is gentler, one heavy on Cancels is a harder challenge. Cancel designs are 3 of 15; two or three copies each in a class deck ≈ a real but survivable threat to a specialist.
