@@ -43,14 +43,13 @@ The attacker's expression has **at most three terms**:
 ```
 damage = your chosen pet attack            (ax + b)
        + your matching stat modifier        (+x / 0 / −x  — §2)
-       + the environment's effect on that attack type   (see §4)
+       + the environment's effect on that attack type   (+2x / +x / 0 / −x / −2x  — §4)
 ```
 
 Then: **collect like terms → substitute your die roll → floor → subtract from the enemy pet's HP.**
 
-- Every modifier is still an **`x` term** — `+x`, `−x`, `+2x`, `−2x`, or `0`. Never a bare number. This is what forces the like-terms step every turn.
+- Every modifier is an **`x` term** — `+x`, `−x`, `+2x`, `−2x`, or `0`. Never a bare number. This is what forces the like-terms step every turn.
 - **Cancel** (§4): the attack type cannot be chosen at all this match — there is no expression to build.
-- **Sap** (§4): build and evaluate the expression normally, then **halve the final number and round down**. This is the only effect that adds a non-algebra step; it lives on a single card.
 
 ### 3.1 Minimums (unchanged from v1)
 
@@ -68,30 +67,28 @@ Then: **collect like terms → substitute your die roll → floor → subtract f
 **C — forced switch.** Same Sorcerer/pet, in **Null Field** (Magic **cancelled**). Magic is off the table. The pet's *strength* attack is `2x` (v2 secondary — §6). Sorcerer is Average Strength → `0`.
 `2x + 0 = 2x` → roll 5 → `10`. A worse turn than a boosted `6x + 2`, but a real turn — this is the point.
 
-**D — sap.** A pet strength attack `3x + 1`, character Average Strength, in **Scorching Desert** (Sap Strength).
-`3x + 1` → roll 4 → `13` → halve, round down → **`6`**.
-
 ## 4. Environments v2
 
-### 4.1 The four verbs
+### 4.1 The three verbs
 
 | Verb | On the card / sheet | Notes |
 |---|---|---|
 | **Boost** | `+2x` (primary) or `+x` (secondary) to one attack type | |
 | **Weaken** | `−2x` (primary) or `−x` (secondary) | still a pure like-terms term |
 | **Cancel** | that attack type **cannot be used** this match | ignores the character bonus entirely — the combo-killer |
-| **Sap** | halve the **final damage** of that type, round down, *after* substituting | one card only; the only non-algebra step |
 
 A card carries **one primary effect** and **optionally one secondary effect on a different attack type**.
 The **`±2x` dial is the environment's job**; the character stat stays `±x`. So a favoured character in weak terrain is penalised *less* than an unfavoured one — strategy, not a wall — while a Cancel bypasses the character bonus for everyone equally.
+
+*(A "Sap" verb — halve the final damage, round down — was considered and cut: it is the only step that isn't algebra. Parked for a possible advanced version.)*
 
 ### 4.2 Reveal order
 
 **Terrain is drawn first; then both players choose which pet to field.** (Simultaneously, revealed together.)
 
-Rationale (design owner): a backup pet is unlikely to play to your strength as well, so a Cancel forces you onto a **less-than-perfect setup — but not a forfeit**. If your opponent is hard-countered too, it may not matter. This rewards **trading well** (keeping a pet that isn't your affinity) rather than guessing. A player who built a single one-shot combination and never hedged is the one who gets punished.
+Rationale (design owner): a backup pet is unlikely to play to your strength as well, so a Cancel forces you onto a **less-than-perfect setup — but not a forfeit**. If your opponent is hard-countered too, it may not matter. This rewards **trading well** (keeping a pet that isn't your affinity) rather than guessing. A player who built a single one-shot combination and never hedged is the one who gets punished — *that is the accepted risk of a glass-cannon build.*
 
-### 4.3 The starting deck (~16 cards)
+### 4.3 The deck
 
 Names live in `cards/environments-v2.md` and are cheap to swap; the mechanics are the contract.
 
@@ -99,15 +96,15 @@ Names live in `cards/environments-v2.md` and are cheap to swap; the mechanics ar
 |---|---|---|
 | **Pure boost** (3) | Arcane Nexus / Warblood Arena / Dark Cavern | Boost Magic / Strength / Agility `+2x` |
 | **Boost + cost** (3) | Runestone Vault / Bonepit / Highcrag Winds | `+2x` one type, `−x` a different type |
-| **Hard weaken** (3) | Mistfen / Sinking Mire / Salt Flats | `−2x` to Magic / Strength / Agility |
+| **Hard weaken** (3) | Mistfen / Scorching Desert / Salt Flats | `−2x` to Magic / Strength / Agility |
 | **Double slog** (2) | Stormfront / Thin Air | `−x` to two types (one type still lands clean) |
 | **Cancel** (3) | Null Field / Black Ice / Ethereal Mist | Magic / Agility / Strength **unusable** |
-| **Sap** (1) | Scorching Desert | Sap Strength + Weaken Agility `−x` |
 | **Neutral** (1) | Open Field | nothing |
 
-- **Cancels ≈ 3/16 ≈ 19%** per match — a genuine threat to a specialist, survivable for a generalist. Tune to 2 if playtest says it stings too often.
+- **Frequency is a print-time choice.** The teacher prints as many copies of each design as they like — a class deck weighted toward boosts is gentler, one heavy on cancels is a harder challenge. More *designs* is always better; the mix is tuned per class.
 - All three attack types are equally cancellable, so no build is safe from every terrain.
 - "Ethereal Mist" flavour for the strength cancel: *blows pass through — only spellcraft and speed touch anything here.*
+- Room to grow: more `+2x/−x` hybrids and themed doubles can be added as designs without changing the model.
 - **Support tier** (differentiation): only ever play Open Field.
 
 ## 5. Characters v2
@@ -140,8 +137,9 @@ Coefficient range widens to `a ∈ {1 … 4}`; constants stay `b ∈ {−2 … 2
 - No **un-boosted** attack one-shots any pet.
 - A **fully-aligned glass-cannon burst** (glass-cannon pet + matching High stat + Boost terrain) — e.g. `4x + x + 2x = 7x` — one-shots a ~40 HP glass cannon on a **5–6** (the payoff for a well-planned trade), and takes a baseline to roughly half.
 - A **forced switch to the `2x` secondary** still contributes ~8–12 per turn — losable, not hopeless.
-- A **cancelled affinity + an already-bad matchup** is the worst case → the loser drops to the second-chance bracket (§7), not straight out.
+- A **cancelled affinity + an already-bad matchup** is the worst case → the loser drops to the second-chance bracket (§7), not straight out. Accepted: this is the downside of choosing a spike build.
 - Typical match: **8–14 total attacks**.
+- **No first-turn mitigation.** In a glass-cannon mirror whoever spikes first may just win — that is the archetype's built-in gamble, not a bug.
 
 ### 6.2 Trade phase, redefined
 
@@ -175,22 +173,27 @@ One A4 page, **multiple attack blocks** (target 4–6), simplified.
 | Component | Work |
 |---|---|
 | `core-rules.md` | rewrite §5, §6.1, §8, §9.3 to v2 (or replace with this doc promoted) |
-| Environment deck | new `environments-v2.md` + `cards/environments-v2.md` + generator changes (4 verbs, `±2x`, cancel, sap); ~16 cards |
-| Pet decks (core **and** challenge) | `pets-v2.md`; new HP + secondary attack on all 22 (×2 decks); rename `strike` → `strength` |
+| Environment deck | new `environments-v2.md` + `cards/environments-v2.md` + generator changes (3 verbs: Boost `+2x`/`+x`, Weaken `−2x`/`−x`, Cancel); ~15 designs |
+| Core pet deck | `pets-v2.md`; new HP + buffed secondary attack on all 22; rename `strike` → `strength`. **Challenge deck deferred** — rebuild after Core v2 has settled (§10.3). |
 | Character cards | generator effect-table: Strength rows mirror Magic/Agility; drop the defence/red treatment; re-flavour playstyle lines |
 | Battle sheet | rebuild per §8 |
 | Student rulebook / teacher guide | rewrite the damage-model, environment, and flow sections; new worked examples A–D above |
 | Answer key | extend the fast-marking lookup table to `8x` (boost `+2x` + char `+x` on a `4x` attack); new scenario answers |
 | Fast-marking generator | `tools/gen_lookup.py` coefficient range → `1..8` |
 
-## 10. Open questions for playtest
+### Decided
 
-1. **Cancel frequency** — 3/16, or drop to 2?
-2. **Sap** — does the "÷2 round down" step earn its place, or fold Scorching Desert into a plain `−2x`?
-3. **Exact HP + coefficients** — the §6 model is a first target; the second playtest tunes per-pet.
-4. **Tank mirrors** — a 100-HP tank vs 100-HP tank with `3x`-ish attacks is ~9 turns each. Acceptable, or tanks to ~90 / call it on HP-remaining?
-5. **Does removing defence make first-turn advantage too strong** in a glass-cannon mirror? Consider "first attacker's turn-1 damage is halved" if it's a coin-flip.
-6. **Challenge deck** — apply the same v2 treatment now, or after Core v2 settles?
+- **Cancel frequency** — keep all 3 cancel designs; the teacher tunes the mix by how many copies of each card they print (§4.3).
+- **Sap** — cut. Scorching Desert is a plain `−2x` Weaken Strength. (§4.1)
+- **First-turn advantage in a glass-cannon mirror** — no mitigation; it is the archetype's accepted gamble. (§6.1)
+- **Challenge deck** — deferred; rebuild after Core v2 has settled. (§9)
+
+### Still open for playtest
+
+1. **Exact HP + coefficients** — the §6 model is a first target; the second playtest tunes per-pet.
+2. **Tank mirrors** — a 100-HP tank vs 100-HP tank with `3x`-ish attacks is ~9 turns each. Acceptable, or tanks to ~90 / call it on HP-remaining?
+3. **Secondary-attack ceiling** — is `2x` enough to make a forced switch feel like a real turn, or does it want `2x + 1`?
+4. **Environment count** — is ~15 designs the right variety for a class ladder, or push to 20+?
 
 ## 11. Migration
 
