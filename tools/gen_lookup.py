@@ -21,9 +21,11 @@ def main() -> None:
         sys.stdout.reconfigure(encoding="utf-8")
     except AttributeError:
         pass
-    print("### Core (n = 1x .. 6x)")
+    # v2: a 4x affinity attack + character +x + environment Boost +2x = 7x;
+    # give one row of headroom to 8x.
+    print("### Core (n = 1x .. 8x)")
     print()
-    emit_table(range(1, 7), range(-3, 4))
+    emit_table(range(1, 9), range(-3, 4))
     print()
     print("### Challenge negative-coefficient rows (n = -1x .. -6x)")
     print()

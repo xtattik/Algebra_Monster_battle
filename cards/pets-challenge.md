@@ -26,7 +26,7 @@ Same as `cards/pets.md`, except an attack's equation may be:
 - HP: <integer>
 - Archetype: <Glass cannon | Baseline | Tank>
 - Magic: <attack name> | <equation>  [(min 1)]
-- Strike: <attack name> | <equation>  [(min 1)]
+- Strength: <attack name> | <equation>  [(min 1)]
 - Agility: <attack name> | <equation>  [(min 1)]
 - Flavour: <one line>
 ```
@@ -41,7 +41,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## At a glance
 
-| # | Name | HP | Archetype | Magic | Strike | Agility |
+| # | Name | HP | Archetype | Magic | Strength | Agility |
 |---|---|---|---|---|---|---|
 | 1 | Emberwisp | 28 | Glass cannon | 3(x + 1) | -x + 5 (min 1) | 2(x - 1) (min 1) |
 | 2 | Gorehoof | 30 | Glass cannon | 2(x - 1) (min 1) | -3x + 10 (min 1) | -x + 5 (min 1) |
@@ -73,7 +73,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 28
 - Archetype: Glass cannon
 - Magic: Cinderburst | 3(x + 1)
-- Strike: Singe | -x + 5 (min 1)
+- Strength: Singe | -x + 5 (min 1)
 - Agility: Flit | 2(x - 1) (min 1)
 - Flavour: A trapped mote of wildfire that never learned to be careful.
 
@@ -82,7 +82,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 30
 - Archetype: Glass cannon
 - Magic: Snort | 2(x - 1) (min 1)
-- Strike: Goring Charge | -3x + 10 (min 1)
+- Strength: Goring Charge | -3x + 10 (min 1)
 - Agility: Trample | -x + 5 (min 1)
 - Flavour: Aims first. Thinks later, if at all.
 
@@ -91,7 +91,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 26
 - Archetype: Glass cannon
 - Magic: Static Lick | -2x + 8 (min 1)
-- Strike: Tail Whip | 2(x + 1)
+- Strength: Tail Whip | 2(x + 1)
 - Agility: Blink Slash | 3(x + 1)
 - Flavour: You feel it a moment before you see it.
 
@@ -100,7 +100,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 50
 - Archetype: Baseline
 - Magic: Warding Roar | -x + 5 (min 1)
-- Strike: Pounce | 3(x + 1)
+- Strength: Pounce | 3(x + 1)
 - Agility: Prowl | 2(x - 1) (min 1)
 - Flavour: Patient. Then, very suddenly, not.
 
@@ -109,7 +109,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 48
 - Archetype: Baseline
 - Magic: Tidal Pulse | 3(x - 1) (min 1)
-- Strike: Tail Slap | 2(x - 1) (min 1)
+- Strength: Tail Slap | 2(x - 1) (min 1)
 - Agility: Slip Away | -2x + 8 (min 1)
 - Flavour: It calls the water, and the water always answers.
 
@@ -118,7 +118,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 46
 - Archetype: Baseline
 - Magic: Whisper Gale | -x + 5 (min 1)
-- Strike: Buffet | 2(x + 1)
+- Strength: Buffet | 2(x + 1)
 - Agility: Cyclone Kick | 3(x - 1) (min 1)
 - Flavour: Hard to catch, harder to hold onto.
 
@@ -127,7 +127,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 54
 - Archetype: Baseline
 - Magic: Spark Seam | 2(x + 1)
-- Strike: Hammer Fist | -2x + 8 (min 1)
+- Strength: Hammer Fist | -2x + 8 (min 1)
 - Agility: Lumber | 3(x - 1) (min 1)
 - Flavour: Assembled from spare parts, none of them a matched set.
 
@@ -136,7 +136,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 44
 - Archetype: Baseline
 - Magic: Dust of Ages | 2(x - 1) (min 1)
-- Strike: Wing Slam | -2x + 8 (min 1)
+- Strength: Wing Slam | -2x + 8 (min 1)
 - Agility: Phase Flurry | 3(x - 1) (min 1)
 - Flavour: Half of it is here. The other half is somewhere worse.
 
@@ -145,7 +145,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 46
 - Archetype: Baseline
 - Magic: Baying Howl | -x + 5 (min 1)
-- Strike: Bone Crush | 3(x - 1) (min 1)
+- Strength: Bone Crush | 3(x - 1) (min 1)
 - Agility: Lunge | 2(x + 1)
 - Flavour: It has your scent now, and it is not in a hurry.
 
@@ -154,7 +154,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 82
 - Archetype: Tank
 - Magic: Dust Cloud | -x + 5 (min 1)
-- Strike: Shell Bash | -2x + 8 (min 1)
+- Strength: Shell Bash | -2x + 8 (min 1)
 - Agility: Withdraw | 2(x - 1) (min 1)
 - Flavour: In no rush to get anywhere, least of all away from you.
 
@@ -163,7 +163,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 78
 - Archetype: Tank
 - Magic: Root Surge | 2(x - 1) (min 1)
-- Strike: Deadfall | -x + 5 (min 1)
+- Strength: Deadfall | -x + 5 (min 1)
 - Agility: Slow Creak | -2x + 8 (min 1)
 - Flavour: Older than the hill it grew out of.
 
@@ -172,7 +172,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 84
 - Archetype: Tank
 - Magic: Spore Cloud | 2(x - 1) (min 1)
-- Strike: Heavy Club | -2x + 8 (min 1)
+- Strength: Heavy Club | -2x + 8 (min 1)
 - Agility: Shamble | -x + 5 (min 1)
 - Flavour: Thick, slow, and remarkably hard to convince to fall over.
 
@@ -181,7 +181,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 29
 - Archetype: Glass cannon
 - Magic: Arc Bite | -3x + 10 (min 1)
-- Strike: Nip | 2(x - 1) (min 1)
+- Strength: Nip | 2(x - 1) (min 1)
 - Agility: Dash | -x + 5 (min 1)
 - Flavour: Static crackles off it when it gets excited, which is always.
 
@@ -190,7 +190,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 31
 - Archetype: Glass cannon
 - Magic: Huff | -x + 5 (min 1)
-- Strike: Spine Rush | 3(x + 1)
+- Strength: Spine Rush | 3(x + 1)
 - Agility: Sidestep | 2(x + 1)
 - Flavour: The warning snort is the only warning you get.
 
@@ -199,7 +199,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 27
 - Archetype: Glass cannon
 - Magic: Bubble | 2(x + 1)
-- Strike: Fin Slap | -2x + 8 (min 1)
+- Strength: Fin Slap | -2x + 8 (min 1)
 - Agility: Riptide Dart | -3x + 10 (min 1)
 - Flavour: Gone before the ripples have finished spreading.
 
@@ -208,7 +208,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 49
 - Archetype: Baseline
 - Magic: Ember Purr | 3(x + 1)
-- Strike: Swipe | -2x + 8 (min 1)
+- Strength: Swipe | -2x + 8 (min 1)
 - Agility: Slink | 2(x - 1) (min 1)
 - Flavour: Warm to the touch. Warmer if it has decided it doesn't like you.
 
@@ -217,7 +217,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 52
 - Archetype: Baseline
 - Magic: Bleat | -2x + 8 (min 1)
-- Strike: Headbutt | 3(x - 1) (min 1)
+- Strength: Headbutt | 3(x - 1) (min 1)
 - Agility: Scramble | 2(x - 1) (min 1)
 - Flavour: Built like a doorstop and twice as stubborn.
 
@@ -226,7 +226,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 45
 - Archetype: Baseline
 - Magic: Updraft | -x + 5 (min 1)
-- Strike: Talon Rake | 2(x + 1)
+- Strength: Talon Rake | 2(x + 1)
 - Agility: Divebomb | 3(x - 1) (min 1)
 - Flavour: Rides the wind so you never have to guess where it is — until you do.
 
@@ -235,7 +235,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 53
 - Archetype: Baseline
 - Magic: Spark Coil | -2x + 8 (min 1)
-- Strike: Pincer | 2(x - 1) (min 1)
+- Strength: Pincer | 2(x - 1) (min 1)
 - Agility: Scuttle | 3(x - 1) (min 1)
 - Flavour: Wind it up, set it down, and take a step back.
 
@@ -244,7 +244,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 79
 - Archetype: Tank
 - Magic: Chill Touch | -x + 5 (min 1)
-- Strike: Grave Reach | 2(x - 1) (min 1)
+- Strength: Grave Reach | 2(x - 1) (min 1)
 - Agility: Drift | -2x + 8 (min 1)
 - Flavour: It remembers being alive, and it resents you for still managing it.
 
@@ -253,7 +253,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 80
 - Archetype: Tank
 - Magic: Mud Bolt | -2x + 8 (min 1)
-- Strike: Bellyflop | 2(x - 1) (min 1)
+- Strength: Bellyflop | 2(x - 1) (min 1)
 - Agility: Hunker | -x + 5 (min 1)
 - Flavour: Has not moved in a decade and does not plan to start now.
 
@@ -262,6 +262,6 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 - HP: 83
 - Archetype: Tank
 - Magic: Oxide Cloud | -2x + 8 (min 1)
-- Strike: Iron Fist | -x + 5 (min 1)
+- Strength: Iron Fist | -x + 5 (min 1)
 - Agility: Grind Forward | 2(x - 1) (min 1)
 - Flavour: Slow, heavy, and only ever going one direction: yours.

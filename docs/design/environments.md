@@ -1,189 +1,70 @@
-# Algebra Monster Battle — Environment Set Design
+# Algebra Monster Battle — Environment Set Design (v2)
 
-**Date:** 2026-09-02
-**Status:** Implemented — model confirmed with the design owner; cards, generator, and rulebook reconciliation are in the repo. Open playtest question flagged in §7.
-**Depends on:** [`core-rules.md`](core-rules.md) §5, §8
-**Changes applied:** [`core-rules.md`](core-rules.md) §5.1–§5.3, §8, §13; student rulebook §5–6; teacher guide §6–8; answer key §1, §3 — see §8 below
-**Scope:** The environment model and an 8-card starter deck, with content and print layout.
+**Date:** 2026-09-02 · **v2 rewrite:** 2026-09-10
+**Status:** Draft for review — provisional, first v2 playtest pending.
+**Model:** [`core-rules-v2.md`](core-rules-v2.md) §4. **Source:** [`../cards/environments.md`](../cards/environments.md) · **Generator:** [`../tools/gen_env_cards.py`](../tools/gen_env_cards.py)
 
 ---
 
-## 1. Purpose & what changed
+## 1. What v2 changed
 
-Core-rules §8 gave each environment a flat "one stat boosted `+x`, one stat hurt `−x`", matched to the *attack type*. That only ever reaches Magic and Agility attacks.
+v1 had a flat `±x` per attack type plus a "Tests: Strength" defence check. Playtest: too weak to matter, and the defence check was opaque. v2:
 
-This spec keeps that flat attack-type model **and adds one thing**: an environment can **test Strength** — physically harsh terrain (cold, heat) that wears down a fighter's *defence* unless they are hardy enough to cope. That is the piece a flat attack-type modifier can't express, because Strength is not an attack type.
+- The environment is the **`±2x` dial** (`±x` as a secondary), with **Cancel** as a third verb. Character stats stay `±x` (so a favoured character is penalised *less*, not walled).
+- Attack type is **strength** (was "strike"), matching the stat.
+- No defence — HP is defence.
 
-The die, the base-attack model, the character stats, and "every modifier is a `±x` term" are all unchanged.
+## 2. The three verbs
 
-## 2. The environment card
+| Verb | Card line | Term |
+|---|---|---|
+| **Boost** | `Boost: <Type> <+2x\|+x>` | added to that attack type |
+| **Weaken** | `Weaken: <Type> <-2x\|-x>` (may list two types) | subtracted from that attack type |
+| **Cancel** | `Cancel: <Type>` | that attack type is **unusable** this match — ignores the character bonus |
 
-Each card has up to three lines. **At least one** must be present (except the deliberate neutral card, §7 #8).
+One card: at most one Boost, at most one Cancel, up to two Weaken types; every effect names a different type; ≤ 2 effects total. `Open Field` has none.
 
-```
-BOOSTS:   <Magic | Agility>     matching attacks gain +x   (everyone, no check)
-HINDERS:  <Magic | Agility>     matching attacks take −x   (everyone, no check)
-TESTS:    Strength              checked against the defender's Strength tier
-```
+## 3. The 15 designs
 
-**Constraints:**
-- `BOOSTS` and `HINDERS` must name **different** stats.
-- `TESTS` only ever names **Strength** in v1. A Magic/Agility "test" would just be a flat boost or hinder with extra words — use those.
-
-## 3. BOOSTS / HINDERS — the flat attack-type modifiers
-
-`BOOSTS: Magic` → every **magic attack** in this environment gains `+x`.
-`HINDERS: Magic` → every **magic attack** takes `−x`.
-Same for Agility.
-
-- **No character check.** The terrain suits (or fights) that style for everyone. A High-Magic Sorcerer in a Magic-hindering Null Field still takes the `−x` — their character bonus and the environment penalty are separate terms that partly cancel (`+x − x`).
-- **Never touches strike attacks** (unchanged from core-rules §5.3).
-- There is no `BOOSTS: Strength` / `HINDERS: Strength` — Strength is handled by `TESTS`.
-
-## 4. TESTS: Strength — the conditional defence check
-
-`TESTS: Strength` is resolved against the **defender's own Strength tier**, mirroring the stat ladder, and the resulting term is added to the **enemy-Strength slot** for every attack made *against that defender*:
-
-| Defender's Strength tier | Environment term (added to the enemy-Strength slot) |
-|---|---|
-| High | `−x` |
-| Average | `0` |
-| Low | `+x` |
-
-- **Same sign convention as core-rules §5.2** (High defence → `−x` to the attacker), so it simply **stacks** with the existing enemy-Strength term:
-
-  | Defender Strength | §5.2 term | `TESTS: Strength` term | Combined |
-  |---|---|---|---|
-  | High | `−x` | `−x` | `−2x` — a fortress |
-  | Average | `0` | `0` | `0` |
-  | Low | `+x` | `+x` | `+2x` — fully exposed |
-
-- **Reaches strike attacks.** Strike takes no BOOSTS/HINDERS term, but the enemy-Strength slot has always applied to it (§5.3), and the environment's Strength term rides that slot. "The blizzard wears you down even against a club."
-- Checked once per defender per match (their character's tier doesn't change), so in practice it is a fixed `+x` / `0` / `−x` the attacker adds every turn against that opponent.
-
-## 5. The damage formula with an environment
-
-Extends core-rules §5.1. The attacker builds:
-
-```
-damage = pet base attack             (ax + b)
-       + your character stat modifier   (magic/agility attacks only; §5.2)
-       + environment BOOSTS term        (+x if this attack's type is boosted)
-       + environment HINDERS term       (−x if this attack's type is hindered)
-       + enemy Strength term            (§5.2; applies to strike too)
-       + environment TESTS: Strength term  (defender's tier; applies to strike too)
-```
-
-Then collect like terms → substitute the roll → floor per §5.4 → subtract from HP.
-
-## 6. Worked examples
-
-**E. Boost (unchanged from example A).** Sorcerer (Magic High) pet magic `3x + 1`, in **Arcane Nexus** (`BOOSTS: Magic`), vs a Bard (Str Avg).
-→ `3x + 1 + x + x = 5x + 1` → roll 4 → **21**
-
-**F. Hinder cancels the caster's edge.** Illusionist (Magic High) pet magic `3x + 1`, in **Null Field** (`HINDERS: Magic`), vs a Bard.
-- Illusionist High Magic (§5.2): `+x`
-- Null Field HINDERS Magic: `−x`
-- enemy Strength, Bard Average: `0`
-→ `3x + 1 + x − x = 3x + 1` → roll 4 → **13**
-
-**G. Strength test, fragile defender, strike attack.** Barbarian pet **strike** `2x + 2`, in **Frozen Wastes** (`TESTS: Strength`), vs an Illusionist (Str Low).
-- strike: no character, BOOSTS or HINDERS term
-- enemy Strength, Illusionist Low (§5.2): `+x`
-- Frozen Wastes TESTS Strength, defender Illusionist Low: `+x`
-→ `2x + 2 + x + x = 4x + 2` → roll 3 → **14**  (vs `2x + 2` → 8 on open ground)
-
-**H. Strength test, tough defender.** Same strike `2x + 2`, same Frozen Wastes, vs a Paladin (Str High).
-- enemy Strength, Paladin High: `−x`
-- Frozen Wastes TESTS Strength, defender Paladin High: `−x`
-→ `2x + 2 − x − x = 2` → roll anything → **2**  (a bare constant — the Paladin in a blizzard is nearly untouchable by a club)
-
-**I. Hybrid card, attacker's speed cancelled.** Trickster (Agi High) pet agility `2x + 1`, in **Scorching Desert** (`HINDERS: Agility`, `TESTS: Strength`), vs a Ranger (Str Avg).
-- Trickster High Agility (§5.2): `+x`
-- Scorching Desert HINDERS Agility: `−x`
-- Scorching Desert TESTS Strength, defender Ranger Average: `0`
-- enemy Strength, Ranger Average: `0`
-→ `2x + 1 + x − x = 2x + 1` → roll 5 → **11**
-
-**Independent recomputation**
-- **E:** `(3 + 1 + 1)x + 1 = 5x + 1`; `x=4` → `21`. ✔
-- **F:** `(3 + 1 − 1)x + 1 = 3x + 1`; `x=4` → `13`. ✔
-- **G:** `(2 + 1 + 1)x + 2 = 4x + 2`; `x=3` → `14`. ✔
-- **H:** `(2 − 1 − 1)x + 2 = 2`; any `x` → `2`. ✔
-- **I:** `(2 + 1 − 1)x + 1 = 2x + 1`; `x=5` → `11`. ✔
-
-## 7. Balance check (50 HP baseline pet, D6)
-
-| Stack | Simplified | Roll 6 | Note |
+| # | Name | Effect | Art |
 |---|---|---|---|
-| Offence fully aligned: character `+x` + BOOSTS `+x` on `3x + 1` | `5x + 1` | 31 | same ceiling as core-rules §5.6 |
-| Attacking a Low-Strength character in a Strength-testing environment: enemy Strength `+x` + `TESTS` `+x` on top of the above | `7x + 1` | 43 | **new max**, and needs a BOOSTS-Magic + TESTS-Strength card — the v1 deck (§7.1) has none, so the real v1 ceiling is `6x + 1` → 37 |
-| Fortress (example H): High-Strength defender in a Strength-testing environment | base `− 2x` | — | most base attacks become a bare constant; grindy but never below the printed min |
+| 1 | Arcane Nexus | Boost Magic `+2x` | ✅ have |
+| 2 | Dark Cavern | Boost Agility `+2x` | ✅ have |
+| 3 | Null Field | **Cancel Magic** | ✅ have |
+| 4 | Sunken Marsh | Weaken Agility `−2x` | ✅ have |
+| 5 | Frozen Wastes | **Cancel Agility** | ✅ have (icy — "too slick to move") |
+| 6 | Scorching Desert | Weaken Strength `−2x` | ✅ have |
+| 7 | Runic Vault | Boost Magic `+2x` · Weaken Agility `−x` | ✅ have |
+| 8 | Open Field | — (neutral) | ✅ have |
+| 9 | Coliseum | Boost Strength `+2x` | 🆕 need |
+| 10 | Bonepit | Boost Strength `+2x` · Weaken Magic `−x` | 🆕 need |
+| 11 | Highcrag | Boost Agility `+2x` · Weaken Strength `−x` | 🆕 need |
+| 12 | Dead Grove | Weaken Magic `−2x` | 🆕 need |
+| 13 | Thunderhead | Weaken Magic `−x` · Weaken Agility `−x` | 🆕 need |
+| 14 | Cloud Peak | Weaken Strength `−x` · Weaken Agility `−x` | 🆕 need |
+| 15 | The Veil | **Cancel Strength** | 🆕 need |
 
-The `TESTS`/§5.2 stack against a Low-Strength *character* (not just pet) is the sharpest edge. It requires the defender's character to be wrong for the terrain and full attacker alignment; the defender can soften it with a tank pet but not remove it. **Left as-is for playtest** per the design owner. If it proves unfair, the fix is to cap the enemy-Strength slot at `±x` total.
+**Art still to make (7):** Coliseum · Bonepit · Highcrag · Dead Grove · Thunderhead · Cloud Peak · The Veil. The eight v1 environment images map straight onto cards 1–8 (same numbers, same files — no renaming). Names in the source are cheap to swap.
 
-### 7.1 The 8-card starter deck
+Coverage: every attack type gets a pure `+2x` boost, a hybrid `+2x` boost, a `−2x` weaken, and a Cancel.
 
-| # | Name | BOOSTS | HINDERS | TESTS | Flavour hook |
-|---|---|---|---|---|---|
-| 1 | Arcane Nexus | Magic | — | — | Ley lines converge; spellcraft comes easy. |
-| 2 | Dark Cavern | Agility | — | — | Pitch black underground; footwork and feel win. |
-| 3 | Null Field | — | Magic | — | A dead zone. Spells gutter and fail. |
-| 4 | Sunken Marsh | — | Agility | — | Knee-deep mud and black water; every quick move turns slow. |
-| 5 | Frozen Wastes | — | — | Strength | Marrow-deep cold. The hardy endure; the frail seize up. |
-| 6 | Scorching Desert | — | Agility | Strength | Heat and thirst: every move drags, and only the tough push on. |
-| 7 | Runic Vault | Magic | Agility | — | Old wards feed spellcraft, but the air hangs thick and slow. |
-| 8 | Open Field | — | — | — | Flat, mild, open. Nothing helps and nothing hinders. |
+## 4. Frequency
 
-Spread: BOOSTS Magic ×2, Agility ×1, none ×5. HINDERS Magic ×1, Agility ×2, none ×5. TESTS Strength ×2, none ×6. No card boosts and hinders the same stat. Card 8 (**Open Field**) is the neutral / pacing card and the differentiation "support" tier in core-rules §11 ("only ever play Open Field").
+There is **no fixed ratio**. The teacher prints however many copies of each design they want — a deck weighted to boosts is gentler, one heavy on Cancels is a harder challenge. Cancel designs are 3 of 15; two or three copies each in a class deck ≈ a real but survivable threat to a specialist.
 
-Names and flavour live in `cards/environments.md` and are cheap to swap; the mechanics above are the contract.
+## 5. Reveal order
 
-## 8. Changes required to existing documents
+Terrain drawn first → both players pick a pet (simultaneous reveal). A Cancel forces a specialist onto their backup pet — a worse setup, not a forfeit ([`core-rules-v2.md`](core-rules-v2.md) §4.2).
 
-Small, because the flat attack-type model is unchanged:
+## 6. Verification
 
-**`core-rules.md`**
-- **§5.1 / §5.2** — the environment row becomes: up to one `BOOSTS` (`+x`) and one `HINDERS` (`−x`) attack-type term, still flat and unconditional, **plus** an optional `TESTS: Strength` term (§4 here) added to the enemy-Strength slot.
-- **§5.3** — physical attacks still take no BOOSTS/HINDERS term; add one sentence that a `TESTS: Strength` environment *does* affect them, through the enemy-Strength slot.
-- **§5.5** — example D's card was later renamed *Blinding Light → Sunken Marsh* (a `HINDERS: Agility` marsh — more realistic than glare now that stealth folds into Agility); the maths is unchanged.
-- **§6.2** — playstyle tips renamed with the cards: *Deep Shadow → Dark Cavern* (Ranger's home turf), *Blinding Light → Sunken Marsh* (what the Trickster avoids). Both still correct under the flat model.
-- **§8** — replace the scope summary with the model above and a pointer to this doc.
-- **§13** — mark the environment open questions resolved (count 8; Open Field is the neutral card; the temperature ideas map onto `TESTS: Strength`).
+- [x] `python tools/gen_env_cards.py` runs clean, idempotent; rejects a bad type / term, `>2` effects, a non-Weaken multi-type line, a card with no effect that isn't Open Field.
+- [x] 15 cards, every effect a different type, ≤ 2 per card.
+- [ ] Print preview: 15 cards over 2 A4 pages, nothing clipped, Cancel rows legible in mono.
+- [ ] Playtest: is `±2x` the right size? are 3 Cancel designs too many?
 
-**`rulebook/student-rulebook.md`** — §5 "The environment": add that some cards instead/also **test Strength** — check your character's Strength tier, and it changes every attack against you, *including strike*. Add one worked example (F or G).
+## 7. Out of scope
 
-**`rulebook/teacher-guide.md`** — §6 common errors: add "used the Strength test without checking the defender's tier" and "forgot the Strength test reaches strike attacks". §7: add worked examples F–I. §8 differentiation: support = Open Field only.
-
-**`rulebook/answer-key.md`** — add the simplified forms and answers for F–I. The lookup table (`1x`–`6x`, `−3`..`+3`) still covers the v1 deck's reachable forms; add a note that two-environment extension play can exceed `6x`.
-
-**`cards/characters.md`** — no change needed (playstyle lines already match).
-
-## 9. Card layout & print
-
-**Files:** `cards/environments.md` (authored source of truth) → `tools/gen_env_cards.py` → `cards/environments.html`.
-
-Mirror the character-card setup:
-- Same 63 mm × 88 mm card, A4 9-up sheet, self-contained HTML, black on white + the one red spot colour.
-- **BOOSTS** row: stat name + `+x`. **HINDERS** row: stat name + `−x`. Missing line prints `—`.
-- **TESTS: Strength** shown as a mini 3-row table (High `−x` / Average `0` / Low `+x`) with the same red "defence · vs you" treatment as the character cards, plus a one-line "also affects strike attacks" note.
-- Flavour line at the foot; card number in the header.
-- Art box: full width × ~26 mm hero image that replaces the name header when present, centre-cropped; embedded from `cards/art/environments/NN-slug.*` when present. See `cards/art/README.md`.
-- The generator derives every `±x` term; it reads only name / boosts / hinders / tests / flavour from the source. It exits non-zero on: an unknown stat, `BOOSTS == HINDERS`, `TESTS` not equal to `Strength`, or a card with no lines that is not named `Open Field`.
-
-## 10. Verification checklist
-
-- [x] core-rules.md §5.1–§5.3, §8, §13 reconciled; no document still describes only the flat model.
-- [x] Worked examples A–I recomputed from scratch (`ev(n,c,x)=max(0,nx+c)`), all PASS.
-- [x] Each of the 8 cards: BOOSTS ≠ HINDERS; TESTS is Strength or absent; at least one line (Open Field excepted). Enforced by the generator.
-- [x] Every doc that mentions the Strength test also says it reaches strike attacks (core-rules §5.3/§8, student rulebook §5/§6, teacher guide §6/§7, answer key §1/§3, card face).
-- [x] `python tools/gen_env_cards.py` runs clean, is idempotent (`--check` after two runs), and rejects a bad stat / `BOOSTS==HINDERS` / `TESTS: Agility` / an empty non-Open-Field card.
-- [x] Print preview: 8 cards on one A4 page, nothing clipped; Strength-test rows still distinguishable in greyscale.
-- [x] No card or doc introduces a bare-number bonus or a coefficient other than `x`.
-
-## 11. Out of scope
-
-- Two-environments-per-match (core-rules §11 extension) — the model allows it; the answer key stays single-environment for v1.
-- Magic/Agility graded tests, or any `TESTS` result other than `+x / 0 / −x`.
-- Environment cards that alter HP, the die, turn order, or pet choice (core-rules §12).
+- "Sap" (halve the final number) — considered, cut; parked for an advanced version.
+- Environments that alter HP, the die, turn order, or pet choice.
 - Real artwork; card backs.

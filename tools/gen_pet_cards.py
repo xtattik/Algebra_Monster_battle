@@ -4,7 +4,7 @@
 # and writes cards/pets.html / cards/pets-challenge.html (A4, 9-up,
 # 63 mm x 88 mm cards). Shared page/CSS/CLI live in tools/cardsheet.py.
 #
-# Each pet has HP, an archetype, and three attack equations (magic / strike /
+# Each pet has HP, an archetype, and three attack equations (magic / strength /
 # agility). Core pets use plain `ax + b`. Challenge pets (--variant challenge)
 # may also use an unexpanded bracket `a(x + b)` / `a(x - b)`, or a negative
 # leading coefficient `-ax + b` — both still reduce to the same `ax + b`
@@ -26,16 +26,20 @@ from cardsheet import MINUS, ROOT, die, esc
 
 PROG = "gen_pet_cards"
 
-ATTACKS = ("Magic", "Strike", "Agility")
+# v2: the physical attack type is "strength" (was "strike"), matching the stat.
+ATTACKS = ("Magic", "Strength", "Agility")
 REQUIRED = ("HP",) + ("Archetype",) + ATTACKS + ("Flavour",)
 
-# archetype -> (min HP, max HP) — identical for Core and Challenge, so a
-# Challenge card is a drop-in swap for its Core counterpart.
-BANDS = {"Glass cannon": (26, 32), "Baseline": (44, 54), "Tank": (76, 84)}
+# archetype -> (min HP, max HP), per variant. v2 Core runs longer, higher-swing
+# matches; Challenge keeps the v1 bands.
+BANDS_BY_VARIANT = {
+    None: {"Glass cannon": (36, 44), "Baseline": (68, 82), "Tank": (95, 110)},
+    "challenge": {"Glass cannon": (26, 32), "Baseline": (44, 54), "Tank": (76, 84)},
+}
 
-PLAIN_RE = re.compile(r"^([123]?)x(?:\s*([+-])\s*([0-3]))?(?:\s*\(min\s*(?P<min>\d+)\))?$")
+PLAIN_RE = re.compile(r"^([1234]?)x(?:\s*([+-])\s*([0-3]))?(?:\s*\(min\s*(?P<min>\d+)\))?$")
 BRACKET_RE = re.compile(r"^([23])\(x\s*([+-])\s*([12])\)(?:\s*\(min\s*(?P<min>\d+)\))?$")
-NEGATIVE_RE = re.compile(r"^-([123]?)x(?:\s*([+-])\s*(\d{1,2}))?(?:\s*\(min\s*(?P<min>\d+)\))?$")
+NEGATIVE_RE = re.compile(r"^-([1234]?)x(?:\s*([+-])\s*(\d{1,2}))?(?:\s*\(min\s*(?P<min>\d+)\))?$")
 
 VARIANTS = {
     None: (ROOT / "cards" / "pets.md", ROOT / "cards" / "pets.html", "", {"plain"}, False),
@@ -47,6 +51,7 @@ VARIANTS = {
 
 VARIANT = cardsheet.variant_arg(PROG, set(VARIANTS))
 SRC, OUT, TITLE_SUFFIX, ALLOWED_FORMS, REQUIRE_BOTH_HARD_FORMS = VARIANTS[VARIANT]
+BANDS = BANDS_BY_VARIANT[VARIANT]
 
 EXTRA_CSS = """\
     .pethdr { display: flex; align-items: baseline; gap: 2.4mm; margin-top: 0.6mm; }
@@ -206,7 +211,7 @@ def build_pets(blocks: list[dict]) -> list[dict]:
             forms = {attacks[t]["form"] for t in ATTACKS}
             if not {"bracket", "negative"} <= forms:
                 die(PROG, f"{tag}: needs at least one bracket and one negative-coefficient "
-                          f"attack among Magic/Strike/Agility (got: {', '.join(sorted(forms))})")
+                          f"attack among {'/'.join(ATTACKS)} (got: {', '.join(sorted(forms))})")
 
         pets.append({
             "num": b["num"], "name": b["name"], "hp": hp,
