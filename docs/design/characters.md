@@ -1,9 +1,10 @@
 # Algebra Monster Battle — Character Set Design
 
-**Date:** 2026-09-02
+**Date:** 2026-09-02 · **v2 revision:** 2026-09-10
 **Status:** Draft for review
-**Depends on:** [`core-rules.md`](core-rules.md) §6 (character system)
-**Scope:** Final content and print layout for the 7 character cards. No rules changes — this doc only fixes flavour, wording, and card format.
+**Depends on:** [`core-rules-v2.md`](core-rules-v2.md) §2, §5
+**Scope:** Content and print layout for the 7 character cards.
+**v2 change:** all three stats are now **offensive and parallel** — each buffs its own attack type (`+x` High / `0` Average / `−x` Low). There is no defence stat, so the Strength row is now identical in format to Magic and Agility (no red / "vs you" / "defence" treatment). Stat *lines* per character are unchanged.
 
 ---
 
@@ -32,27 +33,24 @@ Only the character's *own* three stats appear — not the full 3×3 grid. A stud
 
 The `±x` term and the plain-words effect are a pure function of (stat, tier). The card generator owns this table so the wording is identical on every card:
 
+The `±x` term and the plain-words effect are a pure function of (stat, tier), identical in form for all three stats:
+
 | Stat | Tier | Plain-words effect | Term |
 |---|---|---|---|
 | Magic | HIGH | your magic attacks gain | `+x` |
 | Magic | AVERAGE | your magic attacks are unchanged | `0` |
 | Magic | LOW | your magic attacks take | `−x` |
+| Strength | HIGH | your strength attacks gain | `+x` |
+| Strength | AVERAGE | your strength attacks are unchanged | `0` |
+| Strength | LOW | your strength attacks take | `−x` |
 | Agility | HIGH | your agility attacks gain | `+x` |
 | Agility | AVERAGE | your agility attacks are unchanged | `0` |
 | Agility | LOW | your agility attacks take | `−x` |
-| Strength | HIGH | enemy attacks against you take | `−x` |
-| Strength | AVERAGE | enemy attacks against you are unchanged | `0` |
-| Strength | LOW | enemy attacks against you gain | `+x` |
 
 Notes:
-- Strength is **defensive**: a HIGH-Strength card makes the *attacker's* expression `−x`; a LOW-Strength card hands the attacker `+x`. This is **inverted** from Magic/Agility (where HIGH is `+x`), which trips students up. The Strength row is therefore set apart visually so it reads as "the enemy's term, not yours":
-  - the whole row sits on a **light red tint**,
-  - the tier is tagged **`defence`**,
-  - the term is prefixed **`vs you`** and printed in **red**,
-  - the effect sentence spells out the direction ("Enemy attacks against you take `−x`").
-  None of this changes the maths — the term a student writes on the worksheet is still exactly `−x` / `0` / `+x`. The tint and red are set with `print-color-adjust: exact` so a colour printer keeps them; on a mono photocopy the `vs you` / `defence` labels and the effect sentence still carry the meaning.
-- Strike (physical) attacks are never modified by Magic or Agility or the environment — that rule lives in the rulebook, not on the character card, because it is about the *pet's* attack type, not the character.
-- The `0` tiers still print a row. Students must write `+ 0` on the worksheet, so the card should not hide the Average stat.
+- One rule, three identical cases: *what attack am I using → check that one stat.* No defence, no "your opponent's stat affects you" indirection.
+- The pet attack type is now **"strength"** (renamed from "strike" in v1) so it matches the stat name.
+- The `0` tiers still print a row — students write `+ 0` on the sheet, so Average must not be hidden.
 
 ## 4. The 7 characters
 
@@ -74,13 +72,13 @@ Each character has exactly one High, one Average, one Low — except the Bard (a
 
 The authored content (names, tiers, playstyle, flavour) is the source of truth in [`../../cards/characters.md`](../../cards/characters.md). It is reproduced here for review:
 
-1. **Sorcerer** — *Playstyle:* Field high-magic pets and lean on their magic attack; watch the environment, because a Magic-hurt terrain turns your main weapon into `−x`. *Flavour:* Power enough to bend the die — and just enough armour to regret it.
-2. **Illusionist** — *Playstyle:* Same big magic as the Sorcerer but paper defence — every enemy attack gets `+x` against you, so end fights before they end you. *Flavour:* Every wound is real. So is every second you waste doubting it.
-3. **Paladin** — *Playstyle:* A wall. Enemy attacks take `−x`, so field a durable pet and win the long game while your magic ticks away. *Flavour:* Stand still long enough and the storm has to go around you.
-4. **Barbarian** — *Playstyle:* Bruiser. Your magic is `−x`, so field physical-strong pets and swing the strike attack the environment can't touch. *Flavour:* The maths is simple when the answer is always "hit it again".
-5. **Trickster** — *Playstyle:* Fast and fragile. Agility attacks gain `+x`, but enemies get `+x` against you — pick agility pets and don't get caught in a Sunken Marsh. *Flavour:* Win the roll, not the fight. There is a difference, and only one of them hurts.
-6. **Ranger** — *Playstyle:* Agility specialist with a solid guard. Thrives where Agility is boosted — a Dark Cavern is home turf. *Flavour:* Patience, the right ground, and one clean shot.
-7. **Bard** — *Playstyle:* No weakness and no spike. Every stat is `0`, so you adapt to any terrain and any pet while sharper builds get countered. *Flavour:* Never the strongest in the room. Often the last one standing.
+1. **Sorcerer** (M-High / S-Avg / A-Low) — *Playstyle:* Lean on magic-attack pets — High Magic makes every cast `+x`. A Cancel: Magic terrain shuts the whole plan down, so keep a non-magic pet in reserve. *Flavour:* Power enough to bend the die. Ask them to swing a sword and watch the confidence drain.
+2. **Illusionist** (M-High / S-Low / A-Avg) — *Playstyle:* Huge magic like the Sorcerer, but Low Strength makes your strength attacks `−x` — never plan to win a slugfest. End it with spells. *Flavour:* Every wound is real. So is every second you waste doubting it.
+3. **Paladin** (M-Avg / S-High / A-Low) — *Playstyle:* Heavy hitter. High Strength makes strength attacks `+x` — field a big-strike pet and pound it out. Slow, but it lands. *Flavour:* Not fast. Not clever. But when it connects, things fall down.
+4. **Barbarian** (M-Low / S-High / A-Avg) — *Playstyle:* Bruiser. Strength attacks `+x`, but Low Magic makes any cast `−x` — a caster pet is wasted on you. *Flavour:* The maths is simple when the answer is always "hit it again".
+5. **Trickster** (M-Avg / S-Low / A-High) — *Playstyle:* Fast skirmisher. High Agility gives agility attacks `+x`; Low Strength means you fold in a straight fight — stay on agility. *Flavour:* Win the roll, not the fight. There is a difference, and only one of them hurts.
+6. **Ranger** (M-Low / S-Avg / A-High) — *Playstyle:* Agility specialist. Your `+x` is on agility attacks; a magic pet does nothing for you. Fear a Cancel: Agility. *Flavour:* Patience, the right ground, and one clean shot.
+7. **Bard** (all Average) — *Playstyle:* Every stat is `0` — no spike, but no weakness. Never hard-countered, never cancelled out. The reliable pick. *Flavour:* Never the strongest in the room. Often the last one standing.
 
 ## 5. Print layout
 
@@ -90,9 +88,9 @@ Requirements:
 
 - **Card size:** 63 mm × 88 mm (standard poker / "bridge-plus" playing card), the size most sleeve and cutter guillotines expect.
 - **Page:** A4 portrait, 9 cards per sheet (3 × 3), centred, with a thin cut outline on each card.
-- **Print:** black on white plus one spot colour (red) used only on the Strength/defence row. No bleed. The card must still be fully readable if the red drops to grey on a mono copy — the red is reinforcement, never the only signal. Art is optional per card (see §2 item 1 and [`../../cards/art/README.md`](../../cards/art/README.md)); with no art the card is fully functional.
+- **Print:** black on white, no bleed. **v2: no spot colour** — the Strength row is now identical to the others. Art is optional per card (see §2 item 1 and [`../../cards/art/README.md`](../../cards/art/README.md)); with no art the card is fully functional.
 - **Self-contained:** one HTML file, inline CSS, no external fonts or images, so "Print to PDF" from any browser produces the deck.
-- **Legibility:** stat terms (`+x`, `−x`, `0`) set larger and bold; plain-words effect in a smaller line beneath. The Strength row gets the §3 defensive treatment (tint + `vs you` + `defence` + red term).
+- **Legibility:** stat terms (`+x`, `−x`, `0`) set larger and bold; plain-words effect in a smaller line beneath. All three stat rows use the same format.
 - **Class set:** the sheet prints one of each card. To make a class set, print the sheet as many times as needed (the teacher guide already says "multiple copies of each").
 
 The generator must fail loudly (non-zero exit, message to stderr) if `cards/characters.md` contains a stat tier it does not recognise, rather than emitting a card with a blank effect.
@@ -101,13 +99,12 @@ The generator must fail loudly (non-zero exit, message to stderr) if `cards/char
 
 Before committing:
 
-- [ ] All 7 stat lines match core-rules §6.2 exactly.
-- [ ] Each card shows exactly 3 stat rows, in Magic / Strength / Agility order.
-- [ ] Each `±x` term matches the §3 table for that (stat, tier) pair.
-- [ ] `python tools/gen_cards.py` runs clean and regenerates `cards/characters.html` with no diff when run twice.
-- [ ] The HTML prints to 1 page of 9 cards with nothing clipped (checked in a browser print preview).
-- [ ] No card contains a bare-number bonus anywhere in its text.
-- [ ] The Strength row on every card is visually distinct from Magic/Agility, and still readable with colour disabled.
+- [x] All 7 stat lines unchanged from v1 (Magic / Strength / Agility per character).
+- [x] Each card shows exactly 3 stat rows in Magic / Strength / Agility order, **all in the same format** (no defence treatment).
+- [x] Each `±x` term matches the §3 table — every stat: High `+x`, Average `0`, Low `−x`.
+- [x] `python tools/gen_cards.py` (and `--variant female`) run clean and idempotent.
+- [ ] Prints to 1 page of 7 cards, nothing clipped (browser print preview).
+- [x] No bare-number bonus anywhere.
 
 ## 7. Out of scope
 

@@ -26,7 +26,8 @@ The generator parses each card block exactly as:
 
 The plain-words effect and the `±x` term for each stat tier are **not** written here —
 the generator derives them from the tier so the wording is identical on every card
-(see the design doc §3).
+(see the design doc §3). **v2:** all three stats are offensive — each buffs its own
+attack type (`+x` High / `0` Average / `−x` Low). There is no defence stat.
 
 ## At a glance
 
@@ -47,15 +48,15 @@ the generator derives them from the tier so the wording is identical on every ca
 - Magic: High
 - Strength: Average
 - Agility: Low
-- Playstyle: Field high-magic pets and lean on their magic attack; watch the environment, because a Magic-hurt terrain turns your main weapon into −x.
-- Flavour: Power enough to bend the die — and just enough armour to regret it.
+- Playstyle: Lean on magic-attack pets — High Magic makes every cast +x. A Cancel: Magic terrain shuts the whole plan down, so keep a non-magic pet in reserve.
+- Flavour: Power enough to bend the die. Ask them to swing a sword and watch the confidence drain.
 
 ## 2. Illusionist
 
 - Magic: High
 - Strength: Low
 - Agility: Average
-- Playstyle: Same big magic as the Sorcerer but paper defence — every enemy attack gets +x against you, so end fights before they end you.
+- Playstyle: Huge magic like the Sorcerer, but Low Strength makes your strength attacks −x — never plan to win a slugfest. End it with spells.
 - Flavour: Every wound is real. So is every second you waste doubting it.
 
 ## 3. Paladin
@@ -63,15 +64,15 @@ the generator derives them from the tier so the wording is identical on every ca
 - Magic: Average
 - Strength: High
 - Agility: Low
-- Playstyle: A wall. Enemy attacks take −x, so field a durable pet and win the long game while your magic ticks away.
-- Flavour: Stand still long enough and the storm has to go around you.
+- Playstyle: Heavy hitter. High Strength makes strength attacks +x — field a big-strike pet and pound it out. Slow, but it lands.
+- Flavour: Not fast. Not clever. But when it connects, things fall down.
 
 ## 4. Barbarian
 
 - Magic: Low
 - Strength: High
 - Agility: Average
-- Playstyle: Bruiser. Your magic is −x, so field physical-strong pets and swing the strike attack the environment can't touch.
+- Playstyle: Bruiser. Strength attacks +x, but Low Magic makes any cast −x — a caster pet is wasted on you.
 - Flavour: The maths is simple when the answer is always "hit it again".
 
 ## 5. Trickster
@@ -79,7 +80,7 @@ the generator derives them from the tier so the wording is identical on every ca
 - Magic: Average
 - Strength: Low
 - Agility: High
-- Playstyle: Fast and fragile. Agility attacks gain +x, but enemies get +x against you — pick agility pets and don't get bogged down in a Sunken Marsh.
+- Playstyle: Fast skirmisher. High Agility gives agility attacks +x; Low Strength means you fold in a straight fight — stay on agility.
 - Flavour: Win the roll, not the fight. There is a difference, and only one of them hurts.
 
 ## 6. Ranger
@@ -87,7 +88,7 @@ the generator derives them from the tier so the wording is identical on every ca
 - Magic: Low
 - Strength: Average
 - Agility: High
-- Playstyle: Agility specialist with a solid guard. Thrives where Agility is boosted — a Dark Cavern is home turf.
+- Playstyle: Agility specialist. Your +x is on agility attacks; a magic pet does nothing for you. Fear a Cancel: Agility.
 - Flavour: Patience, the right ground, and one clean shot.
 
 ## 7. Bard
@@ -95,5 +96,5 @@ the generator derives them from the tier so the wording is identical on every ca
 - Magic: Average
 - Strength: Average
 - Agility: Average
-- Playstyle: No weakness and no spike. Every stat is 0, so you adapt to any terrain and any pet while sharper builds get countered.
+- Playstyle: Every stat is 0 — no spike, but no weakness. Never hard-countered, never cancelled out. The reliable pick.
 - Flavour: Never the strongest in the room. Often the last one standing.

@@ -26,16 +26,17 @@ VARIANT = cardsheet.variant_arg(PROG, set(VARIANTS))
 ART_DECK, OUT, TITLE_SUFFIX = VARIANTS[VARIANT]
 
 # (stat, tier) -> (plain-words effect, term shown in the chip)
+# v2: all three stats are offensive and parallel — each buffs its own attack type.
 EFFECTS = {
     ("Magic", "High"): ("Your magic attacks gain +x.", "+x"),
     ("Magic", "Average"): ("Your magic attacks are unchanged.", "0"),
     ("Magic", "Low"): (f"Your magic attacks take {MINUS}x.", f"{MINUS}x"),
+    ("Strength", "High"): ("Your strength attacks gain +x.", "+x"),
+    ("Strength", "Average"): ("Your strength attacks are unchanged.", "0"),
+    ("Strength", "Low"): (f"Your strength attacks take {MINUS}x.", f"{MINUS}x"),
     ("Agility", "High"): ("Your agility attacks gain +x.", "+x"),
     ("Agility", "Average"): ("Your agility attacks are unchanged.", "0"),
     ("Agility", "Low"): (f"Your agility attacks take {MINUS}x.", f"{MINUS}x"),
-    ("Strength", "High"): (f"Enemy attacks against you take {MINUS}x.", f"{MINUS}x"),
-    ("Strength", "Average"): ("Enemy attacks against you are unchanged.", "0"),
-    ("Strength", "Low"): ("Enemy attacks against you gain +x.", "+x"),
 }
 
 STAT_ORDER = ("Magic", "Strength", "Agility")
@@ -47,24 +48,13 @@ def render_card(card: dict, total: int) -> str:
     for stat in STAT_ORDER:
         tier = card["stats"][stat]
         effect, term = EFFECTS[(stat, tier)]
-        # Strength is defensive and its sign is inverted vs Magic/Agility
-        # (HIGH gives the *attacker* -x). Flag the row so students read it as
-        # "the enemy's term", not their own: tinted row, "vs you" label, red term.
-        is_def = stat == "Strength"
-        row_cls = "row row-def" if is_def else "row"
-        term_cls = "term"
-        if term == "0":
-            term_cls += " term-zero"
-        elif is_def:
-            term_cls += " term-def"
-        prefix = '<span class="vsyou">vs you</span>' if is_def else ""
-        val = f"{tier.upper()} <span class=\"deftag\">defence</span>" if is_def else tier.upper()
+        term_cls = "term term-zero" if term == "0" else "term"
         rows.append(
-            f'      <div class="{row_cls}">\n'
+            f'      <div class="row">\n'
             f'        <div class="line">'
             f'<span class="key">{stat}</span>'
-            f'<span class="val">{val}</span>'
-            f'<span class="termwrap">{prefix}<span class="{term_cls}">{esc(term)}</span></span></div>\n'
+            f'<span class="val">{tier.upper()}</span>'
+            f'<span class="termwrap"><span class="{term_cls}">{esc(term)}</span></span></div>\n'
             f'        <div class="effect">{esc(effect)}</div>\n'
             f'      </div>'
         )
