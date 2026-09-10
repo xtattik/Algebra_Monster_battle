@@ -1,8 +1,14 @@
-# Algebra Monster Battle — Core Rules Design
+# Algebra Monster Battle — Core Rules Design (v1)
+
+> ⚠️ **Superseded by [`core-rules-v2.md`](core-rules-v2.md).** After the first playtest the
+> stat model changed (all three stats are offensive; no defence; `strike` → `strength`),
+> the environment became a `±2x` dial with a **Cancel** verb, and attacks are chosen
+> *before* the roll. This document is kept as the v1 record. §5, §6.1, §8 and §9.3 below
+> are the parts v2 replaces; §1–§4, §9.1–§9.2, §10–§14 still broadly hold.
 
 **Date:** 2026-09-01
-**Status:** Draft for review
-**Scope:** Core game system + full character roster. Environments and pets get their own specs (see §13).
+**Status:** v1 — superseded
+**Scope:** Core game system + full character roster.
 
 ---
 
