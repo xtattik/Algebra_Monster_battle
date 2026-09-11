@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algebra Monster Battle — Quick Reference</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #fff; color: #111; }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .slide {
+    width: 100vw; height: 100vh; padding: 2.6vh 2.8vw;
+    display: flex; flex-direction: column;
+  }
+  h1 {
+    font-size: 4vh; margin: 0 0 0.4vh; letter-spacing: 0.02vh;
+  }
+  .sub { font-size: 1.9vh; color: #555; margin: 0 0 1.8vh; }
+
+  .cols { flex: 1; display: flex; gap: 2.6vw; min-height: 0; }
+  .col { flex: 1; display: flex; flex-direction: column; gap: 1.8vh; min-width: 0; }
+
+  .panel {
+    border: 0.28vh solid #000; border-radius: 1vh; padding: 1.8vh 2vw;
+    display: flex; flex-direction: column; min-height: 0;
+  }
+  .panel h2 {
+    font-size: 2.5vh; margin: 0 0 1.2vh; text-transform: uppercase;
+    letter-spacing: 0.06vh; border-bottom: 0.2vh solid #ddd; padding-bottom: 0.8vh;
+  }
+  .grow { flex: 1; }
+
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  .steps li {
+    counter-increment: step; position: relative;
+    padding-left: 3.4vh; margin-bottom: 1.05vh;
+    font-size: 2.3vh; line-height: 1.25;
+  }
+  .steps li::before {
+    content: counter(step); position: absolute; left: 0; top: 0.1vh;
+    width: 2.6vh; height: 2.6vh; border-radius: 50%;
+    background: #1c1c1c; color: #fff; font-weight: 700;
+    font-size: 1.7vh; display: flex; align-items: center; justify-content: center;
+  }
+
+  .bullets { list-style: none; margin: 0; padding: 0; }
+  .bullets li {
+    position: relative; padding-left: 2.2vw; margin-bottom: 1.1vh;
+    font-size: 2.15vh; line-height: 1.3;
+  }
+  .bullets li::before {
+    content: "\2022"; position: absolute; left: 0.4vw; color: #444; font-size: 1.9vh;
+  }
+  .bullets.pre li:not(:last-child) { margin-bottom: 0.9vh; }
+
+  .m {
+    font-family: "Cambria Math", "Times New Roman", Georgia, serif; font-weight: 700;
+  }
+  .up { color: #1a7f37; }
+  .down { color: #b3261e; }
+  .warn::before { content: "\2715"; color: #b3261e; font-weight: 700; }
+  .warn { padding-left: 2.4vw; }
+
+  .footer {
+    margin-top: 1.4vh; text-align: center; font-size: 1.7vh; color: #666;
+  }
+
+  @page { size: A4 landscape; margin: 8mm; }
+  @media print {
+    html, body { width: 297mm; height: 210mm; }
+    .slide { width: 297mm; height: 210mm; }
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <h1>Algebra Monster Battle — Quick Reference</h1>
+  <p class="sub">Keep this on screen during play</p>
+
+  <div class="cols">
+    <div class="col">
+      <div class="panel">
+        <h2>Before the Battle</h2>
+        <ul class="bullets">
+          <li>Draw <b>one</b> environment card — read what it does to each attack type.</li>
+          <li>Both players choose a pet, then reveal <b>together</b>.</li>
+        </ul>
+      </div>
+
+      <div class="panel grow">
+        <h2>On Your Turn</h2>
+        <ol class="steps">
+          <li>Choose your attack — magic, strength, or agility.</li>
+          <li>Add your <b>character</b> bonus.</li>
+          <li>Add the <b>environment</b> bonus.</li>
+          <li>Simplify &rarr; one <span class="m">nx + c</span>.</li>
+          <li><b>Now</b> roll the die.</li>
+          <li>Substitute your roll.</li>
+          <li>Calculate damage &rarr; subtract from the enemy pet's HP.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="panel grow">
+        <h2>Remember</h2>
+        <ul class="bullets">
+          <li><b>First turn:</b> rock&#8209;paper&#8209;scissors, a coin flip, or a dice roll.</li>
+          <li>Choose and <b>simplify before you roll</b> — not after.</li>
+          <li><b>No attack type three turns running</b> — mix it up (you don't have to use all three).</li>
+          <li>A terrain <b class="down">Cancel</b> means that attack type can't be used <b>at all</b> this match.</li>
+          <li>Every bonus is an <i>x</i> term: <span class="m up">+x</span>, <span class="m up">+2x</span>, <span class="m down">&minus;x</span>, <span class="m down">&minus;2x</span> — <b>never</b> a plain number.</li>
+          <li>Damage floors at <b>0</b>; a base attack never deals less than <b>1</b>.</li>
+          <li>Win: roll a <b>6</b> to capture the beaten pet; your pet heals to full either way.</li>
+          <li>Lose: no elimination — head to the <b>second-chance bracket</b> and keep playing.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer">Full rules: student rulebook &amp; teacher guide &middot; Marking: answer key</p>
+</div>
+</body>
+</html>
