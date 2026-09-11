@@ -42,7 +42,9 @@ trading/strategy discussion and a longer ladder).
 4. **Pair students and run the ladder.** Each pair:
    - **draws one environment card first**, and reads what it does to each attack type;
    - **both choose a pet and reveal together**;
-   - duels (rulebook §6) — **choose and simplify each attack before rolling**.
+   - duels (rulebook §6) — **choose and simplify each attack before rolling**,
+     and **no attack type three times running** (rulebook §8) — students don't
+     have to cycle all three, just can't spam one every single turn.
    The loser drops to the **second-chance bracket** (see §4); the winner heals to
    full, re-pairs with another winner, and draws a **new** environment.
 5. **Call time** — last student standing, or most wins.
@@ -83,6 +85,9 @@ a block before the top has broken the turn order, not just skipped working.
   Strength, agility attack → Agility. Nothing else touches the roll.
 - **Using a Cancelled attack type.** If the environment Cancels magic, there is
   no legal magic attack this match — the pet must use strength or agility.
+- **Spamming one attack type.** Same type three turns running isn't allowed —
+  the third must switch. Not the same as being *forced* to rotate through all
+  three (some terrain removes one type entirely; that's fine).
 - **`+2x` vs `+x`.** A card's Boost/Weaken can be either size; students copy the
   term straight off the card.
 - **Letting damage go negative.** After terms, floor at **0**. (A pet's *base*

@@ -1,7 +1,7 @@
 # Algebra Monster Battle — Core Rules v2 (design)
 
-**Date:** 2026-09-10
-**Status:** Draft for review — decisions locked with the design owner; numbers provisional pending first v2 playtest.
+**Date:** 2026-09-10 · **playtest update:** 2026-09-11
+**Status:** Playtested once — the model held up. Numbers still provisional; §7's "no 3-in-a-row" rule added from that playtest.
 **Supersedes (on implementation):** [`core-rules.md`](core-rules.md) §5, §6.1, §8, §9.3; [`environments.md`](environments.md) wholesale; [`pets.md`](pets.md) §3.
 **Keeps:** v1 stays printable and correct until v2 is built. This doc is the decision record; component specs (`environments-v2.md`, `pets-v2.md`) and the rebuild follow.
 
@@ -151,6 +151,7 @@ v1: "trade to cover your character's weak stat." v2: your best line is **affinit
 - **Choose your attack *before* you roll.** (v1 was roll-then-choose.) You commit an attack type + build its expression — ideally during your opponent's turn — then on your turn you only roll and substitute. Removes "I rolled a 1, so I'll pick the attack with the bigger constant" and speeds play. The battle sheet enforces it with a printed line (§8).
 - **Elimination softens:** the loser of a duel drops to the **second-chance bracket by default** rather than out of the session. A terrain-RNG loss shouldn't end a student's game. (Teachers can still run hard single-elimination as an extension.)
 - No defender roll for defence (there is no defence) — a player only rolls on their own turn, as the attacker.
+- **No attack type three times in a row.** *(Added after playtest.)* If your last two attacks were the same type, your next one must be a different type. **You are not required to cycle through all three** — some terrain removes one type entirely, and forcing full rotation would defeat the point of building a pet/character around one strong line. The rule only stops *spamming* one line every single turn; it does not stop favouring it. Always satisfiable: no environment can cancel more than one attack type (the card format caps a card at 2 effects total, and `Cancel` occupies one field per card), so at least two types are always legal to alternate between.
 
 ## 8. Battle sheet v2
 
@@ -187,6 +188,7 @@ One A4 page, **multiple attack blocks** (target 4–6), simplified.
 - **Sap** — cut. Scorching Desert is a plain `−2x` Weaken Strength. (§4.1)
 - **First-turn advantage in a glass-cannon mirror** — no mitigation; it is the archetype's accepted gamble. (§6.1)
 - **Challenge deck** — deferred; rebuild after Core v2 has settled. (§9)
+- **No attack type 3× running** — added from playtest feedback; forces variety without mandating full rotation. (§7)
 
 ### Still open for playtest
 

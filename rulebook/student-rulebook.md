@@ -51,7 +51,7 @@ The environment's term is bigger than your character's `±x`, so terrain matters
 
 **Choose your attack and build the whole expression *before* you roll.** (Do it during your opponent's turn if you can.)
 
-1. Pick an attack type — magic, strength, or agility (not one the terrain Cancels) — and write its equation, e.g. `4x`.
+1. Pick an attack type — magic, strength, or agility (not one the terrain Cancels, and not the **same type as your last two attacks in a row** — see section 8) — and write its equation, e.g. `4x`.
 2. Add **your matching stat** buff (`+x` / `0` / `−x`).
 3. Add the **environment** term for that attack type (`+2x` / `+x` / `0` / `−x` / `−2x`).
 4. **Collect like terms** into a single `nx + c`.
@@ -86,7 +86,8 @@ Roll a 5: `2 × 5 = 10`. Worse than the boosted `6x + 2` — but a real turn.
 2. **Both players choose a pet** and reveal at the same time.
 3. Decide who goes first: coin flip, dice roll, or rock-paper-scissors.
 4. Take turns. On your turn: choose and build your attack (section 6), **then** roll and substitute.
-5. When a pet reaches **0 HP**, it loses — that duel is over.
+5. **No attack type three times running.** If your last two attacks were both, say, magic, your next one must be strength or agility. You don't have to use all three types — just not the same one a third time in a row.
+6. When a pet reaches **0 HP**, it loses — that duel is over.
 
 ## 9. The ladder
 
