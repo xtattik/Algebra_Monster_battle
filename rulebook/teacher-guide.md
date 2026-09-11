@@ -28,9 +28,15 @@ trading/strategy discussion and a longer ladder).
 - **Environment deck:** `cards/environments.html` — **15 designs**. Print however
   many copies of each you want: **more boost cards = gentler; more Cancel cards =
   harder**. A starting mix of ~2 copies of each is fine. One deck per group of pairs.
-- **Battle sheets:** `worksheets/battle-sheet.html` — a bundle, one A4 each. Six
-  attack blocks per sheet; a match usually fits on one or two. It also carries
-  both pets' HP tracks and the result box.
+- **Battle sheets:** two versions, one A4 each — print a mix and hand out by
+  readiness.
+  - `worksheets/battle-sheet.html` — six fully-scaffolded attack blocks. Use
+    for first-timers or students who need the working laid out every time.
+  - `worksheets/battle-sheet-streamlined.html` — two scaffolded blocks, then
+    an open ruled area with "repeat the same process." Use once a student has
+    the steps down; it's faster to fill in and fits more attacks per sheet.
+  - Both carry the same HP tracks and result box; neither repeats character/pet/
+    environment details already printed on the cards.
 - **Dice:** one D6 per pair.
 
 ## 3. Run sheet

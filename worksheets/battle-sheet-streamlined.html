@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Algebra Monster Battle — Battle Sheet</title>
+<title>Algebra Monster Battle — Battle Sheet (Streamlined)</title>
 <style>
   :root { color-scheme: light; }
   * { box-sizing: border-box; }
@@ -13,14 +13,13 @@
     font-size: 10pt; line-height: 1.25;
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
-  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 9mm; }
+  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 9mm; display: flex; flex-direction: column; }
 
   h1 { font-size: 14pt; margin: 0; letter-spacing: 0.2pt; display: inline; }
   .sub { font-size: 7.5pt; color: #666; margin-left: 3mm; }
 
   .fill { display: inline-block; border-bottom: 0.3mm solid #555; min-width: 20mm; }
   .fill.sm { min-width: 11mm; }
-  .fill.lg { min-width: 38mm; }
   .cell {
     display: inline-block; border: 0.3mm solid #000; border-radius: 0.8mm;
     min-width: 11mm; height: 5.4mm; vertical-align: middle;
@@ -39,7 +38,7 @@
   .result .r { display: inline-block; min-width: 6mm; text-align: center; padding: 0 1mm; }
 
   /* ---- body: attack blocks + HP columns ---- */
-  .body { display: flex; gap: 5mm; align-items: flex-start; }
+  .body { display: flex; gap: 5mm; align-items: stretch; flex: 1; min-height: 0; }
   .blocks { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2mm; }
   .hpcol { flex: none; width: 48mm; }
 
@@ -63,6 +62,19 @@
   .blk .simp .note { flex: none; font-size: 6.4pt; text-transform: uppercase; letter-spacing: 0.4pt; color: #888; }
   .blk .roll { display: flex; align-items: baseline; gap: 1.4mm; }
   .blk .roll .fill { flex: 1; }
+
+  /* ---- repeat prompt + ruled workspace ---- */
+  .repeat {
+    display: flex; align-items: baseline; gap: 2mm;
+    font-size: 8pt; color: #444; margin: 0.5mm 0 0;
+  }
+  .repeat b { color: #000; }
+  .ruled {
+    flex: 1; min-height: 40mm; border: 0.35mm solid #000; border-radius: 1.5mm;
+    padding: 1mm 2.4mm; display: flex; flex-direction: column;
+  }
+  .ruled .rline { flex: 1; border-bottom: 0.25mm solid #ccc; }
+  .ruled .rline:last-child { border-bottom: none; }
 
   /* ---- HP tracks ---- */
   .hp-track { border: 0.4mm solid #000; border-radius: 1.5mm; padding: 2.6mm; }
@@ -89,7 +101,7 @@
 
   @page { size: A4; margin: 9mm; }
   @media print {
-    .page { margin: 0; padding: 0; min-height: 0; width: auto; }
+    .page { margin: 0; padding: 0; min-height: 0; height: 279mm; width: auto; }
     body { font-size: 9.4pt; }
     .foot { font-size: 7.2pt; }
   }
@@ -100,7 +112,7 @@
 
   <div class="topline">
     <h1>Battle Sheet</h1>
-    <span class="sub">Algebra Monster Battle · one attack per box · choose &amp; simplify <b>before</b> you roll</span>
+    <span class="sub">Algebra Monster Battle · streamlined · choose &amp; simplify <b>before</b> you roll</span>
     <span class="id">Name: <span class="fill"></span> &nbsp;&nbsp; Result: <span class="r">won</span>/<span class="r">lost</span> &nbsp; captured? <span class="r">Y</span>/<span class="r">N</span></span>
   </div>
 
@@ -136,60 +148,19 @@
         <div class="roll">roll <code>x =</code> <span class="cell" style="min-width:8mm"></span> &nbsp; substitute &rarr; <span class="fill"></span> <span>=</span> <span class="cell" style="min-width:13mm"></span> <span>damage</span></div>
       </div>
 
-      <div class="blk">
-        <div class="top">
-          <span class="n">Attack&nbsp;<span class="fill sm" style="min-width:8mm"></span></span>
-          <span class="type"><span class="cb"></span>magic <span class="cb"></span>strength <span class="cb"></span>agility</span>
-        </div>
-        <div class="terms">
-          <span>pet attack <span class="fill"></span></span>
-          <span>+ my stat <span class="fill"></span></span>
-          <span>+ environment <span class="fill"></span></span>
-        </div>
-        <div class="simp"><b>simplify &rarr;</b> <span class="fill"></span> <span class="note">↑ all done before you roll</span></div>
-        <div class="roll">roll <code>x =</code> <span class="cell" style="min-width:8mm"></span> &nbsp; substitute &rarr; <span class="fill"></span> <span>=</span> <span class="cell" style="min-width:13mm"></span> <span>damage</span></div>
-      </div>
+      <p class="repeat"><b>Repeat the same process</b> for every attack — write your workings below.</p>
 
-      <div class="blk">
-        <div class="top">
-          <span class="n">Attack&nbsp;<span class="fill sm" style="min-width:8mm"></span></span>
-          <span class="type"><span class="cb"></span>magic <span class="cb"></span>strength <span class="cb"></span>agility</span>
-        </div>
-        <div class="terms">
-          <span>pet attack <span class="fill"></span></span>
-          <span>+ my stat <span class="fill"></span></span>
-          <span>+ environment <span class="fill"></span></span>
-        </div>
-        <div class="simp"><b>simplify &rarr;</b> <span class="fill"></span> <span class="note">↑ all done before you roll</span></div>
-        <div class="roll">roll <code>x =</code> <span class="cell" style="min-width:8mm"></span> &nbsp; substitute &rarr; <span class="fill"></span> <span>=</span> <span class="cell" style="min-width:13mm"></span> <span>damage</span></div>
-      </div>
-
-      <div class="blk">
-        <div class="top">
-          <span class="n">Attack&nbsp;<span class="fill sm" style="min-width:8mm"></span></span>
-          <span class="type"><span class="cb"></span>magic <span class="cb"></span>strength <span class="cb"></span>agility</span>
-        </div>
-        <div class="terms">
-          <span>pet attack <span class="fill"></span></span>
-          <span>+ my stat <span class="fill"></span></span>
-          <span>+ environment <span class="fill"></span></span>
-        </div>
-        <div class="simp"><b>simplify &rarr;</b> <span class="fill"></span> <span class="note">↑ all done before you roll</span></div>
-        <div class="roll">roll <code>x =</code> <span class="cell" style="min-width:8mm"></span> &nbsp; substitute &rarr; <span class="fill"></span> <span>=</span> <span class="cell" style="min-width:13mm"></span> <span>damage</span></div>
-      </div>
-
-      <div class="blk">
-        <div class="top">
-          <span class="n">Attack&nbsp;<span class="fill sm" style="min-width:8mm"></span></span>
-          <span class="type"><span class="cb"></span>magic <span class="cb"></span>strength <span class="cb"></span>agility</span>
-        </div>
-        <div class="terms">
-          <span>pet attack <span class="fill"></span></span>
-          <span>+ my stat <span class="fill"></span></span>
-          <span>+ environment <span class="fill"></span></span>
-        </div>
-        <div class="simp"><b>simplify &rarr;</b> <span class="fill"></span> <span class="note">↑ all done before you roll</span></div>
-        <div class="roll">roll <code>x =</code> <span class="cell" style="min-width:8mm"></span> &nbsp; substitute &rarr; <span class="fill"></span> <span>=</span> <span class="cell" style="min-width:13mm"></span> <span>damage</span></div>
+      <div class="ruled">
+        <div class="rline"></div>
+        <div class="rline"></div>
+        <div class="rline"></div>
+        <div class="rline"></div>
+        <div class="rline"></div>
+        <div class="rline"></div>
+        <div class="rline"></div>
+        <div class="rline"></div>
+        <div class="rline"></div>
+        <div class="rline"></div>
       </div>
 
     </div>
