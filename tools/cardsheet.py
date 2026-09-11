@@ -169,7 +169,8 @@ def _data_uri(path: Path, prog: str) -> str:
     return f"data:{mime};base64," + base64.b64encode(data).decode("ascii")
 
 
-def card_top(deck: str, num: int, total: int, name: str, prog: str, subhead: str = "") -> str:
+def card_top(deck: str, num: int, total: int, name: str, prog: str, subhead: str = "",
+             focal: str = "0% 45%") -> str:
     """The top of a card: the identity zone + art.
 
     No artwork: a text header (name + N/total), then `subhead` (deck-specific,
@@ -179,6 +180,12 @@ def card_top(deck: str, num: int, total: int, name: str, prog: str, subhead: str
     bottom-left (so the card is identifiable even if its name is not painted
     into the art), then `subhead`. Drop a file at
     cards/art/<deck>/<NN>-<slug>.<ext> to switch a card.
+
+    `focal` is the CSS object-position for the art: default left-anchored
+    (protects a title painted into the left of the art, as characters/
+    environments do); pass "50% 45%" for art with no title to protect, so a
+    too-wide image is cropped evenly from both sides instead of losing
+    everything past the left ~63%.
     """
     sub = f"\n      {subhead}" if subhead else ""
     path = _find_art(deck, num, name, prog)
@@ -191,7 +198,7 @@ def card_top(deck: str, num: int, total: int, name: str, prog: str, subhead: str
         )
     return (
         f'      <div class="art has-art art-hero">'
-        f'<img alt="{esc(name)}" src="{_data_uri(path, prog)}">'
+        f'<img alt="{esc(name)}" style="object-position: {focal}" src="{_data_uri(path, prog)}">'
         f'<span class="cardname">{esc(name)}</span>'
         f'<span class="cardno">{num}/{total}</span></div>'
         f'{sub}'

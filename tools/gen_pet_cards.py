@@ -170,7 +170,8 @@ def render_card(pet: dict, total: int) -> str:
     )
     return (
         f'    <div class="card">\n'
-        + cardsheet.card_top("pets", pet["num"], total, pet["name"], PROG, subhead=pethdr) + "\n"
+        + cardsheet.card_top("pets", pet["num"], total, pet["name"], PROG,
+                             subhead=pethdr, focal="50% 42%") + "\n"
         + "\n".join(rows) + "\n"
         f'      <p class="flavour">{esc(pet["flavour"])}</p>\n'
         f'    </div>'
