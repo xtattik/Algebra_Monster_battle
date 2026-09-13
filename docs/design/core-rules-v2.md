@@ -175,7 +175,7 @@ One A4 page, **multiple attack blocks** (target 4–6), simplified.
 |---|---|
 | `core-rules.md` | rewrite §5, §6.1, §8, §9.3 to v2 (or replace with this doc promoted) |
 | Environment deck | new `environments-v2.md` + `cards/environments-v2.md` + generator changes (3 verbs: Boost `+2x`/`+x`, Weaken `−2x`/`−x`, Cancel); ~15 designs |
-| Core pet deck | `pets-v2.md`; new HP + buffed secondary attack on all 22; rename `strike` → `strength`. **Challenge deck deferred** — rebuild after Core v2 has settled (§10.3). |
+| Core pet deck | `pets-v2.md`; new HP + buffed secondary attack on all 22; rename `strike` → `strength`. **Challenge deck v2 done** — see `docs/design/pets-challenge.md`. |
 | Character cards | generator effect-table: Strength rows mirror Magic/Agility; drop the defence/red treatment; re-flavour playstyle lines |
 | Battle sheet | rebuild per §8 |
 | Student rulebook / teacher guide | rewrite the damage-model, environment, and flow sections; new worked examples A–D above |
@@ -187,7 +187,7 @@ One A4 page, **multiple attack blocks** (target 4–6), simplified.
 - **Cancel frequency** — keep all 3 cancel designs; the teacher tunes the mix by how many copies of each card they print (§4.3).
 - **Sap** — cut. Scorching Desert is a plain `−2x` Weaken Strength. (§4.1)
 - **First-turn advantage in a glass-cannon mirror** — no mitigation; it is the archetype's accepted gamble. (§6.1)
-- **Challenge deck** — deferred; rebuild after Core v2 has settled. (§9)
+- **Challenge deck** — rebuilt for v2: same HP/name/art as Core (drop-in swap), glass-cannon-affinity templates bumped from `3x`- to `4x`-tier to match Core's own bump. (§9, `docs/design/pets-challenge.md`)
 - **No attack type 3× running** — added from playtest feedback; forces variety without mandating full rotation. (§7)
 
 ### Still open for playtest

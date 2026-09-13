@@ -143,9 +143,19 @@ read the value under their die roll. §3 has four fully-worked v2 scenarios.
 ## 10. Challenge Mode
 
 `cards/pets-challenge.html` — 22 pets whose attacks are unexpanded brackets
-(`3(x − 1)`) or negative leading coefficients (`−3x + 10`).
+(`3(x − 1)`) or negative leading coefficients (`−4x + 13`).
 
-**Note (v2):** the Challenge deck has **not yet been rebalanced for v2** — its HP
-and damage are still v1-scale, so it is *not* a drop-in swap for the v2 core deck
-in the same ladder. Use it as its own self-contained harder game, or wait for the
-Challenge v2 pass. Mark it with answer-key §2a.
+**v2 status:** rebalanced to match the Core v2 deck — same name, HP, archetype,
+and art per pet, so a Challenge card is a genuine **drop-in swap** for its Core
+counterpart. Hand a stronger pair the Challenge card for the same monster, mix
+decks freely in one ladder, or run it as its own harder game. The
+glass-cannon-affinity attack matches Core's own `4x`-tier (bracket `4(x + 1)`
+or negative `−4x + 13`); everything else about the game — battle loop,
+environments, HP tracks, the no-3x-row rule — is untouched.
+
+Mark it with **answer-key §2a** (negative and mixed-sign rows) and **§2b**
+(the one extra `c = 4` row the glass-cannon bracket needs). A bracket attack
+expands to a normal `ax + b` and marks against §2 as usual; a negative
+attack's damage shrinks as the roll rises, and a big enough favourable stack
+can push a weak one (`−x`/`−2x`) to a small positive `n` — §2a covers that
+case too, it isn't only negative rows despite the name.

@@ -43,61 +43,61 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 | # | Name | HP | Archetype | Magic | Strength | Agility |
 |---|---|---|---|---|---|---|
-| 1 | Emberwisp | 28 | Glass cannon | 3(x + 1) | -x + 5 (min 1) | 2(x - 1) (min 1) |
-| 2 | Gorehoof | 30 | Glass cannon | 2(x - 1) (min 1) | -3x + 10 (min 1) | -x + 5 (min 1) |
-| 3 | Dartclaw | 26 | Glass cannon | -2x + 8 (min 1) | 2(x + 1) | 3(x + 1) |
-| 4 | Sootmane | 50 | Baseline | -x + 5 (min 1) | 3(x + 1) | 2(x - 1) (min 1) |
-| 5 | Tidecaller | 48 | Baseline | 3(x - 1) (min 1) | 2(x - 1) (min 1) | -2x + 8 (min 1) |
-| 6 | Gustling | 46 | Baseline | -x + 5 (min 1) | 2(x + 1) | 3(x - 1) (min 1) |
-| 7 | Patchwork Golem | 54 | Baseline | 2(x + 1) | -2x + 8 (min 1) | 3(x - 1) (min 1) |
-| 8 | Riftmoth | 44 | Baseline | 2(x - 1) (min 1) | -2x + 8 (min 1) | 3(x - 1) (min 1) |
-| 9 | Grave Hound | 46 | Baseline | -x + 5 (min 1) | 3(x - 1) (min 1) | 2(x + 1) |
-| 10 | Boulderhide | 82 | Tank | -x + 5 (min 1) | -2x + 8 (min 1) | 2(x - 1) (min 1) |
-| 11 | Old Cairn | 78 | Tank | 2(x - 1) (min 1) | -x + 5 (min 1) | -2x + 8 (min 1) |
-| 12 | Moss Troll | 84 | Tank | 2(x - 1) (min 1) | -2x + 8 (min 1) | -x + 5 (min 1) |
-| 13 | Sparkhound | 29 | Glass cannon | -3x + 10 (min 1) | 2(x - 1) (min 1) | -x + 5 (min 1) |
-| 14 | Bristlecharge | 31 | Glass cannon | -x + 5 (min 1) | 3(x + 1) | 2(x + 1) |
-| 15 | Quickfin | 27 | Glass cannon | 2(x + 1) | -2x + 8 (min 1) | -3x + 10 (min 1) |
-| 16 | Cindercat | 49 | Baseline | 3(x + 1) | -2x + 8 (min 1) | 2(x - 1) (min 1) |
-| 17 | Ironhide Ram | 52 | Baseline | -2x + 8 (min 1) | 3(x - 1) (min 1) | 2(x - 1) (min 1) |
-| 18 | Zephyr Kite | 45 | Baseline | -x + 5 (min 1) | 2(x + 1) | 3(x - 1) (min 1) |
-| 19 | Clockwork Beetle | 53 | Baseline | -2x + 8 (min 1) | 2(x - 1) (min 1) | 3(x - 1) (min 1) |
-| 20 | Barrow Wight | 79 | Tank | -x + 5 (min 1) | 2(x - 1) (min 1) | -2x + 8 (min 1) |
-| 21 | Deepstone Toad | 80 | Tank | -2x + 8 (min 1) | 2(x - 1) (min 1) | -x + 5 (min 1) |
-| 22 | Rust Golem | 83 | Tank | -2x + 8 (min 1) | -x + 5 (min 1) | 2(x - 1) (min 1) |
+| 1 | Emberwisp | 40 | Glass cannon | 4(x + 1) | -x + 5 (min 1) | 2(x - 1) (min 1) |
+| 2 | Gorehoof | 42 | Glass cannon | 2(x - 1) (min 1) | -4x + 13 (min 1) | -x + 5 (min 1) |
+| 3 | Dartclaw | 38 | Glass cannon | -2x + 8 (min 1) | 2(x + 1) | 4(x + 1) |
+| 4 | Sootmane | 76 | Baseline | -x + 5 (min 1) | 3(x + 1) | 2(x - 1) (min 1) |
+| 5 | Tidecaller | 74 | Baseline | 3(x - 1) (min 1) | 2(x - 1) (min 1) | -2x + 8 (min 1) |
+| 6 | Gustling | 72 | Baseline | -x + 5 (min 1) | 2(x + 1) | 3(x - 1) (min 1) |
+| 7 | Patchwork Golem | 80 | Baseline | 2(x + 1) | -2x + 8 (min 1) | 3(x - 1) (min 1) |
+| 8 | Riftmoth | 70 | Baseline | 2(x - 1) (min 1) | -2x + 8 (min 1) | 3(x - 1) (min 1) |
+| 9 | Grave Hound | 74 | Baseline | -x + 5 (min 1) | 3(x - 1) (min 1) | 2(x + 1) |
+| 10 | Boulderhide | 100 | Tank | -x + 5 (min 1) | -2x + 8 (min 1) | 2(x - 1) (min 1) |
+| 11 | Old Cairn | 98 | Tank | 2(x - 1) (min 1) | -x + 5 (min 1) | -2x + 8 (min 1) |
+| 12 | Moss Troll | 104 | Tank | 2(x - 1) (min 1) | -2x + 8 (min 1) | -x + 5 (min 1) |
+| 13 | Sparkhound | 39 | Glass cannon | -4x + 13 (min 1) | 2(x - 1) (min 1) | -x + 5 (min 1) |
+| 14 | Bristlecharge | 41 | Glass cannon | -x + 5 (min 1) | 4(x + 1) | 2(x + 1) |
+| 15 | Quickfin | 38 | Glass cannon | 2(x + 1) | -2x + 8 (min 1) | -4x + 13 (min 1) |
+| 16 | Cindercat | 75 | Baseline | 3(x + 1) | -2x + 8 (min 1) | 2(x - 1) (min 1) |
+| 17 | Ironhide Ram | 78 | Baseline | -2x + 8 (min 1) | 3(x - 1) (min 1) | 2(x - 1) (min 1) |
+| 18 | Zephyr Kite | 72 | Baseline | -x + 5 (min 1) | 2(x + 1) | 3(x - 1) (min 1) |
+| 19 | Clockwork Beetle | 80 | Baseline | -2x + 8 (min 1) | 2(x - 1) (min 1) | 3(x - 1) (min 1) |
+| 20 | Barrow Wight | 96 | Tank | -x + 5 (min 1) | 2(x - 1) (min 1) | -2x + 8 (min 1) |
+| 21 | Deepstone Toad | 98 | Tank | -2x + 8 (min 1) | 2(x - 1) (min 1) | -x + 5 (min 1) |
+| 22 | Rust Golem | 102 | Tank | -2x + 8 (min 1) | -x + 5 (min 1) | 2(x - 1) (min 1) |
 
 ---
 
 ## 1. Emberwisp
 
-- HP: 28
+- HP: 40
 - Archetype: Glass cannon
-- Magic: Cinderburst | 3(x + 1)
+- Magic: Cinderburst | 4(x + 1)
 - Strength: Singe | -x + 5 (min 1)
 - Agility: Flit | 2(x - 1) (min 1)
 - Flavour: A trapped mote of wildfire that never learned to be careful.
 
 ## 2. Gorehoof
 
-- HP: 30
+- HP: 42
 - Archetype: Glass cannon
 - Magic: Snort | 2(x - 1) (min 1)
-- Strength: Goring Charge | -3x + 10 (min 1)
+- Strength: Goring Charge | -4x + 13 (min 1)
 - Agility: Trample | -x + 5 (min 1)
 - Flavour: Aims first. Thinks later, if at all.
 
 ## 3. Dartclaw
 
-- HP: 26
+- HP: 38
 - Archetype: Glass cannon
 - Magic: Static Lick | -2x + 8 (min 1)
 - Strength: Tail Whip | 2(x + 1)
-- Agility: Blink Slash | 3(x + 1)
+- Agility: Blink Slash | 4(x + 1)
 - Flavour: You feel it a moment before you see it.
 
 ## 4. Sootmane
 
-- HP: 50
+- HP: 76
 - Archetype: Baseline
 - Magic: Warding Roar | -x + 5 (min 1)
 - Strength: Pounce | 3(x + 1)
@@ -106,7 +106,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 5. Tidecaller
 
-- HP: 48
+- HP: 74
 - Archetype: Baseline
 - Magic: Tidal Pulse | 3(x - 1) (min 1)
 - Strength: Tail Slap | 2(x - 1) (min 1)
@@ -115,7 +115,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 6. Gustling
 
-- HP: 46
+- HP: 72
 - Archetype: Baseline
 - Magic: Whisper Gale | -x + 5 (min 1)
 - Strength: Buffet | 2(x + 1)
@@ -124,7 +124,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 7. Patchwork Golem
 
-- HP: 54
+- HP: 80
 - Archetype: Baseline
 - Magic: Spark Seam | 2(x + 1)
 - Strength: Hammer Fist | -2x + 8 (min 1)
@@ -133,7 +133,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 8. Riftmoth
 
-- HP: 44
+- HP: 70
 - Archetype: Baseline
 - Magic: Dust of Ages | 2(x - 1) (min 1)
 - Strength: Wing Slam | -2x + 8 (min 1)
@@ -142,7 +142,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 9. Grave Hound
 
-- HP: 46
+- HP: 74
 - Archetype: Baseline
 - Magic: Baying Howl | -x + 5 (min 1)
 - Strength: Bone Crush | 3(x - 1) (min 1)
@@ -151,7 +151,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 10. Boulderhide
 
-- HP: 82
+- HP: 100
 - Archetype: Tank
 - Magic: Dust Cloud | -x + 5 (min 1)
 - Strength: Shell Bash | -2x + 8 (min 1)
@@ -160,7 +160,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 11. Old Cairn
 
-- HP: 78
+- HP: 98
 - Archetype: Tank
 - Magic: Root Surge | 2(x - 1) (min 1)
 - Strength: Deadfall | -x + 5 (min 1)
@@ -169,7 +169,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 12. Moss Troll
 
-- HP: 84
+- HP: 104
 - Archetype: Tank
 - Magic: Spore Cloud | 2(x - 1) (min 1)
 - Strength: Heavy Club | -2x + 8 (min 1)
@@ -178,34 +178,34 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 13. Sparkhound
 
-- HP: 29
+- HP: 39
 - Archetype: Glass cannon
-- Magic: Arc Bite | -3x + 10 (min 1)
+- Magic: Arc Bite | -4x + 13 (min 1)
 - Strength: Nip | 2(x - 1) (min 1)
 - Agility: Dash | -x + 5 (min 1)
 - Flavour: Static crackles off it when it gets excited, which is always.
 
 ## 14. Bristlecharge
 
-- HP: 31
+- HP: 41
 - Archetype: Glass cannon
 - Magic: Huff | -x + 5 (min 1)
-- Strength: Spine Rush | 3(x + 1)
+- Strength: Spine Rush | 4(x + 1)
 - Agility: Sidestep | 2(x + 1)
 - Flavour: The warning snort is the only warning you get.
 
 ## 15. Quickfin
 
-- HP: 27
+- HP: 38
 - Archetype: Glass cannon
 - Magic: Bubble | 2(x + 1)
 - Strength: Fin Slap | -2x + 8 (min 1)
-- Agility: Riptide Dart | -3x + 10 (min 1)
+- Agility: Riptide Dart | -4x + 13 (min 1)
 - Flavour: Gone before the ripples have finished spreading.
 
 ## 16. Cindercat
 
-- HP: 49
+- HP: 75
 - Archetype: Baseline
 - Magic: Ember Purr | 3(x + 1)
 - Strength: Swipe | -2x + 8 (min 1)
@@ -214,7 +214,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 17. Ironhide Ram
 
-- HP: 52
+- HP: 78
 - Archetype: Baseline
 - Magic: Bleat | -2x + 8 (min 1)
 - Strength: Headbutt | 3(x - 1) (min 1)
@@ -223,7 +223,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 18. Zephyr Kite
 
-- HP: 45
+- HP: 72
 - Archetype: Baseline
 - Magic: Updraft | -x + 5 (min 1)
 - Strength: Talon Rake | 2(x + 1)
@@ -232,7 +232,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 19. Clockwork Beetle
 
-- HP: 53
+- HP: 80
 - Archetype: Baseline
 - Magic: Spark Coil | -2x + 8 (min 1)
 - Strength: Pincer | 2(x - 1) (min 1)
@@ -241,7 +241,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 20. Barrow Wight
 
-- HP: 79
+- HP: 96
 - Archetype: Tank
 - Magic: Chill Touch | -x + 5 (min 1)
 - Strength: Grave Reach | 2(x - 1) (min 1)
@@ -250,7 +250,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 21. Deepstone Toad
 
-- HP: 80
+- HP: 98
 - Archetype: Tank
 - Magic: Mud Bolt | -2x + 8 (min 1)
 - Strength: Bellyflop | 2(x - 1) (min 1)
@@ -259,7 +259,7 @@ Affinity is the attack type with the largest **magnitude** of coefficient (`|a|`
 
 ## 22. Rust Golem
 
-- HP: 83
+- HP: 102
 - Archetype: Tank
 - Magic: Oxide Cloud | -2x + 8 (min 1)
 - Strength: Iron Fist | -x + 5 (min 1)

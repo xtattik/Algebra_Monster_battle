@@ -37,7 +37,7 @@ Constraints the generator enforces:
 
 - Coefficient `a ∈ {1 … 4}`; constant `b ∈ {−3 … 3}`. Every attack has an `x` term.
 - `(min 1)` is printed **exactly when** a roll of 1–6 could give less than 1.
-- HP must sit inside its archetype's band (v2 bands above; the Challenge deck keeps the v1 bands).
+- HP must sit inside its archetype's band (v2 bands above; the Challenge deck shares these — it's a drop-in swap for its Core counterpart, so it copies HP verbatim, see [`pets-challenge.md`](pets-challenge.md)).
 - All three attack types present.
 
 ### Balance targets (v2)

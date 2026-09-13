@@ -13,12 +13,12 @@ NSW Mathematics **Stage 4 — Algebraic Techniques**: collecting like terms, sub
 - [7 character cards](cards/characters.html) (print a class set so several students can share a design)
 - [22 pet cards](cards/pets.html) (print ~3 copies each so every student draws 2 at random)
 - [15 environment cards](cards/environments.html) (one drawn per match; print your own mix of copies)
-- [optional Challenge pet deck](cards/pets-challenge.html) — harder attacks (unexpanded brackets, negative coefficients); **not yet rebalanced for v2**
+- [optional Challenge pet deck](cards/pets-challenge.html) — same 22 pets (same HP/name/art), harder attacks (unexpanded brackets, negative coefficients); a drop-in swap for its Core counterpart
 - one six-sided die per pair
 - [Student rulebook](rulebook/student-rulebook.md)
 - [Teacher guide](rulebook/teacher-guide.md)
 - [Fast-marking answer key](rulebook/answer-key.md) (lookup table plus worked scenarios)
-- [Battle sheet](worksheets/battle-sheet.html) — six attack blocks + HP tracks, one per match
+- Battle sheet — two versions, pick by readiness: [full scaffold](worksheets/battle-sheet.html) (six attack blocks) or [streamlined](worksheets/battle-sheet-streamlined.html) (two blocks + open ruled workspace); both carry the HP tracks
 
 ## Build status (v2)
 
@@ -28,8 +28,8 @@ NSW Mathematics **Stage 4 — Algebraic Techniques**: collecting like terms, sub
 - [x] Environment deck — 15 designs, 3-verb model ([design doc](docs/design/environments.md))
 - [x] Pet collection — 22 pets rebalanced ([design doc](docs/design/pets.md))
 - [x] Student rulebook + teacher guide + answer key rewritten for v2
+- [x] Challenge pet deck rebalanced for v2 — drop-in swap for Core ([design doc](docs/design/pets-challenge.md))
 - [ ] Playtest v2, then act on the open questions in `core-rules-v2.md` §10
-- [ ] Challenge pet deck — still v1 balance; v2 pass deferred
 
 ## Repo layout
 

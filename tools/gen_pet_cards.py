@@ -30,15 +30,14 @@ PROG = "gen_pet_cards"
 ATTACKS = ("Magic", "Strength", "Agility")
 REQUIRED = ("HP",) + ("Archetype",) + ATTACKS + ("Flavour",)
 
-# archetype -> (min HP, max HP), per variant. v2 Core runs longer, higher-swing
-# matches; Challenge keeps the v1 bands.
-BANDS_BY_VARIANT = {
-    None: {"Glass cannon": (36, 44), "Baseline": (68, 82), "Tank": (95, 110)},
-    "challenge": {"Glass cannon": (26, 32), "Baseline": (44, 54), "Tank": (76, 84)},
-}
+# archetype -> (min HP, max HP), per variant. Challenge is a drop-in swap for
+# its Core counterpart (same name/art/HP/archetype), so v2 gives it Core's
+# own HP bands rather than a separate set.
+_V2_BANDS = {"Glass cannon": (36, 44), "Baseline": (68, 82), "Tank": (95, 110)}
+BANDS_BY_VARIANT = {None: _V2_BANDS, "challenge": _V2_BANDS}
 
 PLAIN_RE = re.compile(r"^([1234]?)x(?:\s*([+-])\s*([0-3]))?(?:\s*\(min\s*(?P<min>\d+)\))?$")
-BRACKET_RE = re.compile(r"^([23])\(x\s*([+-])\s*([12])\)(?:\s*\(min\s*(?P<min>\d+)\))?$")
+BRACKET_RE = re.compile(r"^([234])\(x\s*([+-])\s*([12])\)(?:\s*\(min\s*(?P<min>\d+)\))?$")
 NEGATIVE_RE = re.compile(r"^-([1234]?)x(?:\s*([+-])\s*(\d{1,2}))?(?:\s*\(min\s*(?P<min>\d+)\))?$")
 
 VARIANTS = {

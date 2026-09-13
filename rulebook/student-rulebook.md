@@ -100,4 +100,27 @@ Roll a 5: `2 × 5 = 10`. Worse than the boosted `6x + 2` — but a real turn.
 
 ## 10. Challenge Mode
 
-Some pets come in a harder **Challenge** version. *(Being updated for v2 — check with your teacher before using it.)*
+Some pets come in a harder **Challenge** version — same name, HP, and art as
+your normal zoo, so it's a straight swap for whichever pet it replaces.
+Everything else about the game is unchanged. The only difference: all three
+attacks are written in a form you have to do one extra step on before you can
+use section 6.
+
+- **Bracket**, e.g. `3(x + 2)`. Expand it first: `3(x + 2) = 3x + 6`. Then
+  build your expression exactly as normal.
+- **Negative coefficient**, e.g. `−2x + 8`. No expanding needed, but the
+  damage now *shrinks* as your roll goes up — this attack wants a **low**
+  roll. A `+x` buff or a Boost doesn't make it hit harder; it **softens** the
+  negative, pulling the number toward a flat constant instead.
+
+**Worked example — bracket.** Pet attack `4(x + 1)`. Expand: `4x + 4`. Add
+High Magic `+x` and a Boost `+2x`: `4x + 4 + x + 2x = 7x + 4`. Roll a 5:
+`7 × 5 + 4 = 39`.
+
+**Worked example — negative coefficient.** Pet attack `−4x + 13`. Add High
+Magic `+x` and a Boost `+2x`: `−4x + 13 + x + 2x = −x + 13`. Roll a 1 (your
+*best* roll for this attack): `−1 + 13 = 12`. Roll a 6 (your worst): `−6 + 13
+= 7` — still a real hit, just smaller. Notice the `+x` and `+2x` **shrank**
+the `−4x` down to `−x`, rather than making it more negative.
+
+Ask your teacher which cards (if any) are in play before you draw.
