@@ -991,6 +991,43 @@ function renderLog(){
 }
 function renderBattle(){ renderEnvStrip(); renderFighters(); renderLog(); renderActiveArea(); }
 
+function spawnDamageFloat(defIdx, dmg){
+  var cards = document.querySelectorAll("#battle-fighters .fighter");
+  var card = cards[defIdx];
+  if(!card) return;
+  card.classList.add("hit");
+  var el = document.createElement("div");
+  el.className = "dmg-float";
+  el.textContent = "−"+dmg;
+  card.appendChild(el);
+}
+function clearDamageFloats(){
+  document.querySelectorAll(".dmg-float").forEach(function(el){ el.remove(); });
+  document.querySelectorAll(".fighter.hit").forEach(function(el){ el.classList.remove("hit"); });
+}
+// Shared by the player's own Apply-damage click and the CPU reveal sequence
+// (added in a later task) so both paths render the same paced callout instead
+// of an instant HP change. attackerIdx is whichever player's turn it currently
+// is; logPartial supplies the attacker-specific log fields (who/attackName/
+// expr/roll/clamped) — this function fills in target/hpBefore/hpAfter itself.
+function resolveDamage(attackerIdx, dmg, logPartial, onDone){
+  var def = Game.players[1-attackerIdx];
+  var hpBefore = Math.max(def.curHp,0);
+  def.curHp = Math.max(def.curHp-dmg,0);
+  Game.log.push({
+    p: attackerIdx, who: logPartial.who, attackName: logPartial.attackName,
+    expr: logPartial.expr, roll: logPartial.roll, dmg: dmg, clamped: logPartial.clamped,
+    target: def.fielded.name, hpBefore: hpBefore, hpAfter: Math.max(def.curHp,0)
+  });
+  renderEnvStrip(); renderFighters(); renderLog();
+  document.getElementById("battle-active").innerHTML="";
+  spawnDamageFloat(1-attackerIdx, dmg);
+  setTimeout(function(){
+    clearDamageFloats();
+    onDone(def.curHp<=0);
+  }, 1400);
+}
+
 function renderActiveArea(){
   var root=document.getElementById("battle-active");
   var isHumanTurn = Game.mode==="2p" || Game.turn===0;
@@ -1132,22 +1169,24 @@ function finishRoll(final){
   renderActiveArea();
 }
 function applyDamage(){
-  var att=currentPlayer(), def=opponent();
-  var hpBefore=Math.max(def.curHp,0);
-  def.curHp = Math.max(def.curHp-draft.total,0);
+  var att=currentPlayer();
+  var attackerIdx=Game.turn;
+  var dmg=draft.total;
+  var logPartial={
+    who: possessive(att.name)+" "+att.fielded.name, attackName: draft.base.name,
+    expr: fmtFull(draft.correctN,draft.correctC), roll: draft.roll,
+    clamped: draft.total !== draft.correctN*draft.roll+draft.correctC
+  };
   att.lastTypes.push(draft.type);
   if(att.lastTypes.length>2) att.lastTypes.shift();
-  Game.log.push({
-    p:Game.turn, who:possessive(att.name)+" "+att.fielded.name, attackName:draft.base.name,
-    expr:fmtFull(draft.correctN,draft.correctC), roll:draft.roll, dmg:draft.total,
-    clamped: draft.total !== draft.correctN*draft.roll+draft.correctC,
-    target:def.fielded.name, hpBefore:hpBefore, hpAfter:Math.max(def.curHp,0)
-  });
   draft=null;
-  if(def.curHp<=0){ showResult(att,def); return; }
-  Game.turn = 1-Game.turn;
-  renderBattle();
-  if(Game.mode==="cpu" && Game.turn===1) runCpuTurn();
+  resolveDamage(attackerIdx, dmg, logPartial, function(defeated){
+    var attP=Game.players[attackerIdx], defP=Game.players[1-attackerIdx];
+    if(defeated){ showResult(attP,defP); return; }
+    Game.turn = 1-attackerIdx;
+    renderBattle();
+    if(Game.mode==="cpu" && Game.turn===1) runCpuTurn();
+  });
 }
 function runCpuTurn(){
   var root=document.getElementById("battle-active");
