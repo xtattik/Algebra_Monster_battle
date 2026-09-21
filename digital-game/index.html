@@ -689,6 +689,8 @@ document.getElementById("btn-start").addEventListener("click", function(){
   if(!chosenMode) return;
   Game = {
     mode:chosenMode,
+    difficulty:chosenDifficulty,
+    petPool: chosenDifficulty==="challenge" ? CHALLENGE_PETS : PETS,
     players:[ mkPlayer(chosenMode==="cpu"?"You":"Player 1"), mkPlayer(chosenMode==="cpu"?"CPU":"Player 2") ],
     environment:null, turn:0, log:[]
   };
@@ -773,7 +775,7 @@ function pickCharacter(playerIdx,c){
 
 /* ---------- pet roll ---------- */
 function dealPets(){
-  var pool = shuffled(PETS);
+  var pool = shuffled(Game.petPool);
   Game.players[0].roster = [clonePet(pool[0]), clonePet(pool[1])];
   Game.players[1].roster = [clonePet(pool[2]), clonePet(pool[3])];
   renderPetRoll();
@@ -834,7 +836,7 @@ document.getElementById("petroll-continue").addEventListener("click", function()
 /* ---------- trade ---------- */
 function rollShelf(player){
   var ownIds = player.roster.map(function(p){ return p.id; });
-  var pool = PETS.filter(function(p){ return ownIds.indexOf(p.id)===-1; });
+  var pool = Game.petPool.filter(function(p){ return ownIds.indexOf(p.id)===-1; });
   return shuffled(pool).slice(0,6).map(clonePet);
 }
 function cpuShelfDecision(cpu, shelf){
@@ -1403,8 +1405,8 @@ function showResult(winner,loser){
 }
 document.getElementById("btn-rematch").addEventListener("click", function(){
   var chars=[Game.players[0].character, Game.players[1].character];
-  var mode=Game.mode;
-  Game = { mode:mode, players:[mkPlayer(mode==="cpu"?"You":"Player 1"), mkPlayer(mode==="cpu"?"CPU":"Player 2")], environment:null, turn:0, log:[] };
+  var mode=Game.mode, difficulty=Game.difficulty, petPool=Game.petPool;
+  Game = { mode:mode, difficulty:difficulty, petPool:petPool, players:[mkPlayer(mode==="cpu"?"You":"Player 1"), mkPlayer(mode==="cpu"?"CPU":"Player 2")], environment:null, turn:0, log:[] };
   Game.players[0].character=chars[0]; Game.players[1].character=chars[1];
   dealPets();
 });
