@@ -738,7 +738,7 @@ function petCardInner(pet, opts){
     '<div class="footer"><span class="name">'+pet.name+'</span>'+affPill+flagPill+cancelPill+
       '<div class="pillrow">'+TYPES.map(function(t){
         var atk=pet.attacks[t];
-        return '<span class="stat-chip '+t+'">'+TYPE_LABEL[t]+' '+fmtFull(atk.a,atk.b)+(atk.min?' (min '+atk.min+')':'')+'</span>';
+        return '<span class="stat-chip '+t+'">'+TYPE_LABEL[t]+' '+(atk.printed||fmtFull(atk.a,atk.b))+(atk.min?' (min '+atk.min+')':'')+'</span>';
       }).join('')+'</div>'+
     '</div>';
 }
@@ -1103,7 +1103,7 @@ function builderHTML(){
     var disabled = allowed.indexOf(t)===-1;
     var chosen = draft && draft.type===t;
     html += '<button class="type-btn '+t+(chosen?" chosen":"")+'" data-type="'+t+'" '+(disabled?"disabled":"")+'>'+
-      '<b>'+TYPE_LABEL[t]+'</b><div class="eq">'+atk.name+' · '+fmtFull(atk.a,atk.b)+(atk.min?' (min '+atk.min+')':'')+'</div>'+
+      '<b>'+TYPE_LABEL[t]+'</b><div class="eq">'+atk.name+' · '+(atk.printed||fmtFull(atk.a,atk.b))+(atk.min?' (min '+atk.min+')':'')+'</div>'+
       (isCancelled(env,t)?'<div class="eq" style="color:var(--danger)">cancelled here</div>':(blockedByStreak(p,t)?'<div class="eq" style="color:var(--warn)">used 2x in a row</div>':''))+
       '</button>';
   });
@@ -1112,7 +1112,7 @@ function builderHTML(){
   if(draft && draft.type){
     var d=draft;
     html += '<div class="term-lines">'+
-      '<div class="term-line"><span class="label">Pet attack — '+d.base.name+'</span><span class="expr">'+fmtFull(d.base.a,d.base.b)+'</span></div>'+
+      '<div class="term-line"><span class="label">Pet attack — '+d.base.name+'</span><span class="expr">'+(d.base.printed||fmtFull(d.base.a,d.base.b))+'</span></div>'+
       '<div class="term-line"><span class="label">Your '+TYPE_LABEL[d.type]+' stat ('+p.character.stats[d.type]+')</span><span class="expr">'+fmtSigned(d.sMod)+'</span></div>'+
       '<div class="term-line"><span class="label">'+env.name+'</span><span class="expr">'+fmtSigned(d.eMod)+'</span></div>'+
       '</div>';
@@ -1278,7 +1278,7 @@ function renderCpuReveal(stage){
   var b=cpuReveal.built, t=cpuReveal.type;
   var html='<div class="card builder"><h3>'+possessive(cpu.name)+" turn — "+b.atk.name+"</h3>";
   html+='<div class="term-lines">'+
-    '<div class="term-line"><span class="label">Pet attack — '+b.atk.name+'</span><span class="expr">'+fmtFull(b.atk.a,b.atk.b)+'</span></div>'+
+    '<div class="term-line"><span class="label">Pet attack — '+b.atk.name+'</span><span class="expr">'+(b.atk.printed||fmtFull(b.atk.a,b.atk.b))+'</span></div>'+
     '<div class="term-line"><span class="label">'+cpu.name+"'s "+TYPE_LABEL[t]+' stat ('+cpu.character.stats[t]+')</span><span class="expr">'+fmtSigned(b.sMod)+'</span></div>'+
     '<div class="term-line"><span class="label">'+Game.environment.name+'</span><span class="expr">'+fmtSigned(b.eMod)+'</span></div>'+
     '</div>';
