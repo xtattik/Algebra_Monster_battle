@@ -176,6 +176,9 @@
   @media (max-width:680px){.trade-cols{grid-template-columns:1fr}}
   .trade-col h3{font-size:1rem;margin-bottom:12px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-body);font-weight:800}
   .trade-result{margin-top:18px;padding:14px 16px;border-radius:10px;background:var(--panel-2);border:1px solid var(--line-soft);font-size:.88rem;color:var(--ink-dim)}
+  #scr-trade .trade-cols{grid-template-columns:1fr 2fr}
+  .shelf-list{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:680px){#scr-trade .trade-cols{grid-template-columns:1fr}.shelf-list{grid-template-columns:1fr}}
 
   /* ---------- battle screen ---------- */
   .env-strip{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:10px 14px;margin-bottom:18px}
@@ -815,7 +818,7 @@ function renderShelfScreen(){
 
   var shelfCol=document.createElement("div"); shelfCol.className="trade-col";
   var shelfH=document.createElement("h3"); shelfH.textContent="Trade shelf"; shelfCol.appendChild(shelfH);
-  var shelfList=document.createElement("div"); shelfList.className="list";
+  var shelfList=document.createElement("div"); shelfList.className="list shelf-list";
   pending.shelf.forEach(function(pet,si){
     var chosen = pending.take===si;
     var card=document.createElement("div");
@@ -903,6 +906,9 @@ function showTradeSummary(){
   }).join("");
   document.getElementById("trade-continue").textContent="Continue to arena ▸";
   pending.tradeSummaryShown=true;
+  var btn=document.getElementById("trade-continue");
+  btn.disabled=true;
+  setTimeout(function(){ btn.disabled=false; }, 400);
 }
 
 /* ---------- environment ---------- */
