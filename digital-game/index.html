@@ -952,7 +952,7 @@ function advanceTrade(){
     passTo(1, function(){ startShelfTrade(1); });
     return;
   }
-  if(Game.mode==="cpu"){
+  if(Game.mode==="cpu"||Game.mode==="tournament"){
     resolveCpuShelfTrade();
   }
   showTradeSummary();
@@ -1052,7 +1052,7 @@ function renderFieldGrid(idx){
 function pickFielded(idx,pi){
   Game.players[idx].fielded = Game.players[idx].roster[pi];
   if(Game.mode==="2p" && idx===0){ passTo(1,function(){ fieldStepHuman(1); }); return; }
-  if(Game.mode==="cpu"){
+  if(Game.mode==="cpu"||Game.mode==="tournament"){
     var cpu=Game.players[1];
     var choiceIdx = cpuFieldChoice(cpu);
     cpu.fielded = cpu.roster[choiceIdx];
@@ -1334,7 +1334,7 @@ function applyDamage(){
     if(defeated){ showResult(attP,defP); return; }
     Game.turn = 1-attackerIdx;
     renderBattle();
-    if(Game.mode==="cpu" && Game.turn===1) runCpuTurn();
+    if((Game.mode==="cpu"||Game.mode==="tournament") && Game.turn===1) runCpuTurn();
   });
 }
 function runCpuTurn(){
