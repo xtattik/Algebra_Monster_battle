@@ -995,10 +995,15 @@ function spawnDamageFloat(defIdx, dmg){
   var cards = document.querySelectorAll("#battle-fighters .fighter");
   var card = cards[defIdx];
   if(!card) return;
-  card.classList.add("hit");
   var el = document.createElement("div");
   el.className = "dmg-float";
-  el.textContent = "−"+dmg;
+  if(dmg>0){
+    card.classList.add("hit");
+    el.textContent = "−"+dmg;
+  } else {
+    el.textContent = "No damage";
+    el.style.color = "var(--ink-dim)";
+  }
   card.appendChild(el);
 }
 function clearDamageFloats(){
@@ -1020,10 +1025,21 @@ function resolveDamage(attackerIdx, dmg, logPartial, onDone){
     target: def.fielded.name, hpBefore: hpBefore, hpAfter: Math.max(def.curHp,0)
   });
   renderEnvStrip(); renderFighters(); renderLog();
-  document.getElementById("battle-active").innerHTML="";
-  spawnDamageFloat(1-attackerIdx, dmg);
+  var defIdx = 1-attackerIdx;
+  var fillEl = document.querySelectorAll("#battle-fighters .fighter")[defIdx];
+  fillEl = fillEl && fillEl.querySelector(".hp-fill");
+  if(fillEl){
+    fillEl.style.width = (hpBefore/def.maxHp*100)+"%";
+    void fillEl.offsetWidth; // force reflow so the next width change actually transitions
+    fillEl.style.width = (Math.max(def.curHp,0)/def.maxHp*100)+"%";
+  }
+  document.getElementById("battle-active").innerHTML =
+    '<div class="card" style="padding:22px;text-align:center;color:var(--ink-dim)">'+logPartial.who+
+    (dmg>0 ? ' connects for '+dmg+' damage.' : ' connects for no damage.')+'</div>';
+  spawnDamageFloat(defIdx, dmg);
   setTimeout(function(){
     clearDamageFloats();
+    if(!Game) return; // match was abandoned mid-reveal
     onDone(def.curHp<=0);
   }, 1400);
 }
