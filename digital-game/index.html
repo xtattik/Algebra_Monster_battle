@@ -101,7 +101,7 @@
   .hero .content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:5%;max-width:64%}
   .hero h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.05}
   .hero .tag{color:var(--ink-dim);margin-top:12px;line-height:1.5;font-size:.95rem;max-width:48ch}
-  .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+  .mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
   @media (max-width:620px){.mode-grid{grid-template-columns:1fr}.hero .content{max-width:88%}}
   .mode-card{
     background:var(--panel);border:1.5px solid var(--line);border-radius:var(--radius);
@@ -319,6 +319,10 @@
         <button class="mode-card" data-mode="2p">
           <b>Two Players</b>
           <p>Pass the device between turns. Good for a quick 1v1 at one desk.</p>
+        </button>
+        <button class="mode-card" data-mode="tournament">
+          <b>Tournament</b>
+          <p>Solo gauntlet. Beat all 7 characters in a row — win a roll and their pet joins your zoo.</p>
         </button>
       </div>
       <div class="art-toggle" id="difficulty-toggle" style="margin-top:22px">
@@ -682,7 +686,7 @@ document.querySelectorAll(".mode-card").forEach(function(el){
     chosenMode = el.getAttribute("data-mode");
     var btn = document.getElementById("btn-start");
     btn.disabled=false;
-    btn.textContent = chosenMode==="cpu" ? "Start — Vs. Computer ▸" : "Start — Two Players ▸";
+    btn.textContent = chosenMode==="cpu" ? "Start — Vs. Computer ▸" : chosenMode==="2p" ? "Start — Two Players ▸" : "Start — Tournament ▸";
   });
 });
 document.getElementById("btn-start").addEventListener("click", function(){
