@@ -947,6 +947,7 @@ function cpuFieldChoice(cpu){
 
 /* ---------- battle ---------- */
 var draft = null;
+var cpuReveal = null;
 function startBattle(){ renderBattle(); show("scr-battle"); if(currentPlayer().name==="CPU" || (Game.mode==="cpu" && Game.turn===1)) runCpuTurn(); }
 function currentPlayer(){ return Game.players[Game.turn]; }
 function opponent(){ return Game.players[1-Game.turn]; }
@@ -1205,32 +1206,81 @@ function applyDamage(){
   });
 }
 function runCpuTurn(){
+  var cpu=currentPlayer();
+  var allowed=allowedTypes(cpu,Game.environment);
+  var bestType=null,bestScore=-Infinity, built=null;
+  allowed.forEach(function(t){
+    var b=buildAttack(cpu,t,Game.environment);
+    var score=b.n*3.5+b.c;
+    if(score>bestScore){ bestScore=score; bestType=t; built=b; }
+  });
+  cpuReveal={type:bestType, built:built, roll:null};
+  renderCpuReveal("choosing");
+  setTimeout(function(){
+    renderCpuReveal("working");
+    setTimeout(function(){
+      renderCpuReveal("rolling");
+      animateCpuRoll();
+    }, 900);
+  }, 600);
+}
+function renderCpuReveal(stage){
   var root=document.getElementById("battle-active");
-  root.innerHTML='<div class="card cpu-turn"><div class="spinner"></div><div>CPU is choosing an attack…</div></div>';
+  var cpu=currentPlayer();
+  if(stage==="choosing"){
+    root.innerHTML='<div class="card cpu-turn"><div class="spinner"></div><div>'+possessive(cpu.name)+" "+cpu.fielded.name+' is choosing an attack…</div></div>';
+    return;
+  }
+  var b=cpuReveal.built, t=cpuReveal.type;
+  var html='<div class="card builder"><h3>'+possessive(cpu.name)+" turn — "+b.atk.name+"</h3>";
+  html+='<div class="term-lines">'+
+    '<div class="term-line"><span class="label">Pet attack — '+b.atk.name+'</span><span class="expr">'+fmtFull(b.atk.a,b.atk.b)+'</span></div>'+
+    '<div class="term-line"><span class="label">'+cpu.name+"'s "+TYPE_LABEL[t]+' stat ('+cpu.character.stats[t]+')</span><span class="expr">'+fmtSigned(b.sMod)+'</span></div>'+
+    '<div class="term-line"><span class="label">'+Game.environment.name+'</span><span class="expr">'+fmtSigned(b.eMod)+'</span></div>'+
+    '</div>';
+  html+='<p class="sub" style="margin-top:14px">Collected: <b>'+fmtFull(b.n,b.c)+'</b></p>';
+  if(stage==="rolling" || stage==="rolled"){
+    html+='<div class="roll-zone"><div class="die" id="cpu-die">'+(cpuReveal.roll||"?")+'</div>';
+    if(stage==="rolled"){
+      html+='<div class="roll-result">Substitute <b>x = '+cpuReveal.roll+'</b> into <b>'+fmtFull(b.n,b.c)+'</b> — floors at 0.</div>';
+    }
+    html+='</div>';
+  }
+  html+='</div>';
+  root.innerHTML=html;
+}
+function animateCpuRoll(){
+  var dieEl=document.getElementById("cpu-die");
+  var final=rollD6();
+  if(reducedMotion()){ finishCpuRoll(final); return; }
+  var ticks=0, max=10;
+  var iv=setInterval(function(){
+    dieEl.textContent = 1+Math.floor(Math.random()*6);
+    ticks++;
+    if(ticks>=max){ clearInterval(iv); finishCpuRoll(final); }
+  },60);
+}
+function finishCpuRoll(final){
+  cpuReveal.roll=final;
+  renderCpuReveal("rolled");
   setTimeout(function(){
     var cpu=currentPlayer();
-    var allowed=allowedTypes(cpu,Game.environment);
-    var best=null,bestScore=-Infinity, builtBest=null;
-    allowed.forEach(function(t){
-      var built=buildAttack(cpu,t,Game.environment);
-      var score=built.n*3.5+built.c;
-      if(score>bestScore){ bestScore=score; best=t; builtBest=built; }
-    });
-    var roll=rollD6();
-    var raw=builtBest.n*roll+builtBest.c;
+    var attackerIdx=Game.turn;
+    var b=cpuReveal.built, t=cpuReveal.type;
+    var raw=b.n*cpuReveal.roll+b.c;
     var total=Math.max(raw,0);
-    var def=opponent();
-    var hpBefore=Math.max(def.curHp,0);
-    def.curHp=Math.max(def.curHp-total,0);
-    cpu.lastTypes.push(best); if(cpu.lastTypes.length>2) cpu.lastTypes.shift();
-    Game.log.push({
-      p:Game.turn, who:possessive(cpu.name)+" "+cpu.fielded.name, attackName:builtBest.atk.name,
-      expr: fmtFull(builtBest.atk.a,builtBest.atk.b)+" "+fmtSignedInline(builtBest.sMod)+" "+fmtSignedInline(builtBest.eMod)+" = "+fmtFull(builtBest.n,builtBest.c),
-      roll:roll, dmg:total, clamped: total!==raw, target:def.fielded.name, hpBefore:hpBefore, hpAfter:Math.max(def.curHp,0)
+    var logPartial={
+      who: possessive(cpu.name)+" "+cpu.fielded.name, attackName: b.atk.name,
+      expr: fmtFull(b.n,b.c), roll: cpuReveal.roll, clamped: total!==raw
+    };
+    cpu.lastTypes.push(t); if(cpu.lastTypes.length>2) cpu.lastTypes.shift();
+    cpuReveal=null;
+    resolveDamage(attackerIdx, total, logPartial, function(defeated){
+      var attP=Game.players[attackerIdx], defP=Game.players[1-attackerIdx];
+      if(defeated){ showResult(attP,defP); return; }
+      Game.turn=1-attackerIdx;
+      renderBattle();
     });
-    if(def.curHp<=0){ showResult(cpu,def); return; }
-    Game.turn=1-Game.turn;
-    renderBattle();
   }, 900);
 }
 
