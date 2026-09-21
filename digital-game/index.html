@@ -460,7 +460,7 @@ const CHARACTERS = [
     art:"art/characters/07-bard.jpg",artFemale:"art/characters/female/07-bard.png"},
 ];
 
-function A(name,a,b,min){ return {name,a,b,min:min||null}; }
+function A(name,a,b,min,printed){ return {name,a,b,min:min||null,printed:printed||null}; }
 const PETS = [
   {id:1,name:"Emberwisp",hp:40,archetype:"Glass cannon",flavour:"A trapped mote of wildfire that never learned to be careful.",art:"art/pets/01-emberwisp.jpg",
     attacks:{magic:A("Cinderburst",4,1),strength:A("Singe",1,-1,1),agility:A("Flit",2,0)}},
@@ -506,6 +506,58 @@ const PETS = [
     attacks:{magic:A("Mud Bolt",3,0),strength:A("Bellyflop",2,0),agility:A("Hunker",1,-1,1)}},
   {id:22,name:"Rust Golem",hp:102,archetype:"Tank",flavour:"Slow, heavy, and only ever going one direction: yours.",art:"art/pets/22-rust-golem.jpg",
     attacks:{magic:A("Oxide Cloud",1,-1,1),strength:A("Iron Fist",3,0),agility:A("Grind Forward",2,0)}},
+];
+
+/* Challenge pet deck — same 22 pets (id/name/hp/archetype/flavour/art all
+   identical to PETS, transcribed from cards/pets-challenge.md), only the
+   three attack equations differ: unexpanded brackets a(x±b) or negative
+   coefficients −ax+b, both reduced to the canonical (a,b) pair here with
+   the authored form kept in `printed` for display (see A(), above). */
+const CHALLENGE_PETS = [
+  {id:1,name:"Emberwisp",hp:40,archetype:"Glass cannon",flavour:"A trapped mote of wildfire that never learned to be careful.",art:"art/pets/01-emberwisp.jpg",
+    attacks:{magic:A("Cinderburst",4,4,null,"4(x + 1)"),strength:A("Singe",-1,5,1,"−x + 5"),agility:A("Flit",2,-2,1,"2(x − 1)")}},
+  {id:2,name:"Gorehoof",hp:42,archetype:"Glass cannon",flavour:"Aims first. Thinks later, if at all.",art:"art/pets/02-gorehoof.jpg",
+    attacks:{magic:A("Snort",2,-2,1,"2(x − 1)"),strength:A("Goring Charge",-4,13,1,"−4x + 13"),agility:A("Trample",-1,5,1,"−x + 5")}},
+  {id:3,name:"Dartclaw",hp:38,archetype:"Glass cannon",flavour:"You feel it a moment before you see it.",art:"art/pets/03-dartclaw.jpg",
+    attacks:{magic:A("Static Lick",-2,8,1,"−2x + 8"),strength:A("Tail Whip",2,2,null,"2(x + 1)"),agility:A("Blink Slash",4,4,null,"4(x + 1)")}},
+  {id:4,name:"Sootmane",hp:76,archetype:"Baseline",flavour:"Patient. Then, very suddenly, not.",art:"art/pets/04-sootmane.jpg",
+    attacks:{magic:A("Warding Roar",-1,5,1,"−x + 5"),strength:A("Pounce",3,3,null,"3(x + 1)"),agility:A("Prowl",2,-2,1,"2(x − 1)")}},
+  {id:5,name:"Tidecaller",hp:74,archetype:"Baseline",flavour:"It calls the water, and the water always answers.",art:"art/pets/05-tidecaller.jpg",
+    attacks:{magic:A("Tidal Pulse",3,-3,1,"3(x − 1)"),strength:A("Tail Slap",2,-2,1,"2(x − 1)"),agility:A("Slip Away",-2,8,1,"−2x + 8")}},
+  {id:6,name:"Gustling",hp:72,archetype:"Baseline",flavour:"Hard to catch, harder to hold onto.",art:"art/pets/06-gustling.jpg",
+    attacks:{magic:A("Whisper Gale",-1,5,1,"−x + 5"),strength:A("Buffet",2,2,null,"2(x + 1)"),agility:A("Cyclone Kick",3,-3,1,"3(x − 1)")}},
+  {id:7,name:"Patchwork Golem",hp:80,archetype:"Baseline",flavour:"Assembled from spare parts, none of them a matched set.",art:"art/pets/07-patchwork-golem.jpg",
+    attacks:{magic:A("Spark Seam",2,2,null,"2(x + 1)"),strength:A("Hammer Fist",-2,8,1,"−2x + 8"),agility:A("Lumber",3,-3,1,"3(x − 1)")}},
+  {id:8,name:"Riftmoth",hp:70,archetype:"Baseline",flavour:"Half of it is here. The other half is somewhere worse.",art:"art/pets/08-riftmoth.jpg",
+    attacks:{magic:A("Dust of Ages",2,-2,1,"2(x − 1)"),strength:A("Wing Slam",-2,8,1,"−2x + 8"),agility:A("Phase Flurry",3,-3,1,"3(x − 1)")}},
+  {id:9,name:"Grave Hound",hp:74,archetype:"Baseline",flavour:"It has your scent now, and it is not in a hurry.",art:"art/pets/09-gravehound.jpg",
+    attacks:{magic:A("Baying Howl",-1,5,1,"−x + 5"),strength:A("Bone Crush",3,-3,1,"3(x − 1)"),agility:A("Lunge",2,2,null,"2(x + 1)")}},
+  {id:10,name:"Boulderhide",hp:100,archetype:"Tank",flavour:"In no rush to get anywhere, least of all away from you.",art:"art/pets/10-boulderhide.jpg",
+    attacks:{magic:A("Dust Cloud",-1,5,1,"−x + 5"),strength:A("Shell Bash",-2,8,1,"−2x + 8"),agility:A("Withdraw",2,-2,1,"2(x − 1)")}},
+  {id:11,name:"Old Cairn",hp:98,archetype:"Tank",flavour:"Older than the hill it grew out of.",art:"art/pets/11-old-cairn.jpg",
+    attacks:{magic:A("Root Surge",2,-2,1,"2(x − 1)"),strength:A("Deadfall",-1,5,1,"−x + 5"),agility:A("Slow Creak",-2,8,1,"−2x + 8")}},
+  {id:12,name:"Moss Troll",hp:104,archetype:"Tank",flavour:"Thick, slow, and remarkably hard to convince to fall over.",art:"art/pets/12-moss-troll.jpg",
+    attacks:{magic:A("Spore Cloud",2,-2,1,"2(x − 1)"),strength:A("Heavy Club",-2,8,1,"−2x + 8"),agility:A("Shamble",-1,5,1,"−x + 5")}},
+  {id:13,name:"Sparkhound",hp:39,archetype:"Glass cannon",flavour:"Static crackles off it when it gets excited, which is always.",art:"art/pets/13-sparkhound.jpg",
+    attacks:{magic:A("Arc Bite",-4,13,1,"−4x + 13"),strength:A("Nip",2,-2,1,"2(x − 1)"),agility:A("Dash",-1,5,1,"−x + 5")}},
+  {id:14,name:"Bristlecharge",hp:41,archetype:"Glass cannon",flavour:"The warning snort is the only warning you get.",art:"art/pets/14-bristelcharge.jpg",
+    attacks:{magic:A("Huff",-1,5,1,"−x + 5"),strength:A("Spine Rush",4,4,null,"4(x + 1)"),agility:A("Sidestep",2,2,null,"2(x + 1)")}},
+  {id:15,name:"Quickfin",hp:38,archetype:"Glass cannon",flavour:"Gone before the ripples have finished spreading.",art:"art/pets/15-quickfin.jpg",
+    attacks:{magic:A("Bubble",2,2,null,"2(x + 1)"),strength:A("Fin Slap",-2,8,1,"−2x + 8"),agility:A("Riptide Dart",-4,13,1,"−4x + 13")}},
+  {id:16,name:"Cindercat",hp:75,archetype:"Baseline",flavour:"Warm to the touch. Warmer if it has decided it doesn't like you.",art:"art/pets/16-cindercat.jpg",
+    attacks:{magic:A("Ember Purr",3,3,null,"3(x + 1)"),strength:A("Swipe",-2,8,1,"−2x + 8"),agility:A("Slink",2,-2,1,"2(x − 1)")}},
+  {id:17,name:"Ironhide Ram",hp:78,archetype:"Baseline",flavour:"Built like a doorstop and twice as stubborn.",art:"art/pets/17-ironhide-ram.jpg",
+    attacks:{magic:A("Bleat",-2,8,1,"−2x + 8"),strength:A("Headbutt",3,-3,1,"3(x − 1)"),agility:A("Scramble",2,-2,1,"2(x − 1)")}},
+  {id:18,name:"Zephyr Kite",hp:72,archetype:"Baseline",flavour:"Rides the wind so you never have to guess where it is — until you do.",art:"art/pets/18-zephyr-kite.jpg",
+    attacks:{magic:A("Updraft",-1,5,1,"−x + 5"),strength:A("Talon Rake",2,2,null,"2(x + 1)"),agility:A("Divebomb",3,-3,1,"3(x − 1)")}},
+  {id:19,name:"Clockwork Beetle",hp:80,archetype:"Baseline",flavour:"Wind it up, set it down, and take a step back.",art:"art/pets/19-clockwork-beetle.jpg",
+    attacks:{magic:A("Spark Coil",-2,8,1,"−2x + 8"),strength:A("Pincer",2,-2,1,"2(x − 1)"),agility:A("Scuttle",3,-3,1,"3(x − 1)")}},
+  {id:20,name:"Barrow Wight",hp:96,archetype:"Tank",flavour:"It remembers being alive, and it resents you for still managing it.",art:"art/pets/20-barrow-wight.jpg",
+    attacks:{magic:A("Chill Touch",-1,5,1,"−x + 5"),strength:A("Grave Reach",2,-2,1,"2(x − 1)"),agility:A("Drift",-2,8,1,"−2x + 8")}},
+  {id:21,name:"Deepstone Toad",hp:98,archetype:"Tank",flavour:"Has not moved in a decade and does not plan to start now.",art:"art/pets/21-deepstone-toad.jpg",
+    attacks:{magic:A("Mud Bolt",-2,8,1,"−2x + 8"),strength:A("Bellyflop",2,-2,1,"2(x − 1)"),agility:A("Hunker",-1,5,1,"−x + 5")}},
+  {id:22,name:"Rust Golem",hp:102,archetype:"Tank",flavour:"Slow, heavy, and only ever going one direction: yours.",art:"art/pets/22-rust-golem.jpg",
+    attacks:{magic:A("Oxide Cloud",-2,8,1,"−2x + 8"),strength:A("Iron Fist",-1,5,1,"−x + 5"),agility:A("Grind Forward",2,-2,1,"2(x − 1)")}},
 ];
 
 function E(type,kind,amount){ return {type,kind,amount:amount||null}; }
