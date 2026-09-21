@@ -714,10 +714,11 @@ function dealPets(){
 }
 function clonePet(p){ return JSON.parse(JSON.stringify(p)); }
 function petAffinity(pet){
-  // null means "Balanced" — all three attacks share the same top coefficient
-  // (Patchwork Golem, Moss Troll, Clockwork Beetle in the source deck).
-  var max=Math.max(pet.attacks.magic.a,pet.attacks.strength.a,pet.attacks.agility.a);
-  var top=TYPES.filter(function(t){ return pet.attacks[t].a===max; });
+  // null means "Balanced" — all three attacks share the same top magnitude.
+  // Magnitude (not raw value) because Challenge pets can have a negative
+  // coefficient that's still the pet's "biggest" attack.
+  var max=Math.max(Math.abs(pet.attacks.magic.a),Math.abs(pet.attacks.strength.a),Math.abs(pet.attacks.agility.a));
+  var top=TYPES.filter(function(t){ return Math.abs(pet.attacks[t].a)===max; });
   return top.length===1 ? top[0] : null;
 }
 // Shared card body for every pet display (roll / trade / field select) — full,
