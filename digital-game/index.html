@@ -176,9 +176,9 @@
   @media (max-width:680px){.trade-cols{grid-template-columns:1fr}}
   .trade-col h3{font-size:1rem;margin-bottom:12px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-body);font-weight:800}
   .trade-result{margin-top:18px;padding:14px 16px;border-radius:10px;background:var(--panel-2);border:1px solid var(--line-soft);font-size:.88rem;color:var(--ink-dim)}
-  #scr-trade .trade-cols{grid-template-columns:1fr 2fr}
+  #scr-trade .trade-cols.shelf-cols{grid-template-columns:1fr 2fr}
   .shelf-list{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media (max-width:680px){#scr-trade .trade-cols{grid-template-columns:1fr}.shelf-list{grid-template-columns:1fr}}
+  @media (max-width:680px){#scr-trade .trade-cols.shelf-cols{grid-template-columns:1fr}.shelf-list{grid-template-columns:1fr}}
 
   /* ---------- battle screen ---------- */
   .env-strip{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:10px 14px;margin-bottom:18px}
@@ -797,6 +797,7 @@ function startShelfTrade(idx){
 function renderShelfScreen(){
   var idx=pending.tradeIdx, p=Game.players[idx];
   var grid=document.getElementById("trade-grid");
+  grid.classList.add("shelf-cols");
   grid.innerHTML="";
   document.getElementById("trade-result-box").innerHTML="";
 
@@ -879,6 +880,7 @@ function resolveCpuShelfTrade(){
 function showTradeSummary(){
   document.getElementById("trade-title").textContent = "Trading complete";
   var grid=document.getElementById("trade-grid");
+  grid.classList.remove("shelf-cols");
   grid.innerHTML="";
   Game.players.forEach(function(p,idx){
     var result=pending.shelfResults[idx];
