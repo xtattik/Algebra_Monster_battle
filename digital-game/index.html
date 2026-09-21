@@ -296,7 +296,7 @@
 <body>
 <div id="app">
   <header class="topbar">
-    <div class="brand"><b>Algebra Monster Battle</b><span>web scaffold</span></div>
+    <div class="brand"><b>Algebra Monster Battle</b><span id="brand-sub">web scaffold</span></div>
     <button class="link-btn" id="btn-reset" hidden>Restart</button>
   </header>
 
@@ -665,7 +665,12 @@ var pending = {}; // scratch state for multi-step screens (pass/select/trade/fie
 
 function show(id){
   document.querySelectorAll(".screen").forEach(function(s){ s.hidden = (s.id!==id); });
+  updateRoundIndicator();
   window.scrollTo({top:0,behavior:reducedMotion()?"auto":"smooth"});
+}
+function updateRoundIndicator(){
+  var el=document.getElementById("brand-sub");
+  el.textContent = (Game && Game.mode==="tournament") ? "Round "+(Game.tournament.round+1)+" of "+Game.tournament.totalRounds : "web scaffold";
 }
 
 /* ---------- title / mode select ---------- */
