@@ -691,6 +691,7 @@ document.querySelectorAll(".mode-card").forEach(function(el){
 });
 document.getElementById("btn-start").addEventListener("click", function(){
   if(!chosenMode) return;
+  if(chosenMode==="tournament"){ beginTournament(); return; }
   Game = {
     mode:chosenMode,
     difficulty:chosenDifficulty,
@@ -701,6 +702,18 @@ document.getElementById("btn-start").addEventListener("click", function(){
   document.getElementById("btn-reset").hidden=false;
   beginSelect(0);
 });
+function beginTournament(){
+  Game = {
+    mode:"tournament",
+    difficulty:chosenDifficulty,
+    petPool: chosenDifficulty==="challenge" ? CHALLENGE_PETS : PETS,
+    players:[ mkPlayer("You"), mkPlayer("CPU") ],
+    environment:null, turn:0, log:[],
+    tournament:{round:0, totalRounds:7, queue:shuffled(CHARACTERS)}
+  };
+  document.getElementById("btn-reset").hidden=false;
+  beginSelect(0);
+}
 document.getElementById("btn-reset").addEventListener("click", function(){
   if(confirm("Restart the whole match?")){ Game=null; document.getElementById("btn-reset").hidden=true; show("scr-title"); }
 });
@@ -766,9 +779,13 @@ function beginSelect(playerIdx){
 }
 function pickCharacter(playerIdx,c){
   Game.players[playerIdx].character = c;
-  if(Game.mode==="cpu" && playerIdx===0){
-    var remaining = CHARACTERS.filter(function(x){ return x.id!==c.id; });
-    Game.players[1].character = remaining[Math.floor(Math.random()*remaining.length)];
+  if((Game.mode==="cpu"||Game.mode==="tournament") && playerIdx===0){
+    if(Game.mode==="tournament"){
+      Game.players[1].character = Game.tournament.queue[Game.tournament.round];
+    } else {
+      var remaining = CHARACTERS.filter(function(x){ return x.id!==c.id; });
+      Game.players[1].character = remaining[Math.floor(Math.random()*remaining.length)];
+    }
     dealPets();
   } else if(Game.mode==="2p" && playerIdx===0){
     passTo(1, function(){ beginSelect(1); });
