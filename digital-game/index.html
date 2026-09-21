@@ -1,0 +1,1197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algebra Monster Battle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Manrope:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Deliberately single dark "arcane battlefield" world — matches the game's own
+     fantasy-painting art, so no light-mode branch (per design guidance). */
+  :root{
+    --bg:#0a0b13;
+    --bg-2:#0d0f1a;
+    --panel:#151827;
+    --panel-2:#1c2033;
+    --line:#2b2f4a;
+    --line-soft:#20233a;
+    --ink:#eee9f7;
+    --ink-dim:#a8a4c4;
+    --ink-faint:#726e94;
+    --accent:#8b6bff;
+    --accent-dim:#5b4499;
+    --magic:#9b6bff;
+    --strength:#ff6a4d;
+    --agility:#35d0c0;
+    --ok:#7ee787;
+    --warn:#ffcf6b;
+    --danger:#ff5470;
+    --shadow: 0 12px 32px -12px rgba(0,0,0,.6);
+    --radius: 14px;
+    --font-display:"Cinzel",Georgia,serif;
+    --font-body:"Manrope",system-ui,-apple-system,Segoe UI,sans-serif;
+    --font-mono:"Space Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(139,107,255,.16), transparent 60%),
+      radial-gradient(ellipse 800px 500px at 100% 0%, rgba(255,106,77,.10), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    padding-inline:16px;
+  }
+  h1,h2,h3{font-family:var(--font-display);letter-spacing:.02em;text-wrap:balance;margin:0}
+  p{margin:0}
+  button{font:inherit;color:inherit}
+  img{max-width:100%;display:block}
+  [hidden]{display:none!important}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  ::selection{background:var(--accent);color:#0a0b13}
+  .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+
+  /* ---------- shell ---------- */
+  #app{max-width:1040px;margin:0 auto}
+  .topbar{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:16px 4px;background:linear-gradient(var(--bg) 70%, transparent);
+  }
+  .topbar .brand{display:flex;align-items:baseline;gap:8px}
+  .topbar .brand b{font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:var(--ink)}
+  .topbar .brand span{font-size:.72rem;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase}
+  .link-btn{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.8rem;color:var(--ink-dim);cursor:pointer}
+  .link-btn:hover{border-color:var(--accent);color:var(--ink)}
+
+  .screen{padding-bottom:64px}
+  .screen-head{margin-bottom:22px}
+  .eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .screen-head h2{font-size:1.7rem;margin-top:6px}
+  .screen-head .sub{color:var(--ink-dim);margin-top:8px;max-width:60ch;line-height:1.5}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--accent);color:#0a0b13;border:none;border-radius:10px;
+    padding:13px 22px;font-weight:800;font-size:.95rem;cursor:pointer;
+    box-shadow:0 6px 20px -6px rgba(139,107,255,.55);
+  }
+  .btn:hover{filter:brightness(1.08)}
+  .btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+  .btn.ghost:hover{border-color:var(--accent)}
+  .btn.wide{width:100%}
+  .row-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+
+  .card{background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .card-pad{padding:20px}
+
+  /* ---------- title screen ---------- */
+  .hero{
+    border-radius:20px;overflow:hidden;position:relative;border:1px solid var(--line-soft);
+    aspect-ratio:1520/620;background:var(--panel-2);
+  }
+  .hero img{width:100%;height:100%;object-fit:cover;object-position:60% 35%}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(100deg, rgba(10,11,19,.94) 20%, rgba(10,11,19,.45) 62%, transparent 100%)}
+  .hero .content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:5%;max-width:64%}
+  .hero h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.05}
+  .hero .tag{color:var(--ink-dim);margin-top:12px;line-height:1.5;font-size:.95rem;max-width:48ch}
+  .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+  @media (max-width:620px){.mode-grid{grid-template-columns:1fr}.hero .content{max-width:88%}}
+  .mode-card{
+    background:var(--panel);border:1.5px solid var(--line);border-radius:var(--radius);
+    padding:20px;text-align:left;cursor:pointer;transition:border-color .15s;
+  }
+  .mode-card:hover,.mode-card.selected{border-color:var(--accent)}
+  .mode-card b{display:block;font-family:var(--font-display);font-size:1.05rem;margin-bottom:6px}
+  .mode-card p{color:var(--ink-dim);font-size:.85rem;line-height:1.45}
+  details.rules{margin-top:28px;background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius);padding:16px 18px}
+  details.rules summary{cursor:pointer;font-weight:700;font-family:var(--font-display);letter-spacing:.02em}
+  details.rules ol{margin:14px 0 0;padding-left:20px;color:var(--ink-dim);line-height:1.7;font-size:.9rem}
+  details.rules ol li b{color:var(--ink)}
+
+  /* ---------- pass screen ---------- */
+  .pass-wrap{min-height:50vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 0}
+  .pass-wrap .card{padding:40px;max-width:420px}
+  .pass-wrap h2{font-size:1.5rem;margin-bottom:10px}
+  .pass-wrap p{color:var(--ink-dim);margin-bottom:24px}
+
+  /* ---------- selection lists (character / pet / field) ----------
+     Source art comes in inconsistent native ratios (male portraits ~2.25-2.75,
+     female ~2.1-2.3, pets a uniform 3.37) and characters/pets bake their own
+     name + tagline into the image, so cards never force an aspect-ratio box —
+     img renders at its own natural size (width:100%, height:auto) so nothing
+     is ever cropped, and each card's height simply follows its art. */
+  .list{display:flex;flex-direction:column;gap:16px}
+  .art-toggle{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;margin-bottom:18px}
+  .art-toggle span{padding:0 10px;font-size:.68rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em}
+  .art-toggle button{border:none;background:none;color:var(--ink-dim);padding:7px 16px;border-radius:999px;font-size:.82rem;font-weight:700;cursor:pointer}
+  .art-toggle button.active{background:var(--accent);color:#0a0b13}
+
+  .art-card{
+    display:block;width:100%;text-align:left;cursor:pointer;background:var(--panel);
+    border:2px solid var(--line-soft);border-radius:var(--radius);overflow:hidden;padding:0;
+  }
+  .art-card:hover{border-color:var(--accent-dim)}
+  .art-card.chosen{border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,107,255,.25)}
+  .art-card.disabled{opacity:.35;cursor:not-allowed;filter:grayscale(.55)}
+  .art-card .art{position:relative;background:var(--bg-2);line-height:0}
+  .art-card .art img{width:100%;height:auto;display:block}
+  .art-card .footer{padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+  .art-card .footer .name{font-family:var(--font-display);font-weight:700;font-size:1.08rem;margin-right:auto}
+  .art-card .footer .meta{font-size:.82rem;color:var(--ink-dim);width:100%;line-height:1.5}
+  .art-card .pillrow{display:flex;gap:6px;flex-wrap:wrap;width:100%;margin-top:2px}
+  .pill{font-size:.68rem;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink-dim);white-space:nowrap}
+  .stat-chip{font-size:.68rem;padding:3px 9px;border-radius:999px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+  .stat-chip.magic{background:rgba(155,107,255,.18);color:var(--magic)}
+  .stat-chip.strength{background:rgba(255,106,77,.18);color:var(--strength)}
+  .stat-chip.agility{background:rgba(53,208,192,.18);color:var(--agility)}
+  .badge-hp{position:absolute;top:10px;right:10px;background:rgba(10,11,19,.8);border:1px solid var(--line);
+    border-radius:999px;padding:3px 9px;font-size:.68rem;font-family:var(--font-mono);color:var(--ink)}
+  .badge-arch{position:absolute;top:10px;left:10px;background:rgba(10,11,19,.8);border:1px solid var(--line);
+    border-radius:999px;padding:3px 9px;font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-dim)}
+
+  /* ---------- environment reveal ---------- */
+  .env-banner{border-radius:18px;overflow:hidden;position:relative;aspect-ratio:1520/500;border:1px solid var(--line-soft)}
+  .env-banner img{width:100%;height:100%;object-fit:cover}
+  .env-banner .veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,19,.95),transparent 60%)}
+  .env-banner .cap{position:absolute;left:0;right:0;bottom:0;padding:22px}
+  .env-banner h2{font-size:1.6rem}
+  .env-banner .flavour{color:var(--ink-dim);margin-top:6px;font-size:.9rem;max-width:60ch}
+  .effect-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px}
+  .effect-chip{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;font-size:.85rem;font-weight:700;border:1px solid var(--line-soft)}
+  .effect-chip .dot{width:8px;height:8px;border-radius:50%}
+  .effect-chip.boost{color:var(--ok)}
+  .effect-chip.weaken{color:var(--warn)}
+  .effect-chip.cancel{color:var(--danger)}
+  .effect-chip .dot.magic{background:var(--magic)} .effect-chip .dot.strength{background:var(--strength)} .effect-chip .dot.agility{background:var(--agility)}
+
+  /* ---------- trade screen ---------- */
+  .trade-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media (max-width:680px){.trade-cols{grid-template-columns:1fr}}
+  .trade-col h3{font-size:1rem;margin-bottom:12px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-body);font-weight:800}
+  .trade-result{margin-top:18px;padding:14px 16px;border-radius:10px;background:var(--panel-2);border:1px solid var(--line-soft);font-size:.88rem;color:var(--ink-dim)}
+
+  /* ---------- battle screen ---------- */
+  .env-strip{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:10px 14px;margin-bottom:18px}
+  .env-strip img{width:52px;height:52px;border-radius:8px;object-fit:cover;flex:none}
+  .env-strip .name{font-family:var(--font-display);font-weight:700}
+  .env-strip .fx{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+  .env-strip .fx span{font-size:.66rem;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+
+  .combat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+  @media (max-width:680px){.combat-grid{grid-template-columns:1fr}}
+  .fighter{padding:16px;position:relative;overflow:hidden}
+  .fighter.active{border-color:var(--accent)}
+  .fighter .top{display:flex;gap:12px;align-items:center}
+  .fighter .thumb{width:58px;height:58px;border-radius:10px;overflow:hidden;flex:none;border:1px solid var(--line-soft)}
+  .fighter .thumb img{width:100%;height:100%;object-fit:cover}
+  .fighter .who{font-size:.7rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em}
+  .fighter .names b{font-family:var(--font-display);font-size:1.02rem}
+  .fighter .names .sub{font-size:.78rem;color:var(--ink-dim)}
+  .hp-row{margin-top:12px}
+  .hp-row .num{display:flex;justify-content:space-between;font-size:.75rem;color:var(--ink-dim);margin-bottom:5px}
+  .hp-track{height:10px;border-radius:999px;background:var(--bg-2);overflow:hidden;border:1px solid var(--line-soft)}
+  .hp-fill{height:100%;border-radius:999px;transition:width .5s ease}
+  .streak{display:flex;gap:5px;margin-top:10px}
+  .streak .pip{width:9px;height:9px;border-radius:50%;background:var(--line)}
+  .turn-flag{position:absolute;top:10px;right:10px;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;border-radius:999px}
+
+  .builder{padding:22px}
+  .builder h3{font-size:1.1rem;margin-bottom:4px}
+  .builder .hint{color:var(--ink-dim);font-size:.85rem;margin-bottom:16px}
+  .type-picker{display:flex;gap:10px;flex-wrap:wrap}
+  .type-btn{flex:1;min-width:150px;border:2px solid var(--line-soft);border-radius:12px;padding:12px 14px;text-align:left;cursor:pointer;background:var(--panel-2)}
+  .type-btn b{display:block;font-family:var(--font-display)}
+  .type-btn .eq{font-family:var(--font-mono);font-size:.85rem;color:var(--ink-dim);margin-top:4px}
+  .type-btn.magic:hover,.type-btn.magic.chosen{border-color:var(--magic)}
+  .type-btn.strength:hover,.type-btn.strength.chosen{border-color:var(--strength)}
+  .type-btn.agility:hover,.type-btn.agility.chosen{border-color:var(--agility)}
+  .type-btn:disabled{opacity:.3;cursor:not-allowed}
+
+  .term-lines{margin-top:18px;display:flex;flex-direction:column;gap:8px}
+  .term-line{display:flex;justify-content:space-between;align-items:baseline;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:8px;padding:10px 14px}
+  .term-line .label{font-size:.78rem;color:var(--ink-dim)}
+  .term-line .expr{font-family:var(--font-mono);font-size:1.05rem}
+
+  .collect-row{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line)}
+  .collect-row label{font-size:.8rem;color:var(--ink-dim);display:block;margin-bottom:8px}
+  .nc-inputs{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .nc-inputs input{
+    width:76px;background:var(--bg-2);border:1.5px solid var(--line);border-radius:8px;color:var(--ink);
+    font-family:var(--font-mono);font-size:1.1rem;padding:10px;text-align:center;
+  }
+  .nc-inputs input:focus{border-color:var(--accent)}
+  .nc-inputs .xsuffix{font-family:var(--font-mono);font-size:1.1rem;color:var(--ink-dim)}
+  .check-feedback{margin-top:12px;font-size:.85rem;font-weight:700}
+  .check-feedback.ok{color:var(--ok)}
+  .check-feedback.bad{color:var(--danger)}
+  .reveal-link{background:none;border:none;color:var(--ink-faint);text-decoration:underline;cursor:pointer;font-size:.78rem;margin-top:10px;padding:0}
+
+  .roll-zone{margin-top:20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .die{
+    width:64px;height:64px;border-radius:14px;background:var(--panel-2);border:2px solid var(--accent-dim);
+    display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;font-size:1.7rem;flex:none;
+  }
+  .roll-result{font-family:var(--font-mono);font-size:1rem;color:var(--ink-dim)}
+  .roll-result b{color:var(--ink);font-size:1.15rem}
+
+  .cpu-turn{padding:22px;display:flex;align-items:center;gap:16px}
+  .cpu-turn .spinner{width:26px;height:26px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--accent);animation:spin 1s linear infinite;flex:none}
+  @media (prefers-reduced-motion: reduce){.cpu-turn .spinner{animation:none}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .log-panel{margin-top:22px}
+  .log-panel h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-dim);margin-bottom:10px;font-family:var(--font-body);font-weight:800}
+  .log-list{max-height:260px;overflow-y:auto;display:flex;flex-direction:column-reverse;gap:8px;padding-right:4px}
+  .log-item{border-left:3px solid var(--line);background:var(--panel);border-radius:0 8px 8px 0;padding:10px 12px;font-size:.8rem;line-height:1.5}
+  .log-item.p0{border-left-color:var(--magic)}
+  .log-item.p1{border-left-color:var(--strength)}
+  .log-item .who{font-weight:800;color:var(--ink)}
+  .log-item .expr{font-family:var(--font-mono);color:var(--ink-dim)}
+  .log-item .dmg{font-family:var(--font-mono);font-weight:700;color:var(--danger)}
+
+  /* ---------- result screen ---------- */
+  .result-hero{text-align:center;padding:50px 20px}
+  .result-hero .crown{font-size:2.4rem;margin-bottom:6px}
+  .result-hero h2{font-size:2rem}
+  .result-hero .pet-big{width:180px;height:180px;border-radius:16px;overflow:hidden;margin:22px auto;border:2px solid var(--accent-dim)}
+  .result-hero .pet-big img{width:100%;height:100%;object-fit:cover}
+  .capture-box{max-width:420px;margin:0 auto;padding:18px;text-align:center}
+  .capture-box p{color:var(--ink-dim);margin-bottom:14px;font-size:.9rem}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand"><b>Algebra Monster Battle</b><span>web scaffold</span></div>
+    <button class="link-btn" id="btn-reset" hidden>Restart</button>
+  </header>
+
+  <main>
+    <section class="screen" id="scr-title">
+      <div class="hero">
+        <img src="art/characters/01-sorcerer.jpg" alt="">
+        <div class="veil"></div>
+        <div class="content">
+          <h1>Algebra&nbsp;Monster&nbsp;Battle</h1>
+          <p class="tag">Pick a character, roll two random pets, trade one, draw an arena — then fight it out by building a linear expression, collecting like terms, and rolling a die to substitute for <em>x</em>. No maths, no damage.</p>
+        </div>
+      </div>
+
+      <div class="mode-grid">
+        <button class="mode-card" data-mode="cpu">
+          <b>Vs. Computer</b>
+          <p>Play solo. The computer picks a character, trades, and fights back using its own (visible) working.</p>
+        </button>
+        <button class="mode-card" data-mode="2p">
+          <b>Two Players</b>
+          <p>Pass the device between turns. Good for a quick 1v1 at one desk.</p>
+        </button>
+      </div>
+      <div class="row-actions">
+        <button class="btn wide" id="btn-start" disabled>Choose a mode to begin</button>
+      </div>
+
+      <details class="rules">
+        <summary>How a turn works</summary>
+        <ol>
+          <li><b>Pick an attack type</b> — magic, strength or agility — from your fielded pet.</li>
+          <li><b>Add your stat term</b> (+x High · 0 Average · −x Low) and <b>the arena's term</b> for that type.</li>
+          <li><b>Collect like terms</b> into a single <span class="mono">nx + c</span> — you have to get this right before you can roll.</li>
+          <li><b>Roll the die</b>, substitute it for <span class="mono">x</span>, and the total (floored at 0) comes off the enemy pet's HP.</li>
+        </ol>
+      </details>
+    </section>
+
+    <section class="screen" id="scr-pass" hidden>
+      <div class="pass-wrap">
+        <div class="card">
+          <h2 id="pass-title">Pass the device</h2>
+          <p id="pass-sub">Hand the screen to the next player.</p>
+          <button class="btn" id="pass-ready">I'm ready</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="scr-select" hidden>
+      <div class="screen-head">
+        <div class="eyebrow" id="select-eyebrow">Character select</div>
+        <h2 id="select-title">Choose your character</h2>
+        <p class="sub">Each character is High in one stat, Low in another — that stat buffs (or drags down) the matching attack type by ±x.</p>
+      </div>
+      <div id="select-toggle"></div>
+      <div class="list" id="select-grid"></div>
+    </section>
+
+    <section class="screen" id="scr-petroll" hidden>
+      <div class="screen-head">
+        <div class="eyebrow">Two pets, drawn at random</div>
+        <h2>Your zoo</h2>
+        <p class="sub">Each pet has a magic, strength and agility attack. Its biggest number is its affinity.</p>
+      </div>
+      <div class="trade-cols" id="petroll-grid"></div>
+      <div class="row-actions"><button class="btn" id="petroll-continue">Continue to trading ▸</button></div>
+    </section>
+
+    <section class="screen" id="scr-trade" hidden>
+      <div class="screen-head">
+        <div class="eyebrow">One trade, before battle</div>
+        <h2 id="trade-title">Offer a pet?</h2>
+        <p class="sub">Put one pet on the block, or keep both. A swap only happens if <em>both</em> sides offer one — that's the "mutual agreement" rule.</p>
+      </div>
+      <div class="trade-cols" id="trade-grid"></div>
+      <div id="trade-result-box"></div>
+      <div class="row-actions"><button class="btn" id="trade-continue">Confirm &amp; continue ▸</button></div>
+    </section>
+
+    <section class="screen" id="scr-environment" hidden>
+      <div class="screen-head">
+        <div class="eyebrow">Arena drawn</div>
+        <h2>The battleground</h2>
+      </div>
+      <div id="env-root"></div>
+      <div class="row-actions"><button class="btn" id="env-continue">Field your pet ▸</button></div>
+    </section>
+
+    <section class="screen" id="scr-field" hidden>
+      <div class="screen-head">
+        <div class="eyebrow" id="field-eyebrow">Choose your fighter</div>
+        <h2 id="field-title">Field a pet</h2>
+        <p class="sub">Picks are revealed together once both sides have chosen.</p>
+      </div>
+      <div class="list" id="field-grid"></div>
+    </section>
+
+    <section class="screen" id="scr-battle" hidden>
+      <div class="env-strip" id="battle-env-strip"></div>
+      <div class="combat-grid" id="battle-fighters"></div>
+      <div id="battle-active"></div>
+      <div class="log-panel">
+        <h3>Battle log</h3>
+        <div class="log-list" id="battle-log"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="scr-result" hidden>
+      <div class="result-hero card">
+        <div class="crown">🏆</div>
+        <h2 id="result-title">Winner!</h2>
+        <div class="pet-big"><img id="result-img" src="" alt=""></div>
+        <p class="sub" id="result-sub" style="margin:0 auto;text-align:center"></p>
+      </div>
+      <div class="capture-box card" id="capture-box"></div>
+      <div class="row-actions" style="justify-content:center">
+        <button class="btn ghost" id="btn-rematch">Rematch — same characters</button>
+        <button class="btn" id="btn-newgame">New game</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================== DATA ==============================
+   Transcribed from the Algebra Monster Battle repo (cards/*.md, rules v2).
+   Attack shorthand {a,b,min}: coefficient, constant, optional printed floor. */
+
+const CHARACTERS = [
+  {id:1,name:"Sorcerer",stats:{magic:"High",strength:"Average",agility:"Low"},
+    playstyle:"Lean on magic-attack pets — High Magic makes every cast +x. A Cancel: Magic terrain shuts the whole plan down, so keep a non-magic pet in reserve.",
+    flavour:"Power enough to bend the die. Ask them to swing a sword and watch the confidence drain.",
+    art:"art/characters/01-sorcerer.jpg",artFemale:"art/characters/female/01-sorcerer.png"},
+  {id:2,name:"Illusionist",stats:{magic:"High",strength:"Low",agility:"Average"},
+    playstyle:"Huge magic like the Sorcerer, but Low Strength makes your strength attacks −x — never plan to win a slugfest. End it with spells.",
+    flavour:"Every wound is real. So is every second you waste doubting it.",
+    art:"art/characters/02-illusionist.jpg",artFemale:"art/characters/female/02-illusionist.png"},
+  {id:3,name:"Paladin",stats:{magic:"Average",strength:"High",agility:"Low"},
+    playstyle:"Heavy hitter. High Strength makes strength attacks +x — field a big-strike pet and pound it out. Slow, but it lands.",
+    flavour:"Not fast. Not clever. But when it connects, things fall down.",
+    art:"art/characters/03-paladin.jpg",artFemale:"art/characters/female/03-paladin.png"},
+  {id:4,name:"Barbarian",stats:{magic:"Low",strength:"High",agility:"Average"},
+    playstyle:"Bruiser. Strength attacks +x, but Low Magic makes any cast −x — a caster pet is wasted on you.",
+    flavour:"The maths is simple when the answer is always “hit it again”.",
+    art:"art/characters/04-barbarian.jpg",artFemale:"art/characters/female/04-barbarian.png"},
+  {id:5,name:"Trickster",stats:{magic:"Average",strength:"Low",agility:"High"},
+    playstyle:"Fast skirmisher. High Agility gives agility attacks +x; Low Strength means you fold in a straight fight — stay on agility.",
+    flavour:"Win the roll, not the fight. There is a difference, and only one of them hurts.",
+    art:"art/characters/05-trickster.jpg",artFemale:"art/characters/female/05-trickster.png"},
+  {id:6,name:"Ranger",stats:{magic:"Low",strength:"Average",agility:"High"},
+    playstyle:"Agility specialist. Your +x is on agility attacks; a magic pet does nothing for you. Fear a Cancel: Agility.",
+    flavour:"Patience, the right ground, and one clean shot.",
+    art:"art/characters/06-ranger.jpg",artFemale:"art/characters/female/06-ranger.png"},
+  {id:7,name:"Bard",stats:{magic:"Average",strength:"Average",agility:"Average"},
+    playstyle:"Every stat is 0 — no spike, but no weakness. Never hard-countered, never cancelled out. The reliable pick.",
+    flavour:"Never the strongest in the room. Often the last one standing.",
+    art:"art/characters/07-bard.jpg",artFemale:"art/characters/female/07-bard.png"},
+];
+
+function A(name,a,b,min){ return {name,a,b,min:min||null}; }
+const PETS = [
+  {id:1,name:"Emberwisp",hp:40,archetype:"Glass cannon",flavour:"A trapped mote of wildfire that never learned to be careful.",art:"art/pets/01-emberwisp.jpg",
+    attacks:{magic:A("Cinderburst",4,1),strength:A("Singe",1,-1,1),agility:A("Flit",2,0)}},
+  {id:2,name:"Gorehoof",hp:42,archetype:"Glass cannon",flavour:"Aims first. Thinks later, if at all.",art:"art/pets/02-gorehoof.jpg",
+    attacks:{magic:A("Snort",1,-1,1),strength:A("Goring Charge",4,1),agility:A("Trample",2,0)}},
+  {id:3,name:"Dartclaw",hp:38,archetype:"Glass cannon",flavour:"You feel it a moment before you see it.",art:"art/pets/03-dartclaw.jpg",
+    attacks:{magic:A("Static Lick",1,0),strength:A("Tail Whip",2,0),agility:A("Blink Slash",4,1)}},
+  {id:4,name:"Sootmane",hp:76,archetype:"Baseline",flavour:"Patient. Then, very suddenly, not.",art:"art/pets/04-sootmane.jpg",
+    attacks:{magic:A("Warding Roar",1,1),strength:A("Pounce",3,1),agility:A("Prowl",2,0)}},
+  {id:5,name:"Tidecaller",hp:74,archetype:"Baseline",flavour:"It calls the water, and the water always answers.",art:"art/pets/05-tidecaller.jpg",
+    attacks:{magic:A("Tidal Pulse",3,1),strength:A("Tail Slap",1,1),agility:A("Slip Away",2,0)}},
+  {id:6,name:"Gustling",hp:72,archetype:"Baseline",flavour:"Hard to catch, harder to hold onto.",art:"art/pets/06-gustling.jpg",
+    attacks:{magic:A("Whisper Gale",2,0),strength:A("Buffet",1,1),agility:A("Cyclone Kick",3,1)}},
+  {id:7,name:"Patchwork Golem",hp:80,archetype:"Baseline",flavour:"Assembled from spare parts, none of them a matched set.",art:"art/pets/07-patchwork-golem.jpg",
+    attacks:{magic:A("Spark Seam",2,0),strength:A("Hammer Fist",2,1),agility:A("Lumber",2,0)}},
+  {id:8,name:"Riftmoth",hp:70,archetype:"Baseline",flavour:"Half of it is here. The other half is somewhere worse.",art:"art/pets/08-riftmoth.jpg",
+    attacks:{magic:A("Dust of Ages",1,0),strength:A("Wing Slam",2,0),agility:A("Phase Flurry",4,-2)}},
+  {id:9,name:"Grave Hound",hp:74,archetype:"Baseline",flavour:"It has your scent now, and it is not in a hurry.",art:"art/pets/09-gravehound.jpg",
+    attacks:{magic:A("Baying Howl",1,-1,1),strength:A("Bone Crush",3,1),agility:A("Lunge",2,-1)}},
+  {id:10,name:"Boulderhide",hp:100,archetype:"Tank",flavour:"In no rush to get anywhere, least of all away from you.",art:"art/pets/10-boulderhide.jpg",
+    attacks:{magic:A("Dust Cloud",2,0),strength:A("Shell Bash",3,0),agility:A("Withdraw",1,0)}},
+  {id:11,name:"Old Cairn",hp:98,archetype:"Tank",flavour:"Older than the hill it grew out of.",art:"art/pets/11-old-cairn.jpg",
+    attacks:{magic:A("Root Surge",3,0),strength:A("Deadfall",2,0),agility:A("Slow Creak",1,-1,1)}},
+  {id:12,name:"Moss Troll",hp:104,archetype:"Tank",flavour:"Thick, slow, and remarkably hard to convince to fall over.",art:"art/pets/12-moss-troll.jpg",
+    attacks:{magic:A("Spore Cloud",2,1),strength:A("Heavy Club",2,1),agility:A("Shamble",2,0)}},
+  {id:13,name:"Sparkhound",hp:39,archetype:"Glass cannon",flavour:"Static crackles off it when it gets excited, which is always.",art:"art/pets/13-sparkhound.jpg",
+    attacks:{magic:A("Arc Bite",4,0),strength:A("Nip",1,-1,1),agility:A("Dash",2,0)}},
+  {id:14,name:"Bristlecharge",hp:41,archetype:"Glass cannon",flavour:"The warning snort is the only warning you get.",art:"art/pets/14-bristelcharge.jpg",
+    attacks:{magic:A("Huff",1,-1,1),strength:A("Spine Rush",4,1),agility:A("Sidestep",2,0)}},
+  {id:15,name:"Quickfin",hp:38,archetype:"Glass cannon",flavour:"Gone before the ripples have finished spreading.",art:"art/pets/15-quickfin.jpg",
+    attacks:{magic:A("Bubble",2,0),strength:A("Fin Slap",1,0),agility:A("Riptide Dart",4,1)}},
+  {id:16,name:"Cindercat",hp:75,archetype:"Baseline",flavour:"Warm to the touch. Warmer if it has decided it doesn't like you.",art:"art/pets/16-cindercat.jpg",
+    attacks:{magic:A("Ember Purr",3,2),strength:A("Swipe",1,1),agility:A("Slink",2,0)}},
+  {id:17,name:"Ironhide Ram",hp:78,archetype:"Baseline",flavour:"Built like a doorstop and twice as stubborn.",art:"art/pets/17-ironhide-ram.jpg",
+    attacks:{magic:A("Bleat",1,1),strength:A("Headbutt",3,2),agility:A("Scramble",2,0)}},
+  {id:18,name:"Zephyr Kite",hp:72,archetype:"Baseline",flavour:"Rides the wind so you never have to guess where it is — until you do.",art:"art/pets/18-zephyr-kite.jpg",
+    attacks:{magic:A("Updraft",2,0),strength:A("Talon Rake",1,1),agility:A("Divebomb",3,2)}},
+  {id:19,name:"Clockwork Beetle",hp:80,archetype:"Baseline",flavour:"Wind it up, set it down, and take a step back.",art:"art/pets/19-clockwork-beetle.jpg",
+    attacks:{magic:A("Spark Coil",2,0),strength:A("Pincer",2,1),agility:A("Scuttle",2,0)}},
+  {id:20,name:"Barrow Wight",hp:96,archetype:"Tank",flavour:"It remembers being alive, and it resents you for still managing it.",art:"art/pets/20-barrow-wight.jpg",
+    attacks:{magic:A("Chill Touch",2,0),strength:A("Grave Reach",3,0),agility:A("Drift",1,0)}},
+  {id:21,name:"Deepstone Toad",hp:98,archetype:"Tank",flavour:"Has not moved in a decade and does not plan to start now.",art:"art/pets/21-deepstone-toad.jpg",
+    attacks:{magic:A("Mud Bolt",3,0),strength:A("Bellyflop",2,0),agility:A("Hunker",1,-1,1)}},
+  {id:22,name:"Rust Golem",hp:102,archetype:"Tank",flavour:"Slow, heavy, and only ever going one direction: yours.",art:"art/pets/22-rust-golem.jpg",
+    attacks:{magic:A("Oxide Cloud",1,-1,1),strength:A("Iron Fist",3,0),agility:A("Grind Forward",2,0)}},
+];
+
+function E(type,kind,amount){ return {type,kind,amount:amount||null}; }
+const ENVIRONMENTS = [
+  {id:1,name:"Arcane Nexus",flavour:"Ley lines converge here — raw magic answers the call.",art:"art/environments/01-arcane-nexus.jpg",effects:[E("magic","boost",2)]},
+  {id:2,name:"Dark Cavern",flavour:"Pitch black and close. Footwork and feel win down here.",art:"art/environments/02-dark-cavern.jpg",effects:[E("agility","boost",2)]},
+  {id:3,name:"Null Field",flavour:"A dead zone. Spells gutter and die no matter who casts them.",art:"art/environments/03-null-field.jpg",effects:[E("magic","cancel")]},
+  {id:4,name:"Sunken Marsh",flavour:"Knee-deep mud and black water. Every quick move turns slow.",art:"art/environments/04-sunken-marsh.jpg",effects:[E("agility","weaken",2)]},
+  {id:5,name:"Frozen Wastes",flavour:"Sheet ice from edge to edge. Nobody moves with any control.",art:"art/environments/05-frozen-wastes.jpg",effects:[E("agility","cancel")]},
+  {id:6,name:"Scorching Desert",flavour:"Heat and thirst drain the power out of every swing.",art:"art/environments/06-scorching-desert.jpg",effects:[E("strength","weaken",2)]},
+  {id:7,name:"Runic Vault",flavour:"Old wards feed spellwork; the air hangs thick around your feet.",art:"art/environments/07-runic-vault.jpg",effects:[E("magic","boost",2),E("agility","weaken",1)]},
+  {id:8,name:"Open Field",flavour:"Flat, mild, open ground. Nothing helps and nothing hinders.",art:"art/environments/08-open-field.jpg",effects:[]},
+  {id:9,name:"Coliseum",flavour:"Packed stands, hard sand, and a crowd that came to see a hit land.",art:"art/environments/09-coliseum.jpg",effects:[E("strength","boost",2)]},
+  {id:10,name:"Bonepit",flavour:"A pit of old bones. Good footing for a brawl; the air fights your casting.",art:"art/environments/10-bonepit.jpg",effects:[E("strength","boost",2),E("magic","weaken",1)]},
+  {id:11,name:"Highcrag",flavour:"A knife-edge ledge in a hard wind. Quick feet thrive; a big swing overbalances.",art:"art/environments/11-highcrag.jpg",effects:[E("agility","boost",2),E("strength","weaken",1)]},
+  {id:12,name:"Dead Grove",flavour:"Petrified trees, no birdsong, no wind. Magic will barely flow.",art:"art/environments/12-dead-grove.jpg",effects:[E("magic","weaken",2)]},
+  {id:13,name:"Thunderhead",flavour:"Lightning every few seconds. Spells scatter, footing is a gamble — but a fist still lands.",art:"art/environments/13-thunderhead.jpg",effects:[E("magic","weaken",1),E("agility","weaken",1)]},
+  {id:14,name:"Cloud Peak",flavour:"Thin air above the clouds. Every hard effort costs double — slow, careful magic still works.",art:"art/environments/14-cloud-peak.jpg",effects:[E("strength","weaken",1),E("agility","weaken",1)]},
+  {id:15,name:"The Veil",flavour:"Half-real fog. Blows pass straight through — only spellcraft and speed touch anything here.",art:"art/environments/15-the-veil.jpg",effects:[E("strength","cancel")]},
+];
+
+const TYPES = ["magic","strength","agility"];
+const TYPE_LABEL = {magic:"Magic",strength:"Strength",agility:"Agility"};
+
+/* ============================== ENGINE ============================== */
+
+function statMod(tier){ return tier==="High"?1:tier==="Low"?-1:0; }
+function envEffect(env,type){ return env.effects.find(function(e){return e.type===type}) || null; }
+function isCancelled(env,type){ var e=envEffect(env,type); return !!e && e.kind==="cancel"; }
+function envMod(env,type){
+  var e=envEffect(env,type);
+  if(!e || e.kind==="cancel") return 0;
+  return (e.kind==="boost"?1:-1)*e.amount;
+}
+function highStatType(character){
+  for(var i=0;i<TYPES.length;i++) if(character.stats[TYPES[i]]==="High") return TYPES[i];
+  return null;
+}
+function blockedByStreak(player,type){
+  var L=player.lastTypes;
+  return L.length>=2 && L[L.length-1]===type && L[L.length-2]===type;
+}
+function allowedTypes(player,env){
+  return TYPES.filter(function(t){ return !isCancelled(env,t) && !blockedByStreak(player,t); });
+}
+function buildAttack(player,type,env){
+  var atk = player.fielded.attacks[type];
+  var sMod = statMod(player.character.stats[type]);
+  var eMod = envMod(env,type);
+  return {atk:atk, sMod:sMod, eMod:eMod, n: atk.a+sMod+eMod, c: atk.b};
+}
+// NOTE (scaffold simplification): a pet's printed "(min 1)" floor applies to
+// its base attack evaluated alone (see core-rules-v2.md §3.1). Because v2 collects
+// all three terms into one nx+c *before* substituting, that per-term floor doesn't
+// cleanly apply post-merge — this scaffold only floors the FINAL combined damage at 0,
+// as §3.1's second rule states. Revisit if a real build wants the per-term floor too.
+function fmtN(n){
+  if(n===0) return "";
+  var core = Math.abs(n)===1 ? "x" : Math.abs(n)+"x";
+  return n<0 ? "−"+core : core;
+}
+function fmtSigned(n){
+  if(n===0) return "0";
+  var core = Math.abs(n)===1 ? "x" : Math.abs(n)+"x";
+  return (n>0?"+ ":"− ")+core;
+}
+// Like fmtSigned, but a zero term still carries "+" — needed when terms are
+// concatenated inline (the CPU's battle-log line) so "− x 0" can't be misread
+// as "− x0"; the term-lines UI shows each term on its own row, so it uses bare fmtSigned.
+function fmtSignedInline(n){ return n===0 ? "+ 0" : fmtSigned(n); }
+function possessive(name){ return name==="You" ? "Your" : name+"'s"; }
+function winsVerb(name){ return name==="You" ? "win" : "wins"; }
+function fmtFull(n,c){
+  var nS=fmtN(n);
+  if(nS==="") return String(c);
+  if(c===0) return nS;
+  return nS+" "+(c>0?"+":"−")+" "+Math.abs(c);
+}
+function shuffled(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function rollD6(){ return Math.floor(Math.random()*6)+1; }
+function reducedMotion(){ return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
+
+/* ============================== GAME STATE ============================== */
+
+var Game = null;
+function mkPlayer(name){
+  return {name:name, character:null, roster:[], fielded:null, curHp:0, maxHp:0, lastTypes:[]};
+}
+
+var pending = {}; // scratch state for multi-step screens (pass/select/trade/field)
+
+function show(id){
+  document.querySelectorAll(".screen").forEach(function(s){ s.hidden = (s.id!==id); });
+  window.scrollTo({top:0,behavior:reducedMotion()?"auto":"smooth"});
+}
+
+/* ---------- title / mode select ---------- */
+var chosenMode = null;
+document.querySelectorAll(".mode-card").forEach(function(el){
+  el.addEventListener("click", function(){
+    document.querySelectorAll(".mode-card").forEach(function(m){ m.classList.remove("selected"); });
+    el.classList.add("selected");
+    chosenMode = el.getAttribute("data-mode");
+    var btn = document.getElementById("btn-start");
+    btn.disabled=false;
+    btn.textContent = chosenMode==="cpu" ? "Start — Vs. Computer ▸" : "Start — Two Players ▸";
+  });
+});
+document.getElementById("btn-start").addEventListener("click", function(){
+  if(!chosenMode) return;
+  Game = {
+    mode:chosenMode,
+    players:[ mkPlayer(chosenMode==="cpu"?"You":"Player 1"), mkPlayer(chosenMode==="cpu"?"CPU":"Player 2") ],
+    environment:null, turn:0, log:[]
+  };
+  document.getElementById("btn-reset").hidden=false;
+  beginSelect(0);
+});
+document.getElementById("btn-reset").addEventListener("click", function(){
+  if(confirm("Restart the whole match?")){ Game=null; document.getElementById("btn-reset").hidden=true; show("scr-title"); }
+});
+
+/* ---------- pass-device interstitial ---------- */
+function passTo(playerIdx, thenFn){
+  if(Game.mode==="cpu"){ thenFn(); return; }
+  document.getElementById("pass-title").textContent = "Pass to "+Game.players[playerIdx].name;
+  document.getElementById("pass-sub").textContent = "Don't peek — the other player's picks stay hidden until reveal.";
+  var btn = document.getElementById("pass-ready");
+  var handler = function(){ btn.removeEventListener("click",handler); thenFn(); };
+  btn.addEventListener("click",handler);
+  show("scr-pass");
+}
+
+/* ---------- character select ---------- */
+var charArtVariant = "male";
+function renderSelectToggle(playerIdx){
+  var box=document.getElementById("select-toggle");
+  box.innerHTML = '<div class="art-toggle"><span>Art</span>'+
+    '<button data-v="male" class="'+(charArtVariant==="male"?"active":"")+'">Male</button>'+
+    '<button data-v="female" class="'+(charArtVariant==="female"?"active":"")+'">Female</button></div>';
+  Array.prototype.forEach.call(box.querySelectorAll("button"), function(b){
+    b.addEventListener("click", function(){
+      charArtVariant = b.getAttribute("data-v");
+      renderSelectToggle(playerIdx);
+      renderCharGrid(playerIdx);
+    });
+  });
+}
+function renderCharGrid(playerIdx){
+  var grid = document.getElementById("select-grid");
+  grid.innerHTML="";
+  var otherChar = Game.players[1-playerIdx].character;
+  CHARACTERS.forEach(function(c){
+    var taken = otherChar && otherChar.id===c.id;
+    var art = charArtVariant==="female" ? c.artFemale : c.art;
+    var card = document.createElement("button");
+    card.className="art-card"+(taken?" disabled":"");
+    card.disabled = !!taken;
+    card.innerHTML =
+      '<div class="art"><img src="'+art+'" alt="'+c.name+'"></div>'+
+      '<div class="footer"><span class="name">'+c.name+'</span>'+
+        '<div class="pillrow">'+
+          '<span class="stat-chip magic">Magic '+c.stats.magic+'</span>'+
+          '<span class="stat-chip strength">Strength '+c.stats.strength+'</span>'+
+          '<span class="stat-chip agility">Agility '+c.stats.agility+'</span>'+
+        '</div>'+
+        '<div class="meta">'+c.playstyle+'</div>'+
+      '</div>';
+    card.addEventListener("click", function(){ pickCharacter(playerIdx,c); });
+    grid.appendChild(card);
+  });
+}
+function beginSelect(playerIdx){
+  pending.selectIdx = playerIdx;
+  var p = Game.players[playerIdx];
+  document.getElementById("select-eyebrow").textContent = "Character select · "+p.name;
+  document.getElementById("select-title").textContent = playerIdx===0 ? "Choose your character" : (Game.mode==="cpu" ? "The CPU is choosing…" : "Choose your character");
+  renderSelectToggle(playerIdx);
+  renderCharGrid(playerIdx);
+  show("scr-select");
+}
+function pickCharacter(playerIdx,c){
+  Game.players[playerIdx].character = c;
+  if(Game.mode==="cpu" && playerIdx===0){
+    var remaining = CHARACTERS.filter(function(x){ return x.id!==c.id; });
+    Game.players[1].character = remaining[Math.floor(Math.random()*remaining.length)];
+    dealPets();
+  } else if(Game.mode==="2p" && playerIdx===0){
+    passTo(1, function(){ beginSelect(1); });
+  } else {
+    dealPets();
+  }
+}
+
+/* ---------- pet roll ---------- */
+function dealPets(){
+  var pool = shuffled(PETS);
+  Game.players[0].roster = [clonePet(pool[0]), clonePet(pool[1])];
+  Game.players[1].roster = [clonePet(pool[2]), clonePet(pool[3])];
+  renderPetRoll();
+  show("scr-petroll");
+}
+function clonePet(p){ return JSON.parse(JSON.stringify(p)); }
+function petAffinity(pet){
+  // null means "Balanced" — all three attacks share the same top coefficient
+  // (Patchwork Golem, Moss Troll, Clockwork Beetle in the source deck).
+  var max=Math.max(pet.attacks.magic.a,pet.attacks.strength.a,pet.attacks.agility.a);
+  var top=TYPES.filter(function(t){ return pet.attacks[t].a===max; });
+  return top.length===1 ? top[0] : null;
+}
+// Shared card body for every pet display (roll / trade / field select) — full,
+// uncropped art on top (pets are a uniform 3.37:1 native ratio) with a footer
+// of HP/archetype badges on the image and affinity + per-type attack pills below.
+function petCardInner(pet, opts){
+  opts = opts || {};
+  var aff=petAffinity(pet);
+  var affPill = aff===null
+    ? '<span class="pill">Balanced</span>'
+    : '<span class="pill" style="color:var(--'+aff+');border-color:var(--'+aff+')">'+TYPE_LABEL[aff]+' affinity</span>';
+  var flagPill = opts.flagText ? '<span class="pill" style="color:'+opts.flagColor+';border-color:'+opts.flagColor+';font-weight:800;text-transform:uppercase">'+opts.flagText+'</span>' : '';
+  var cancelPill = (opts.showCancelNote && aff!==null && isCancelled(Game.environment,aff))
+    ? '<span class="pill" style="color:var(--danger);border-color:var(--danger)">Affinity cancelled here</span>' : '';
+  return '<div class="art"><img src="'+pet.art+'" alt="'+pet.name+'">'+
+      '<div class="badge-hp">HP '+pet.hp+'</div><div class="badge-arch">'+pet.archetype+'</div></div>'+
+    '<div class="footer"><span class="name">'+pet.name+'</span>'+affPill+flagPill+cancelPill+
+      '<div class="pillrow">'+TYPES.map(function(t){
+        var atk=pet.attacks[t];
+        return '<span class="stat-chip '+t+'">'+TYPE_LABEL[t]+' '+fmtFull(atk.a,atk.b)+(atk.min?' (min '+atk.min+')':'')+'</span>';
+      }).join('')+'</div>'+
+    '</div>';
+}
+function renderPetRoll(){
+  var grid=document.getElementById("petroll-grid");
+  grid.innerHTML="";
+  Game.players.forEach(function(p){
+    var col=document.createElement("div");
+    col.className="trade-col";
+    var h=document.createElement("h3"); h.textContent=p.name+" · "+p.character.name;
+    col.appendChild(h);
+    var list=document.createElement("div"); list.className="list";
+    p.roster.forEach(function(pet){
+      var card=document.createElement("div");
+      card.className="art-card";
+      card.style.cursor="default";
+      card.innerHTML = petCardInner(pet);
+      list.appendChild(card);
+    });
+    col.appendChild(list);
+    grid.appendChild(col);
+  });
+}
+document.getElementById("petroll-continue").addEventListener("click", function(){ beginTrade(); });
+
+/* ---------- trade ---------- */
+function beginTrade(){
+  pending.offers=[null,null];
+  pending.tradeDone=false;
+  pending.tradeStage=0;
+  document.getElementById("trade-continue").textContent="Confirm & continue ▸";
+  if(Game.mode==="cpu"){
+    document.getElementById("trade-title").textContent="Offer a pet?";
+    renderTradeScreen(0,true);
+    show("scr-trade");
+  } else {
+    tradeStepHuman(0);
+  }
+}
+function tradeStepHuman(idx){
+  document.getElementById("trade-title").textContent = Game.players[idx].name+": offer a pet?";
+  renderTradeScreen(idx,false);
+  show("scr-trade");
+}
+function renderTradeScreen(activeIdx, showBoth){
+  var grid=document.getElementById("trade-grid");
+  grid.innerHTML="";
+  document.getElementById("trade-result-box").innerHTML="";
+  Game.players.forEach(function(p,idx){
+    var col=document.createElement("div");
+    col.className="trade-col";
+    var interactive = showBoth || idx===activeIdx;
+    var h=document.createElement("h3"); h.textContent=p.name+(interactive?"":" (hidden)");
+    col.appendChild(h);
+    if(!interactive){
+      var note=document.createElement("p"); note.className="sub"; note.textContent="Choice locked in.";
+      col.appendChild(note);
+    } else {
+      var list=document.createElement("div"); list.className="list";
+      p.roster.forEach(function(pet,pi){
+        var offered = pending.offers[idx]===pi;
+        var card=document.createElement("div");
+        card.className="art-card"+(offered?" chosen":"");
+        card.innerHTML = petCardInner(pet, offered?{flagText:"Offering",flagColor:"var(--danger)"}:null);
+        card.addEventListener("click", function(){
+          pending.offers[idx] = offered ? null : pi;
+          if(Game.mode==="cpu") renderTradeScreen(0,true); else renderTradeScreen(idx,false);
+        });
+        list.appendChild(card);
+      });
+      col.appendChild(list);
+    }
+    grid.appendChild(col);
+  });
+}
+document.getElementById("trade-continue").addEventListener("click", function(){
+  if(pending.tradeDone){
+    pending.tradeDone=false;
+    drawEnvironment();
+    return;
+  }
+  if(Game.mode==="2p" && pending.tradeStage!==1){
+    pending.tradeStage=1;
+    passTo(1, function(){ tradeStepHuman(1); });
+    return;
+  }
+  if(Game.mode==="cpu"){
+    var cpu = Game.players[1];
+    var cpuOff = cpuTradeDecision(cpu);
+    pending.offers[1] = cpuOff;
+  }
+  resolveTrade();
+});
+function cpuTradeDecision(cpu){
+  var ht = highStatType(cpu.character);
+  if(!ht) return null;
+  var a=cpu.roster[0].attacks[ht].a, b=cpu.roster[1].attacks[ht].a;
+  if(a===b) return null;
+  return a<b?0:1;
+}
+function resolveTrade(){
+  var off0=pending.offers[0], off1=pending.offers[1];
+  var box=document.getElementById("trade-result-box");
+  var dealMade = off0!=null && off1!=null;
+  var swappedNames = null;
+  if(dealMade){
+    var p0=Game.players[0], p1=Game.players[1];
+    var a=p0.roster[off0], b=p1.roster[off1];
+    p0.roster[off0]=b; p1.roster[off1]=a;
+    swappedNames = {a:a.name,b:b.name};
+    box.innerHTML='<div class="trade-result"><b style="color:var(--ok)">Deal made:</b> '+a.name+' ↔ '+b.name+'.</div>';
+  } else {
+    box.innerHTML='<div class="trade-result">No deal — a swap needs an offer from both sides. Rosters stay as dealt.</div>';
+  }
+  pending.tradeStage=0;
+  pending.tradeDone=true;
+  document.getElementById("trade-title").textContent = dealMade ? "Trade complete" : "No trade";
+  var grid=document.getElementById("trade-grid");
+  grid.innerHTML="";
+  Game.players.forEach(function(p){
+    var col=document.createElement("div");
+    col.className="trade-col";
+    var h=document.createElement("h3"); h.textContent=p.name;
+    col.appendChild(h);
+    var list=document.createElement("div"); list.className="list";
+    p.roster.forEach(function(pet){
+      var justTraded = swappedNames && (pet.name===swappedNames.a || pet.name===swappedNames.b);
+      var card=document.createElement("div");
+      card.className="art-card"+(justTraded?" chosen":"");
+      card.style.cursor="default";
+      card.innerHTML = petCardInner(pet, justTraded?{flagText:"Traded in",flagColor:"var(--ok)"}:null);
+      list.appendChild(card);
+    });
+    col.appendChild(list);
+    grid.appendChild(col);
+  });
+  document.getElementById("trade-continue").textContent="Continue to arena ▸";
+}
+
+/* ---------- environment ---------- */
+function drawEnvironment(){
+  Game.environment = ENVIRONMENTS[Math.floor(Math.random()*ENVIRONMENTS.length)];
+  var env=Game.environment;
+  var root=document.getElementById("env-root");
+  var chips = env.effects.map(function(e){
+    var kindLabel = e.kind==="boost"?"Boost":e.kind==="weaken"?"Weaken":"Cancel";
+    var term = e.kind==="cancel" ? "unusable" : (e.kind==="boost"?"+":"−")+e.amount+"x";
+    return '<span class="effect-chip '+e.kind+'"><span class="dot '+e.type+'"></span>'+kindLabel+' '+TYPE_LABEL[e.type]+' · '+term+'</span>';
+  }).join("") || '<span class="effect-chip" style="color:var(--ink-dim)">No effect — neutral ground</span>';
+  root.innerHTML =
+    '<div class="env-banner"><img src="'+env.art+'" alt=""><div class="veil"></div>'+
+    '<div class="cap"><h2>'+env.name+'</h2><p class="flavour">'+env.flavour+'</p></div></div>'+
+    '<div class="effect-chips">'+chips+'</div>';
+  show("scr-environment");
+}
+document.getElementById("env-continue").addEventListener("click", function(){ beginField(); });
+
+/* ---------- field select ---------- */
+function beginField(){
+  if(Game.mode==="2p"){ fieldStepHuman(0); }
+  else { renderFieldScreen(0); show("scr-field"); }
+}
+function fieldStepHuman(idx){
+  document.getElementById("field-eyebrow").textContent="Field select · "+Game.players[idx].name;
+  document.getElementById("field-title").textContent = Game.players[idx].name+", pick your pet";
+  renderFieldGrid(idx);
+  show("scr-field");
+}
+function renderFieldScreen(idx){
+  document.getElementById("field-eyebrow").textContent="Field select";
+  document.getElementById("field-title").textContent = "Pick your pet";
+  renderFieldGrid(idx);
+}
+function renderFieldGrid(idx){
+  var grid=document.getElementById("field-grid");
+  grid.innerHTML="";
+  Game.players[idx].roster.forEach(function(pet,pi){
+    var card=document.createElement("button");
+    card.className="art-card";
+    card.innerHTML = petCardInner(pet, {showCancelNote:true});
+    card.addEventListener("click", function(){ pickFielded(idx,pi); });
+    grid.appendChild(card);
+  });
+}
+function pickFielded(idx,pi){
+  Game.players[idx].fielded = Game.players[idx].roster[pi];
+  if(Game.mode==="2p" && idx===0){ passTo(1,function(){ fieldStepHuman(1); }); return; }
+  if(Game.mode==="cpu"){
+    var cpu=Game.players[1];
+    var choiceIdx = cpuFieldChoice(cpu);
+    cpu.fielded = cpu.roster[choiceIdx];
+  }
+  Game.players.forEach(function(p){ p.curHp=p.fielded.hp; p.maxHp=p.fielded.hp; p.lastTypes=[]; });
+  Game.turn = Math.random()<0.5 ? 0 : 1;
+  Game.log=[];
+  startBattle();
+}
+function cpuFieldChoice(cpu){
+  var allowed = allowedTypes(cpu, Game.environment);
+  function bestN(pet){
+    var max=-Infinity;
+    allowed.forEach(function(t){
+      var n = pet.attacks[t].a + statMod(cpu.character.stats[t]) + envMod(Game.environment,t);
+      if(n>max) max=n;
+    });
+    return max;
+  }
+  return bestN(cpu.roster[0]) >= bestN(cpu.roster[1]) ? 0 : 1;
+}
+
+/* ---------- battle ---------- */
+var draft = null;
+function startBattle(){ renderBattle(); show("scr-battle"); if(currentPlayer().name==="CPU" || (Game.mode==="cpu" && Game.turn===1)) runCpuTurn(); }
+function currentPlayer(){ return Game.players[Game.turn]; }
+function opponent(){ return Game.players[1-Game.turn]; }
+
+function renderEnvStrip(){
+  var env=Game.environment;
+  var fx = env.effects.map(function(e){
+    var term = e.kind==="cancel"?"cancelled":(e.kind==="boost"?"+":"−")+e.amount+"x";
+    return '<span>'+TYPE_LABEL[e.type]+' '+term+'</span>';
+  }).join("") || '<span>neutral</span>';
+  document.getElementById("battle-env-strip").innerHTML =
+    '<img src="'+env.art+'" alt=""><div><div class="name">'+env.name+'</div><div class="fx">'+fx+'</div></div>';
+}
+function hpColor(pct){ return pct>0.5?"var(--ok)":pct>0.22?"var(--warn)":"var(--danger)"; }
+function renderFighters(){
+  var root=document.getElementById("battle-fighters");
+  root.innerHTML="";
+  Game.players.forEach(function(p,idx){
+    var pct = Math.max(p.curHp,0)/p.maxHp;
+    var streak = p.lastTypes.slice(-2);
+    var div=document.createElement("div");
+    div.className="card fighter"+(Game.turn===idx?" active":"");
+    div.innerHTML =
+      (Game.turn===idx?'<div class="turn-flag">On turn</div>':'')+
+      '<div class="top"><div class="thumb"><img src="'+p.fielded.art+'" alt=""></div>'+
+      '<div class="names"><div class="who">'+p.name+' · '+p.character.name+'</div>'+
+      '<b>'+p.fielded.name+'</b><div class="sub">'+(petAffinity(p.fielded)?TYPE_LABEL[petAffinity(p.fielded)]+' affinity':'Balanced')+'</div></div></div>'+
+      '<div class="hp-row"><div class="num"><span>HP</span><span class="mono">'+Math.max(p.curHp,0)+' / '+p.maxHp+'</span></div>'+
+      '<div class="hp-track"><div class="hp-fill" style="width:'+(pct*100)+'%;background:'+hpColor(pct)+'"></div></div></div>'+
+      '<div class="streak">'+streak.map(function(t){return '<span class="pip" style="background:var(--'+t+')"></span>';}).join('')+'</div>';
+    root.appendChild(div);
+  });
+}
+function renderLog(){
+  var list=document.getElementById("battle-log");
+  list.innerHTML = Game.log.map(function(entry){
+    return '<div class="log-item p'+entry.p+'"><span class="who">'+entry.who+'</span> used <i>'+entry.attackName+'</i> — '+
+      '<span class="expr">'+entry.expr+' → roll '+entry.roll+'</span> → <span class="dmg">'+entry.dmg+' dmg</span>'+
+      (entry.clamped?' <span style="color:var(--ink-faint)">(floored at 0)</span>':'')+
+      '<br><span style="color:var(--ink-faint)">'+entry.target+' HP: '+entry.hpBefore+' → '+entry.hpAfter+'</span></div>';
+  }).join("");
+}
+function renderBattle(){ renderEnvStrip(); renderFighters(); renderLog(); renderActiveArea(); }
+
+function renderActiveArea(){
+  var root=document.getElementById("battle-active");
+  var isHumanTurn = Game.mode==="2p" || Game.turn===0;
+  if(!isHumanTurn){ root.innerHTML='<div class="card cpu-turn"><div class="spinner"></div><div>CPU is choosing an attack…</div></div>'; return; }
+  root.innerHTML = builderHTML();
+  wireBuilder();
+}
+function builderHTML(){
+  var p=currentPlayer(), env=Game.environment;
+  var allowed = allowedTypes(p,env);
+  var html = '<div class="card builder"><h3>'+possessive(p.name)+" turn — build your attack</h3>";
+  html += '<p class="hint">Fielded: <b>'+p.fielded.name+'</b> ('+p.character.name+')'+(allowed.length<3?' · some types are unavailable this turn':'')+'</p>';
+  html += '<div class="type-picker">';
+  TYPES.forEach(function(t){
+    var atk=p.fielded.attacks[t];
+    var disabled = allowed.indexOf(t)===-1;
+    var chosen = draft && draft.type===t;
+    html += '<button class="type-btn '+t+(chosen?" chosen":"")+'" data-type="'+t+'" '+(disabled?"disabled":"")+'>'+
+      '<b>'+TYPE_LABEL[t]+'</b><div class="eq">'+atk.name+' · '+fmtFull(atk.a,atk.b)+(atk.min?' (min '+atk.min+')':'')+'</div>'+
+      (isCancelled(env,t)?'<div class="eq" style="color:var(--danger)">cancelled here</div>':(blockedByStreak(p,t)?'<div class="eq" style="color:var(--warn)">used 2x in a row</div>':''))+
+      '</button>';
+  });
+  html += '</div>';
+
+  if(draft && draft.type){
+    var d=draft;
+    html += '<div class="term-lines">'+
+      '<div class="term-line"><span class="label">Pet attack — '+d.base.name+'</span><span class="expr">'+fmtFull(d.base.a,d.base.b)+'</span></div>'+
+      '<div class="term-line"><span class="label">Your '+TYPE_LABEL[d.type]+' stat ('+p.character.stats[d.type]+')</span><span class="expr">'+fmtSigned(d.sMod)+'</span></div>'+
+      '<div class="term-line"><span class="label">'+env.name+'</span><span class="expr">'+fmtSigned(d.eMod)+'</span></div>'+
+      '</div>';
+
+    html += '<div class="collect-row"><label>Collect the like terms into <span class="mono">nx + c</span>:</label>'+
+      '<div class="nc-inputs"><input type="number" id="n-input" inputmode="numeric" placeholder="n" '+(d.checked?"disabled":"")+' value="'+d.nGuess+'">'+
+      '<span class="xsuffix">x +</span>'+
+      '<input type="number" id="c-input" inputmode="numeric" placeholder="c" '+(d.checked?"disabled":"")+' value="'+d.cGuess+'">'+
+      (d.checked ? '' : '<button class="btn ghost" id="check-btn">Check</button>')+
+      '</div>';
+    if(d.feedback){ html += '<div class="check-feedback '+(d.checked?"ok":"bad")+'">'+d.feedback+'</div>'; }
+    if(!d.checked && d.attempts>=2){ html += '<button class="reveal-link" id="reveal-btn">'+(d.revealed?"Hide":"Show")+' the correct working</button>'; }
+    if(d.revealed && !d.checked){
+      html += '<p class="sub" style="margin-top:8px">'+fmtFull(d.base.a,d.base.b)+' '+fmtSigned(d.sMod)+' '+fmtSigned(d.eMod)+' = <b>'+fmtFull(d.correctN,d.correctC)+'</b></p>';
+    }
+    html += '</div>';
+
+    if(d.checked){
+      html += '<div class="roll-zone"><div class="die" id="die">'+(d.roll||"?")+'</div>';
+      if(d.roll==null){ html += '<button class="btn" id="roll-btn">Roll the die</button>'; }
+      else { html += '<div class="roll-result">Substitute <b>x = '+d.roll+'</b> into <b>'+fmtFull(d.correctN,d.correctC)+'</b> — floors at 0.</div>'; }
+      html += '</div>';
+
+      if(d.roll!=null && !d.dmgChecked){
+        html += '<div class="collect-row"><label>Work out the damage:</label>'+
+          '<div class="nc-inputs"><input type="number" id="dmg-input" inputmode="numeric" placeholder="damage" value="'+d.dmgGuess+'">'+
+          '<button class="btn ghost" id="dmg-check-btn">Check</button></div>';
+        if(d.dmgFeedback){ html += '<div class="check-feedback bad">'+d.dmgFeedback+'</div>'; }
+        if(d.dmgAttempts>=2){ html += '<button class="reveal-link" id="dmg-reveal-btn">'+(d.dmgRevealed?"Hide":"Show")+' the correct working</button>'; }
+        if(d.dmgRevealed){
+          var raw=d.correctN*d.roll+d.correctC;
+          html += '<p class="sub" style="margin-top:8px">'+d.correctN+' × '+d.roll+' '+(d.correctC>=0?'+':'−')+' '+Math.abs(d.correctC)+' = '+raw+(d.total!==raw?' → floored to <b>'+d.total+'</b>':' = <b>'+d.total+'</b>')+'</p>';
+        }
+        html += '</div>';
+      }
+      if(d.dmgChecked){
+        html += '<div class="check-feedback ok">Correct — '+d.total+' damage.</div>';
+        html += '<div class="row-actions"><button class="btn" id="apply-btn">Apply '+d.total+' damage ▸</button></div>';
+      }
+    }
+  }
+  html += '</div>';
+  return html;
+}
+function wireBuilder(){
+  var root=document.getElementById("battle-active");
+  root.querySelectorAll(".type-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var t=btn.getAttribute("data-type");
+      var built = buildAttack(currentPlayer(), t, Game.environment);
+      draft = {type:t, base:built.atk, sMod:built.sMod, eMod:built.eMod, correctN:built.n, correctC:built.c,
+        nGuess:"", cGuess:"", checked:false, feedback:"", attempts:0, revealed:false, roll:null, total:null,
+        dmgGuess:"", dmgChecked:false, dmgFeedback:"", dmgAttempts:0, dmgRevealed:false};
+      renderActiveArea();
+    });
+  });
+  var checkBtn=root.querySelector("#check-btn");
+  if(checkBtn) checkBtn.addEventListener("click", function(){
+    var n=parseInt(document.getElementById("n-input").value,10);
+    var c=parseInt(document.getElementById("c-input").value,10);
+    draft.nGuess=isNaN(n)?"":n; draft.cGuess=isNaN(c)?"":c;
+    draft.attempts++;
+    if(n===draft.correctN && c===draft.correctC){
+      draft.checked=true; draft.feedback="Correct — "+fmtFull(n,c)+". Roll when ready.";
+    } else {
+      draft.feedback="Not quite. Recount the x-terms, then the constants, separately.";
+    }
+    renderActiveArea();
+  });
+  var revealBtn=root.querySelector("#reveal-btn");
+  if(revealBtn) revealBtn.addEventListener("click", function(){ draft.revealed=!draft.revealed; renderActiveArea(); });
+  var rollBtn=root.querySelector("#roll-btn");
+  if(rollBtn) rollBtn.addEventListener("click", function(){ animateRoll(); });
+  var dmgCheckBtn=root.querySelector("#dmg-check-btn");
+  if(dmgCheckBtn) dmgCheckBtn.addEventListener("click", function(){
+    var guess=parseInt(document.getElementById("dmg-input").value,10);
+    draft.dmgGuess = isNaN(guess) ? "" : guess;
+    draft.dmgAttempts++;
+    if(guess===draft.total){
+      draft.dmgChecked=true;
+    } else {
+      var raw = draft.correctN*draft.roll+draft.correctC;
+      if(guess===raw && raw!==draft.total){
+        draft.dmgFeedback = "Close — that's the raw total, but damage floors at 0. What's max(that, 0)?";
+      } else {
+        draft.dmgFeedback = "Not quite. Substitute x = "+draft.roll+" into "+fmtFull(draft.correctN,draft.correctC)+" and recompute.";
+      }
+    }
+    renderActiveArea();
+  });
+  var dmgRevealBtn=root.querySelector("#dmg-reveal-btn");
+  if(dmgRevealBtn) dmgRevealBtn.addEventListener("click", function(){ draft.dmgRevealed=!draft.dmgRevealed; renderActiveArea(); });
+  var applyBtn=root.querySelector("#apply-btn");
+  if(applyBtn) applyBtn.addEventListener("click", applyDamage);
+}
+function animateRoll(){
+  var dieEl=document.getElementById("die");
+  var final=rollD6();
+  if(reducedMotion()){ finishRoll(final); return; }
+  var ticks=0, max=10;
+  var iv=setInterval(function(){
+    dieEl.textContent = 1+Math.floor(Math.random()*6);
+    ticks++;
+    if(ticks>=max){ clearInterval(iv); finishRoll(final); }
+  },60);
+}
+function finishRoll(final){
+  draft.roll=final;
+  var raw = draft.correctN*final+draft.correctC;
+  draft.total = Math.max(raw,0);
+  renderActiveArea();
+}
+function applyDamage(){
+  var att=currentPlayer(), def=opponent();
+  var hpBefore=Math.max(def.curHp,0);
+  def.curHp = Math.max(def.curHp-draft.total,0);
+  att.lastTypes.push(draft.type);
+  if(att.lastTypes.length>2) att.lastTypes.shift();
+  Game.log.push({
+    p:Game.turn, who:possessive(att.name)+" "+att.fielded.name, attackName:draft.base.name,
+    expr:fmtFull(draft.correctN,draft.correctC), roll:draft.roll, dmg:draft.total,
+    clamped: draft.total !== draft.correctN*draft.roll+draft.correctC,
+    target:def.fielded.name, hpBefore:hpBefore, hpAfter:Math.max(def.curHp,0)
+  });
+  draft=null;
+  if(def.curHp<=0){ showResult(att,def); return; }
+  Game.turn = 1-Game.turn;
+  renderBattle();
+  if(Game.mode==="cpu" && Game.turn===1) runCpuTurn();
+}
+function runCpuTurn(){
+  var root=document.getElementById("battle-active");
+  root.innerHTML='<div class="card cpu-turn"><div class="spinner"></div><div>CPU is choosing an attack…</div></div>';
+  setTimeout(function(){
+    var cpu=currentPlayer();
+    var allowed=allowedTypes(cpu,Game.environment);
+    var best=null,bestScore=-Infinity, builtBest=null;
+    allowed.forEach(function(t){
+      var built=buildAttack(cpu,t,Game.environment);
+      var score=built.n*3.5+built.c;
+      if(score>bestScore){ bestScore=score; best=t; builtBest=built; }
+    });
+    var roll=rollD6();
+    var raw=builtBest.n*roll+builtBest.c;
+    var total=Math.max(raw,0);
+    var def=opponent();
+    var hpBefore=Math.max(def.curHp,0);
+    def.curHp=Math.max(def.curHp-total,0);
+    cpu.lastTypes.push(best); if(cpu.lastTypes.length>2) cpu.lastTypes.shift();
+    Game.log.push({
+      p:Game.turn, who:possessive(cpu.name)+" "+cpu.fielded.name, attackName:builtBest.atk.name,
+      expr: fmtFull(builtBest.atk.a,builtBest.atk.b)+" "+fmtSignedInline(builtBest.sMod)+" "+fmtSignedInline(builtBest.eMod)+" = "+fmtFull(builtBest.n,builtBest.c),
+      roll:roll, dmg:total, clamped: total!==raw, target:def.fielded.name, hpBefore:hpBefore, hpAfter:Math.max(def.curHp,0)
+    });
+    if(def.curHp<=0){ showResult(cpu,def); return; }
+    Game.turn=1-Game.turn;
+    renderBattle();
+  }, 900);
+}
+
+/* ---------- result ---------- */
+function showResult(winner,loser){
+  document.getElementById("result-title").textContent = winner.name+" "+winsVerb(winner.name)+"!";
+  document.getElementById("result-img").src = winner.fielded.art;
+  document.getElementById("result-img").alt = winner.fielded.name;
+  document.getElementById("result-sub").textContent = winner.fielded.name+" (played by "+winner.name+", the "+winner.character.name+") knocked out "+loser.fielded.name+".";
+  var box=document.getElementById("capture-box");
+  box.innerHTML = '<p>Roll to try to capture '+loser.fielded.name+' — a 6 adds it to your zoo.</p><button class="btn" id="capture-roll">Roll for capture</button>';
+  document.getElementById("capture-roll").addEventListener("click", function(){
+    var r=rollD6();
+    box.innerHTML = '<p class="mono" style="font-size:1.3rem">Rolled '+r+'</p><p>'+(r===6?('<b style="color:var(--ok)">Captured!</b> '+loser.fielded.name+' joins '+possessive(winner.name)+' zoo.'):('<b style="color:var(--ink-dim)">It escaped.</b> '+loser.fielded.name+' slips away.'))+'</p>';
+  });
+  pending.lastWinner=winner; pending.lastLoser=loser;
+  show("scr-result");
+}
+document.getElementById("btn-rematch").addEventListener("click", function(){
+  var chars=[Game.players[0].character, Game.players[1].character];
+  var mode=Game.mode;
+  Game = { mode:mode, players:[mkPlayer(mode==="cpu"?"You":"Player 1"), mkPlayer(mode==="cpu"?"CPU":"Player 2")], environment:null, turn:0, log:[] };
+  Game.players[0].character=chars[0]; Game.players[1].character=chars[1];
+  dealPets();
+});
+document.getElementById("btn-newgame").addEventListener("click", function(){
+  Game=null; document.getElementById("btn-reset").hidden=true; show("scr-title");
+});
+
+/* ---------- hot-reload snapshot (best-effort; game state is short-lived by design) ---------- */
+try{
+  if(window.claude && window.claude.hot){
+    window.claude.hot.snapshot(function(){ return {}; });
+    if(window.claude.hot.ready) window.claude.hot.ready(function(){}); else {}
+  }
+}catch(e){}
+
+show("scr-title");
+})();
+</script>
+</body>
+
+</html>
