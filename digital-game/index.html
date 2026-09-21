@@ -761,107 +761,131 @@ function renderPetRoll(){
 document.getElementById("petroll-continue").addEventListener("click", function(){ beginTrade(); });
 
 /* ---------- trade ---------- */
-function beginTrade(){
-  pending.offers=[null,null];
-  pending.tradeDone=false;
-  pending.tradeStage=0;
-  document.getElementById("trade-continue").textContent="Confirm & continue ▸";
-  if(Game.mode==="cpu"){
-    document.getElementById("trade-title").textContent="Offer a pet?";
-    renderTradeScreen(0,true);
-    show("scr-trade");
-  } else {
-    tradeStepHuman(0);
-  }
+function rollShelf(player){
+  var ownIds = player.roster.map(function(p){ return p.id; });
+  var pool = PETS.filter(function(p){ return ownIds.indexOf(p.id)===-1; });
+  return shuffled(pool).slice(0,6).map(clonePet);
 }
-function tradeStepHuman(idx){
-  document.getElementById("trade-title").textContent = Game.players[idx].name+": offer a pet?";
-  renderTradeScreen(idx,false);
+function cpuShelfDecision(cpu, shelf){
+  var ht = highStatType(cpu.character);
+  if(!ht) return null;
+  function val(pet){ return pet.attacks[ht].a; }
+  var worseIdx = val(cpu.roster[0]) <= val(cpu.roster[1]) ? 0 : 1;
+  var bestShelfIdx = -1, bestVal = val(cpu.roster[worseIdx]);
+  shelf.forEach(function(pet,i){
+    if(val(pet) > bestVal){ bestVal = val(pet); bestShelfIdx = i; }
+  });
+  return bestShelfIdx===-1 ? null : {give:worseIdx, take:bestShelfIdx};
+}
+function beginTrade(){
+  pending.shelfResults=[null,null];
+  pending.tradeSummaryShown=false;
+  startShelfTrade(0);
+}
+function startShelfTrade(idx){
+  pending.tradeIdx=idx;
+  pending.shelf=rollShelf(Game.players[idx]);
+  pending.give=null;
+  pending.take=null;
+  document.getElementById("trade-title").textContent = Game.players[idx].name+", pick a swap";
+  renderShelfScreen();
   show("scr-trade");
 }
-function renderTradeScreen(activeIdx, showBoth){
+function renderShelfScreen(){
+  var idx=pending.tradeIdx, p=Game.players[idx];
   var grid=document.getElementById("trade-grid");
   grid.innerHTML="";
   document.getElementById("trade-result-box").innerHTML="";
-  Game.players.forEach(function(p,idx){
-    var col=document.createElement("div");
-    col.className="trade-col";
-    var interactive = showBoth || idx===activeIdx;
-    var h=document.createElement("h3"); h.textContent=p.name+(interactive?"":" (hidden)");
-    col.appendChild(h);
-    if(!interactive){
-      var note=document.createElement("p"); note.className="sub"; note.textContent="Choice locked in.";
-      col.appendChild(note);
-    } else {
-      var list=document.createElement("div"); list.className="list";
-      p.roster.forEach(function(pet,pi){
-        var offered = pending.offers[idx]===pi;
-        var card=document.createElement("div");
-        card.className="art-card"+(offered?" chosen":"");
-        card.innerHTML = petCardInner(pet, offered?{flagText:"Offering",flagColor:"var(--danger)"}:null);
-        card.addEventListener("click", function(){
-          pending.offers[idx] = offered ? null : pi;
-          if(Game.mode==="cpu") renderTradeScreen(0,true); else renderTradeScreen(idx,false);
-        });
-        list.appendChild(card);
-      });
-      col.appendChild(list);
-    }
-    grid.appendChild(col);
+
+  var mineCol=document.createElement("div"); mineCol.className="trade-col";
+  var mineH=document.createElement("h3"); mineH.textContent="Your zoo"; mineCol.appendChild(mineH);
+  var mineList=document.createElement("div"); mineList.className="list";
+  p.roster.forEach(function(pet,pi){
+    var chosen = pending.give===pi;
+    var card=document.createElement("div");
+    card.className="art-card"+(chosen?" chosen":"");
+    card.innerHTML = petCardInner(pet, chosen?{flagText:"Giving up",flagColor:"var(--danger)"}:null);
+    card.addEventListener("click", function(){
+      pending.give = chosen ? null : pi;
+      renderShelfScreen();
+    });
+    mineList.appendChild(card);
   });
+  mineCol.appendChild(mineList);
+
+  var shelfCol=document.createElement("div"); shelfCol.className="trade-col";
+  var shelfH=document.createElement("h3"); shelfH.textContent="Trade shelf"; shelfCol.appendChild(shelfH);
+  var shelfList=document.createElement("div"); shelfList.className="list";
+  pending.shelf.forEach(function(pet,si){
+    var chosen = pending.take===si;
+    var card=document.createElement("div");
+    card.className="art-card"+(chosen?" chosen":"");
+    card.innerHTML = petCardInner(pet, chosen?{flagText:"Taking",flagColor:"var(--ok)"}:null);
+    card.addEventListener("click", function(){
+      pending.take = chosen ? null : si;
+      renderShelfScreen();
+    });
+    shelfList.appendChild(card);
+  });
+  shelfCol.appendChild(shelfList);
+
+  grid.appendChild(mineCol);
+  grid.appendChild(shelfCol);
+
+  document.getElementById("trade-continue").textContent =
+    (pending.give!=null && pending.take!=null) ? "Confirm swap ▸" : "Skip trading ▸";
 }
 document.getElementById("trade-continue").addEventListener("click", function(){
-  if(pending.tradeDone){
-    pending.tradeDone=false;
+  if(pending.tradeSummaryShown){
+    pending.tradeSummaryShown=false;
     drawEnvironment();
     return;
   }
-  if(Game.mode==="2p" && pending.tradeStage!==1){
-    pending.tradeStage=1;
-    passTo(1, function(){ tradeStepHuman(1); });
+  var idx=pending.tradeIdx, p=Game.players[idx];
+  var traded = pending.give!=null && pending.take!=null;
+  var gaveName=null, tookName=null;
+  if(traded){
+    gaveName = p.roster[pending.give].name;
+    tookName = pending.shelf[pending.take].name;
+    p.roster[pending.give] = pending.shelf[pending.take];
+  }
+  pending.shelfResults[idx] = {traded:traded, gaveName:gaveName, tookName:tookName};
+  advanceTrade();
+});
+function advanceTrade(){
+  if(Game.mode==="2p" && pending.tradeIdx===0){
+    passTo(1, function(){ startShelfTrade(1); });
     return;
   }
   if(Game.mode==="cpu"){
-    var cpu = Game.players[1];
-    var cpuOff = cpuTradeDecision(cpu);
-    pending.offers[1] = cpuOff;
+    resolveCpuShelfTrade();
   }
-  resolveTrade();
-});
-function cpuTradeDecision(cpu){
-  var ht = highStatType(cpu.character);
-  if(!ht) return null;
-  var a=cpu.roster[0].attacks[ht].a, b=cpu.roster[1].attacks[ht].a;
-  if(a===b) return null;
-  return a<b?0:1;
+  showTradeSummary();
 }
-function resolveTrade(){
-  var off0=pending.offers[0], off1=pending.offers[1];
-  var box=document.getElementById("trade-result-box");
-  var dealMade = off0!=null && off1!=null;
-  var swappedNames = null;
-  if(dealMade){
-    var p0=Game.players[0], p1=Game.players[1];
-    var a=p0.roster[off0], b=p1.roster[off1];
-    p0.roster[off0]=b; p1.roster[off1]=a;
-    swappedNames = {a:a.name,b:b.name};
-    box.innerHTML='<div class="trade-result"><b style="color:var(--ok)">Deal made:</b> '+a.name+' ↔ '+b.name+'.</div>';
+function resolveCpuShelfTrade(){
+  var cpu=Game.players[1];
+  var shelf=rollShelf(cpu);
+  var decision=cpuShelfDecision(cpu, shelf);
+  if(decision){
+    pending.shelfResults[1] = {traded:true, gaveName:cpu.roster[decision.give].name, tookName:shelf[decision.take].name};
+    cpu.roster[decision.give] = shelf[decision.take];
   } else {
-    box.innerHTML='<div class="trade-result">No deal — a swap needs an offer from both sides. Rosters stay as dealt.</div>';
+    pending.shelfResults[1] = {traded:false, gaveName:null, tookName:null};
   }
-  pending.tradeStage=0;
-  pending.tradeDone=true;
-  document.getElementById("trade-title").textContent = dealMade ? "Trade complete" : "No trade";
+}
+function showTradeSummary(){
+  document.getElementById("trade-title").textContent = "Trading complete";
   var grid=document.getElementById("trade-grid");
   grid.innerHTML="";
-  Game.players.forEach(function(p){
+  Game.players.forEach(function(p,idx){
+    var result=pending.shelfResults[idx];
     var col=document.createElement("div");
     col.className="trade-col";
     var h=document.createElement("h3"); h.textContent=p.name;
     col.appendChild(h);
     var list=document.createElement("div"); list.className="list";
     p.roster.forEach(function(pet){
-      var justTraded = swappedNames && (pet.name===swappedNames.a || pet.name===swappedNames.b);
+      var justTraded = result && result.traded && pet.name===result.tookName;
       var card=document.createElement("div");
       card.className="art-card"+(justTraded?" chosen":"");
       card.style.cursor="default";
@@ -871,7 +895,14 @@ function resolveTrade(){
     col.appendChild(list);
     grid.appendChild(col);
   });
+  var box=document.getElementById("trade-result-box");
+  box.innerHTML = Game.players.map(function(p,idx){
+    var r=pending.shelfResults[idx];
+    var msg = (r && r.traded) ? (p.name+" traded "+r.gaveName+" for "+r.tookName+".") : (p.name+" kept both pets.");
+    return '<div class="trade-result">'+msg+'</div>';
+  }).join("");
   document.getElementById("trade-continue").textContent="Continue to arena ▸";
+  pending.tradeSummaryShown=true;
 }
 
 /* ---------- environment ---------- */
