@@ -1168,17 +1168,19 @@ function wireBuilder(){
   var applyBtn=root.querySelector("#apply-btn");
   if(applyBtn) applyBtn.addEventListener("click", applyDamage);
 }
-function animateRoll(){
-  var dieEl=document.getElementById("die");
+function rollDie(elId, onDone){
+  var dieEl=document.getElementById(elId);
   var final=rollD6();
-  if(reducedMotion()){ finishRoll(final); return; }
+  if(reducedMotion()){ onDone(final); return; }
   var ticks=0, max=10;
   var iv=setInterval(function(){
+    if(!Game){ clearInterval(iv); return; }
     dieEl.textContent = 1+Math.floor(Math.random()*6);
     ticks++;
-    if(ticks>=max){ clearInterval(iv); finishRoll(final); }
+    if(ticks>=max){ clearInterval(iv); onDone(final); }
   },60);
 }
+function animateRoll(){ rollDie("die", finishRoll); }
 function finishRoll(final){
   draft.roll=final;
   var raw = draft.correctN*final+draft.correctC;
@@ -1217,8 +1219,10 @@ function runCpuTurn(){
   cpuReveal={type:bestType, built:built, roll:null};
   renderCpuReveal("choosing");
   setTimeout(function(){
+    if(!Game) return;
     renderCpuReveal("working");
     setTimeout(function(){
+      if(!Game) return;
       renderCpuReveal("rolling");
       animateCpuRoll();
     }, 900);
@@ -1249,21 +1253,12 @@ function renderCpuReveal(stage){
   html+='</div>';
   root.innerHTML=html;
 }
-function animateCpuRoll(){
-  var dieEl=document.getElementById("cpu-die");
-  var final=rollD6();
-  if(reducedMotion()){ finishCpuRoll(final); return; }
-  var ticks=0, max=10;
-  var iv=setInterval(function(){
-    dieEl.textContent = 1+Math.floor(Math.random()*6);
-    ticks++;
-    if(ticks>=max){ clearInterval(iv); finishCpuRoll(final); }
-  },60);
-}
+function animateCpuRoll(){ rollDie("cpu-die", finishCpuRoll); }
 function finishCpuRoll(final){
   cpuReveal.roll=final;
   renderCpuReveal("rolled");
   setTimeout(function(){
+    if(!Game) return;
     var cpu=currentPlayer();
     var attackerIdx=Game.turn;
     var b=cpuReveal.built, t=cpuReveal.type;
