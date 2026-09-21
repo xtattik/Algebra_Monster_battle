@@ -321,6 +321,12 @@
           <p>Pass the device between turns. Good for a quick 1v1 at one desk.</p>
         </button>
       </div>
+      <div class="art-toggle" id="difficulty-toggle" style="margin-top:22px">
+        <span>Pets</span>
+        <button data-d="core" class="active">Core</button>
+        <button data-d="challenge">Challenge</button>
+      </div>
+      <p class="sub" id="difficulty-hint" hidden>Pets attack with unexpanded expressions like 3(x − 2) or −4x + 9 — expand first, then collect terms as usual.</p>
       <div class="row-actions">
         <button class="btn wide" id="btn-start" disabled>Choose a mode to begin</button>
       </div>
@@ -660,6 +666,15 @@ function show(id){
 
 /* ---------- title / mode select ---------- */
 var chosenMode = null;
+var chosenDifficulty = "core";
+document.querySelectorAll("#difficulty-toggle button").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    document.querySelectorAll("#difficulty-toggle button").forEach(function(b){ b.classList.remove("active"); });
+    btn.classList.add("active");
+    chosenDifficulty = btn.getAttribute("data-d");
+    document.getElementById("difficulty-hint").hidden = chosenDifficulty!=="challenge";
+  });
+});
 document.querySelectorAll(".mode-card").forEach(function(el){
   el.addEventListener("click", function(){
     document.querySelectorAll(".mode-card").forEach(function(m){ m.classList.remove("selected"); });
