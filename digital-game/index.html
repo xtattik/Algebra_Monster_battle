@@ -1214,12 +1214,13 @@ function renderActiveArea(){
 function builderHTML(){
   var p=currentPlayer(), env=Game.environment;
   var allowed = allowedTypes(p,env);
+  var locked = !!(draft && draft.roll!=null); // die's already rolled — no switching attacks for a do-over
   var html = '<div class="card builder"><h3>'+possessive(p.name)+" turn — build your attack</h3>";
-  html += '<p class="hint">Fielded: <b>'+p.fielded.name+'</b> ('+p.character.name+')'+(allowed.length<3?' · some types are unavailable this turn':'')+'</p>';
+  html += '<p class="hint">Fielded: <b>'+p.fielded.name+'</b> ('+p.character.name+')'+(locked?' · attack locked in for this roll':(allowed.length<3?' · some types are unavailable this turn':''))+'</p>';
   html += '<div class="type-picker">';
   TYPES.forEach(function(t){
     var atk=p.fielded.attacks[t];
-    var disabled = allowed.indexOf(t)===-1;
+    var disabled = allowed.indexOf(t)===-1 || locked;
     var chosen = draft && draft.type===t;
     html += '<button class="type-btn '+t+(chosen?" chosen":"")+'" data-type="'+t+'" '+(disabled?"disabled":"")+'>'+
       '<b>'+TYPE_LABEL[t]+'</b><div class="eq">'+atk.name+' · '+(atk.printed||fmtFull(atk.a,atk.b))+(atk.min?' (min '+atk.min+')':'')+'</div>'+
@@ -1280,6 +1281,7 @@ function wireBuilder(){
   var root=document.getElementById("battle-active");
   root.querySelectorAll(".type-btn").forEach(function(btn){
     btn.addEventListener("click", function(){
+      if(draft && draft.roll!=null) return; // already rolled — no take-backs (belt-and-braces; button is also disabled)
       var t=btn.getAttribute("data-type");
       var built = buildAttack(currentPlayer(), t, Game.environment);
       draft = {type:t, base:built.atk, sMod:built.sMod, eMod:built.eMod, correctN:built.n, correctC:built.c,
